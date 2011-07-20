@@ -1,2 +1,2 @@
-class JournalsController < ApplicationController
+class JournalsController < InheritedResources::Base
 end

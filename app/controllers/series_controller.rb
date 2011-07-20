@@ -1,2 +1,2 @@
-class SeriesController < ApplicationController
+class SeriesController < InheritedResources::Base
 end

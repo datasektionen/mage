@@ -1,0 +1,6 @@
+#user_box 
+  Inloggad som
+  %strong
+    =link_to current_user,admin_user_path(current_user)
+  %p.logout
+    =link_to t('admin.logout'),admin_logout_path
