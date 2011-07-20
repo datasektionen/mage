@@ -1,0 +1,177 @@
+nav a {
+  text-decoration: none; }
+nav a:hover {
+  color: #e2007f; }
+nav li.active a, nav li.active a:visited {
+  color: #e2007f; }
+
+nav#apps li a, nav#apps li a:visited {
+  color: white; }
+nav#apps li a:hover {
+  color: #e2007f; }
+nav#apps li.active {
+  background-color: #333333; }
+  nav#apps li.active a {
+    color: #e2007f; }
+
+nav li a, nav li a:visited {
+  color: black; }
+nav li a:hover {
+  color: #e2007f; }
+nav li.selected a {
+  border-bottom: 1px solid #e2007f; }
+
+p.session-info a, p.session-info:visited {
+  color: white;
+  border-bottom: 0; }
+
+p.session-info a:hover {
+  color: #e2007f; }
+
+footer.main p {
+  color: #666666; }
+  footer.main p a, footer.main p a:visited {
+    color: #333333; }
+
+body {
+  background-color: #eeeeee; }
+  body #root {
+    background-color: white; }
+
+a, a:visited {
+  color: black;
+  text-decoration: none;
+  border-bottom: 1px dotted black; }
+
+a:hover {
+  border-bottom: 1px solid black;
+  color: #e2007f; }
+
+p.session-info {
+  color: white;
+  float: right; }
+  p.session-info span.person {
+    color: #cccccc; }
+  p.session-info a {
+    margin-left: 1em; }
+
+body header.main {
+  border-bottom: 1px solid black; }
+body footer.main {
+  width: 100%;
+  border-top: 1px solid black; }
+  body footer.main p {
+    font-size: 75%;
+    float: right;
+    padding: 0 5px 0; }
+
+nav#apps {
+  /* width: 100% */
+  background-color: black;
+  color: white; }
+
+nav.horizontal ul {
+  list-style: none;
+  height: 1.5em; }
+  nav.horizontal ul li {
+    float: left;
+    padding-right: 3px;
+    padding-left: 3px; }
+
+body section#content {
+  padding: 0 5px 0; }
+  body section#content article {
+    text-align: justify; }
+
+.session-change {
+  float: right;
+  padding-right: 2px; }
+
+.money {
+  text-align: right; }
+
+dl dt {
+  font-weight: bold;
+  display: inline-block;
+  float: left;
+  clear: left;
+  width: 150px; }
+
+form.formtastic fieldset {
+  padding: 1em;
+  border: 0;
+  border-top: 1px solid black; }
+  form.formtastic fieldset legend {
+    text-align: left; }
+  form.formtastic fieldset ol {
+    list-style: none; }
+    form.formtastic fieldset ol li {
+      display: block;
+      text-align: right; }
+      form.formtastic fieldset ol li label {
+        text-align: right;
+        float: left; }
+
+@media only screen and (min-width: 696px) {
+  form.formtastic fieldset {
+    width: 45%;
+    padding: 0 auto; } }
+@media only screen and (max-width: 695px) {
+  form.formtastic {
+    width: 100%; } }
+/* Typography presets
+ * ------------------
+ */
+.gigantic {
+  font-size: 105px;
+  line-height: 120px;
+  letter-spacing: -2px; }
+
+.huge, h1 {
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: -2px; }
+
+.large, h2 {
+  font-size: 28px;
+  line-height: 32px;
+  letter-spacing: -1px; }
+
+.big, h3 {
+  font-size: 24px;
+  line-height: 26px; }
+
+.normal, body {
+  font: 16px/1.5 Helvetica, Arial, sans-serif; }
+
+.small, small {
+  font-size: 13px;
+  line-height: 18px; }
+
+nav#main_menu {
+  display: block;
+  width: 100%; }
+  nav#main_menu ul {
+    margin-left: auto;
+    margin-right: auto;
+    list-style: none; }
+    nav#main_menu ul li {
+      border-bottom: 1px solid lightgrey;
+      width: 48%;
+      height: 80px;
+      margin: 2px;
+      display: inline-block;
+      background-color: lightgray;
+      vertical-align: middle; }
+      nav#main_menu ul li a {
+        display: block;
+        border-bottom: 0px;
+        vertical-align: middle;
+        height: 100%;
+        padding: auto auto; }
+
+fieldset {
+  border-top: 1px solid black;
+  padding: 1em; }
+  fieldset legend {
+    text-align: left; }

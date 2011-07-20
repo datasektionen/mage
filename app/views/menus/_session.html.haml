@@ -1,0 +1,5 @@
+%p.session-info
+  - if user_signed_in?
+    Inloggad som: 
+    %span.person= link_to current_user
+  = session_change_link

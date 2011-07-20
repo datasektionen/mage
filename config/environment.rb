@@ -1,6 +1,13 @@
 # Load the rails application
 require File.expand_path('../application', __FILE__)
 
+module Mage
+  class Application < Rails::Application
+    attr_accessor :settings
+    config.encoding = "utf-8"
+  end
+end
+
 # Initialize the rails application
 Mage::Application.initialize!
 

@@ -1,0 +1,67 @@
+$black: #000
+$white: #fff
+$cerise: #e2007f
+nav
+  a
+    text-decoration: none
+  a:hover
+    color: $cerise
+  li.active
+    a, a:visited
+      color: $cerise
+
+nav#apps
+  li
+    a, a:visited
+      color: $white
+    a:hover
+      color: $cerise
+  li.active
+    background-color: #333
+    a
+      color: $cerise
+
+nav
+  li
+    a, a:visited
+      color: $black
+    a:hover
+      color: $cerise
+  li.selected
+    a
+      border-bottom: 1px solid $cerise
+
+p.session-info a, p.session-info:visited
+  color: white
+  border-bottom: 0
+
+p.session-info a:hover
+  color: #e2007f
+
+footer.main
+  p
+    color: #666
+    a, a:visited
+      color: #333
+
+body
+  background-color: #eee
+  
+  #root
+    background-color: white
+    
+a, a:visited
+  color: black
+  text-decoration: none
+  border-bottom: 1px dotted black
+a:hover
+  border-bottom: 1px solid black
+  color: $cerise
+
+p.session-info
+  color: white
+  float: right
+  span.person
+    color: #ccc
+  a
+    margin-left: 1em

@@ -1,0 +1,109 @@
+@import 'partials/colors'
+@import 'partials/structure'
+
+/* Typography presets
+ * ------------------
+ */
+ 
+.gigantic
+  font-size: 105px
+  line-height: 120px
+  letter-spacing: -2px
+
+.huge, h1
+  font-size: 60px
+  line-height: 64px
+  letter-spacing: -2px
+
+.large, h2
+  font-size: 42px
+  line-height: 48px
+  letter-spacing: -1px
+
+.big, h3
+  font-size: 26px
+  line-height: 36px
+
+.normal, body
+  font: 16px/1.5 Helvetica, Arial, sans-serif
+
+.small, small
+  font-size: 13px
+  line-height: 18px
+
+nav#main_menu
+  border-top: 1px solid black
+  overflow: auto
+
+section#content
+  h1
+    font-size: 42px
+
+table.datatable
+  border-collapse: collapse
+  tr
+    td
+      padding: 0 5px
+  thead
+    background-color: #eee
+    tr
+      th
+        border-spacing: 0px
+        padding: 0 5px
+        text-align: left
+        
+  tbody
+    tr
+      td:last-child *
+        display: inline
+  tfoot
+    tr
+      td
+        border-top: 1px solid #ccc
+
+fieldset
+  border-top: 1px solid black
+  /* float: left */
+  legend
+    text-align: left
+
+form.formtastic 
+  fieldset
+    float: left
+  fieldset.purchase_items
+    border-left: 1px solid black
+  fieldset.buttons
+    clear: both
+textarea
+  width: 200px
+  height: 100px
+
+.clearfix:after
+  content: "."
+  display: block
+  height: 0
+  clear: both
+  visibility: hidden
+
+h1 a, h1 a:hover, h1 a:visited
+  border: 0px
+
+.flash 
+  margin: 0 0 8px
+  padding: 4px 7px
+  border: 1px solid #999
+  color: #000
+  background: #ddd
+
+  .error 
+    border-color: #900
+    background-color: #f99
+  
+  .warning 
+    border-color: #990
+    background-color: #ff9
+  
+  .notice 
+    border-color: #090
+    background-color: #bfb
+  

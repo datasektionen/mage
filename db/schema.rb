@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20110628223702) do
 
   create_table "users", :force => true do |t|
     t.string   "ugid",              :null => false
+    t.string   "login",             :null => false
     t.string   "first_name",        :null => false
     t.string   "last_name",         :null => false
     t.string   "email",             :null => false

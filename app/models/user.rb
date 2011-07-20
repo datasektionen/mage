@@ -2,13 +2,14 @@ class User < ActiveRecord::Base
   devise :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  #attr_accessible :email, :password, :password_confirmation, :remember_me
 
   validates_presence_of :first_name, :last_name, :email, :login, :ugid
 
   has_friendly_id :login
 
   has_one :default_serie
+
 
   # String representation of a user.
   # Basically the same as the cn column in the LDAP server, that is:
@@ -65,13 +66,13 @@ class User < ActiveRecord::Base
                           :base => Mage::Application.settings["ldap_basedn"], 
                           :port => Mage::Application.settings["ldap_port"])
     
-    ldap.search(:filter => filter) do |user|
+    ldap.search(:filter => filter) do |u|
       user = new()
-      user.first_name = user.givenName.first
-      user.last_name = user.sn.first
-      user.login = user.ugUsername.first
-      user.ugid = user.ugkthid.first
-      user.email = user.mail.first
+      user.first_name = u.givenName.first
+      user.last_name = u.sn.first
+      user.login = u.ugUsername.first
+      user.ugid = u.ugkthid.first
+      user.email = u.mail.first
       return user
     end
     return nil

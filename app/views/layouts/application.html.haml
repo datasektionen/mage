@@ -7,6 +7,11 @@
     %meta{:name=>"author", :href=>"http://#{request.host}/humans.txt"}
     %meta{:name=>"description",:content=>""}
 
+    = javascript_include_tag 'rails'
+    = stylesheet_link_tag 'less'
+    = stylesheet_link_tag 'screen'
+    = stylesheet_link_tag 'sticky'
+    = stylesheet_link_tag 'jquery-ui.css'
     = stylesheet_link_tag 'screen'
     /[if lt IE 9]
       = javascript_include_tag 'http://html5shiv.googlecode.com/svn/trunk/html5.js'
@@ -16,27 +21,29 @@
 
     = csrf_meta_tag
   %body
-    #main
+    #root
+      = render :partial => 'menus/session'
+      = render :partial => 'menus/apps'
       .header
-        = render :partial => "partials/user_box"
         = top_navigation_link 'accounting', "Bokföring", @menu
         = top_navigation_link 'reports', "Rapporter", @menu
         = top_navigation_link 'administration', "Administrera", @menu
-
-       - @menu = "main" if !@menu.present?
-       = render :partial=>"menus/#{@menu}" # Render submenu
-        .clear
+       
+      - @menu = "main" if !@menu.present?
+      = render :partial=>"menus/#{@menu}" # Render submenu
+      .clear
       #page
         .body
           .content
             - if flash[:notice]
-              %div.notice
+              %div.flash.notice
                 = flash[:notice]
             - if flash[:error]
-              %div.error
+              %div.flash.error
                 = flash[:error]
 
             = yield
         .clear
         .footer
-          = footer_content
+          :textile
+            Kontakta "kassören":mailto:kassor@d.kth.se vid frågor. Skapad av "Andreas Tarandi":http://www.datasektionen.se/people/taran 2011. För att rapportera eventuella buggar, klicka "här":https://github.com/datasektionen/mage/issues/new.

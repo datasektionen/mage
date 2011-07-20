@@ -1,0 +1,20 @@
+html {
+  height: 100%; }
+  html body {
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto; }
+  html div#root {
+    height: 100%;
+    padding: 0px;
+    overflow: auto; }
+    html div#root section#content {
+      padding-bottom: 40px; }
+  html footer.main {
+    height: 40px;
+    display: block;
+    margin-top: -41px; }
+
+body > div#root {
+  min-height: 100%;
+  height: auto; }
