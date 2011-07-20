@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  kthid: 1
+  name: MyString
+  admin: false
+  default_serie_id: 1
+
+two:
+  kthid: 1
+  name: MyString
+  admin: false
+  default_serie_id: 1

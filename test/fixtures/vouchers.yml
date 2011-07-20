@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  number: 1
+  serie_id: 1
+  arrangement_id: 1
+  organ_id: 1
+  accounting_date: 2011-06-29
+  created_by: 1
+  activity_year: 1
+  corrects: 1
+
+two:
+  number: 1
+  serie_id: 1
+  arrangement_id: 1
+  organ_id: 1
+  accounting_date: 2011-06-29
+  created_by: 1
+  activity_year: 1
+  corrects: 1

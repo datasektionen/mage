@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  voucher_id: 1
+  account_id: 1
+  sum: 9.99
+  canceled: false
+  changed_by: 1
+
+two:
+  voucher_id: 1
+  account_id: 1
+  sum: 9.99
+  canceled: false
+  changed_by: 1
