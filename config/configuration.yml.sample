@@ -1,0 +1,14 @@
+common: 
+  ldap_basedn: ou=Addressbook,dc=kth,dc=se
+  default_host: "www.d.kth.se/staging/cashflow"
+
+production: &production
+  ldap_host: ldap.sys.kth.se
+  ldap_port: 389
+
+development: &development
+  ldap_host: localhost
+  ldap_port: 9999
+
+test:
+  <<: *development

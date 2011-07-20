@@ -1,7 +1,7 @@
-class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def new
-    redirect_to person_omniauth_authorize_path(:cas)
+    redirect_to user_omniauth_authorize_path(:cas)
   end
 
   def cas
