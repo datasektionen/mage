@@ -97,6 +97,8 @@ GEM
     responders (0.6.4)
     rubyntlm (0.1.1)
     sass (3.1.4)
+    simple-navigation (3.3.4)
+      activesupport (>= 2.3.2)
     simple_form (1.4.2)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
@@ -124,4 +126,5 @@ DEPENDENCIES
   oa-enterprise (~> 0.2.0)
   rails (= 3.0.9)
   sass
+  simple-navigation
   simple_form

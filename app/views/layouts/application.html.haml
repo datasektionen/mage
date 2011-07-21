@@ -12,7 +12,6 @@
     = stylesheet_link_tag 'screen'
     = stylesheet_link_tag 'sticky'
     = stylesheet_link_tag 'jquery-ui.css'
-    = stylesheet_link_tag 'screen'
     /[if lt IE 9]
       = javascript_include_tag 'http://html5shiv.googlecode.com/svn/trunk/html5.js'
     = javascript_include_tag "jquery/jquery.min.js"
@@ -24,14 +23,12 @@
     #root
       = render :partial => 'menus/session'
       = render :partial => 'menus/apps'
-      .header
-        = top_navigation_link 'accounting', "Bokföring", @menu
-        = top_navigation_link 'reports', "Rapporter", @menu
-        = top_navigation_link 'administration', "Administrera", @menu
-       
-      - @menu = "main" if !@menu.present?
-      = render :partial=>"menus/#{@menu}" # Render submenu
-      .clear
+      .main_menu
+        - if user_signed_in?
+          = render_navigation(:level=>1)
+        .clear
+      .sub_menu
+        = render_navigation(:level=>2)
       #page
         .body
           .content

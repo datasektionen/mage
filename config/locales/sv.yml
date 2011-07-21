@@ -153,7 +153,7 @@
       #   user: "Dude"
       # will translate User model name to "Dude"
     models:
-      account: "Bankkonto"
+      account: "Konto"
       activity_year: "Verksamhetsår"
       arrangement: "Arrangemang"
       journal: "Journal"
@@ -242,10 +242,12 @@
     users: "anvandare"
     journal: "journal"
     vouchers: "verifikat"
+    accounting: "bokfora"
   path_names:
     new: "ny"
     edit: "redigera"
   routes:
+    accounting: bokfora
     #purchases:
     #  path_names:
     #    new: "nytt"

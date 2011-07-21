@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110628223702) do
+ActiveRecord::Schema.define(:version => 20110721103243) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "number"
@@ -49,19 +49,33 @@ ActiveRecord::Schema.define(:version => 20110628223702) do
     t.string   "letter"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "default_organ_id"
   end
 
-  create_table "series_organs", :force => true do |t|
-    t.integer "serie_id",                    :null => false
-    t.integer "organ_id",                    :null => false
-    t.boolean "default",  :default => false, :null => false
+  create_table "series_organs", :id => false, :force => true do |t|
+    t.integer "serie_id", :null => false
+    t.integer "organ_id", :null => false
   end
+
+  add_index "series_organs", ["organ_id"], :name => "index_series_organs_on_organ_id"
+  add_index "series_organs", ["serie_id"], :name => "index_series_organs_on_serie_id"
 
   create_table "tags", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "user_accesses", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "serie_id"
+    t.integer  "granted_by_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_accesses", ["serie_id"], :name => "index_user_accesses_on_serie_id"
+  add_index "user_accesses", ["user_id"], :name => "index_user_accesses_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "ugid",              :null => false
@@ -87,11 +101,6 @@ ActiveRecord::Schema.define(:version => 20110628223702) do
     t.datetime "updated_at"
   end
 
-  create_table "voucher_tags", :id => false, :force => true do |t|
-    t.integer "voucher_id"
-    t.integer "tag_id"
-  end
-
   create_table "vouchers", :force => true do |t|
     t.integer  "number"
     t.integer  "serie_id"
@@ -103,5 +112,13 @@ ActiveRecord::Schema.define(:version => 20110628223702) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "vouchers_tags", :id => false, :force => true do |t|
+    t.integer "voucher_id"
+    t.integer "tag_id"
+  end
+
+  add_index "vouchers_tags", ["tag_id"], :name => "index_vouchers_tags_on_tag_id"
+  add_index "vouchers_tags", ["voucher_id"], :name => "index_vouchers_tags_on_voucher_id"
 
 end

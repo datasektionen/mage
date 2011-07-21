@@ -97,6 +97,14 @@ dl dt {
   clear: left;
   width: 150px; }
 
+#main_menu ul li {
+  display: block;
+  width: 70px;
+  height: 50px;
+  border: 1px solid black; }
+  #main_menu ul li a {
+    text-decoration: none; }
+
 /* Typography presets
  * ------------------
  */
