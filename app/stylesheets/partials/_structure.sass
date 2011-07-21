@@ -1,8 +1,19 @@
+#root
+  min-width: 800px
+  margin: 0px 50px
+
+
 body
+  h1.title
+    display: inline
+    float: left
+    margin: 5px 50px 5px 5px
   header.main
     border-bottom: 1px solid black
+    padding: 10px 10px 10px 10px
+    height: 70px
   footer.main
-    width: 100%
+    margin: 0px 50px
     border-top: 1px solid black
     p
       font-size: 75%
@@ -10,10 +21,11 @@ body
       padding: 0 5px 0
 
 nav#apps
-  /* width: 100% */
+  width: 100% 
   background-color: black
   color: white
-  
+  ul
+    margin: 0px
 
 nav.horizontal
   ul
@@ -31,9 +43,6 @@ body
     article
       text-align: justify
 
-.session-change
-  float: right
-  padding-right: 2px
 
 .money
   text-align: right
@@ -45,3 +54,11 @@ dl
     float: left
     clear: left
     width: 150px
+
+
+p.session-info
+  margin: 0px 0px
+  float: right
+
+.session-change
+  padding-right: 2px

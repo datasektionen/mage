@@ -14,11 +14,11 @@ nav#apps li.active {
   nav#apps li.active a {
     color: #e2007f; }
 
-nav li a, nav li a:visited {
+.menu li a, .menu li a:visited {
   color: black; }
-nav li a:hover {
+.menu li a:hover {
   color: #e2007f; }
-nav li.selected a {
+.menu li.selected a {
   border-bottom: 1px solid #e2007f; }
 
 p.session-info a, p.session-info:visited {
@@ -48,17 +48,26 @@ a:hover {
   color: #e2007f; }
 
 p.session-info {
-  color: white;
-  float: right; }
+  color: white; }
   p.session-info span.person {
     color: #cccccc; }
   p.session-info a {
     margin-left: 1em; }
 
+#root {
+  min-width: 800px;
+  margin: 0px 50px; }
+
+body h1.title {
+  display: inline;
+  float: left;
+  margin: 5px 50px 5px 5px; }
 body header.main {
-  border-bottom: 1px solid black; }
+  border-bottom: 1px solid black;
+  padding: 10px 10px 10px 10px;
+  height: 70px; }
 body footer.main {
-  width: 100%;
+  margin: 0px 50px;
   border-top: 1px solid black; }
   body footer.main p {
     font-size: 75%;
@@ -66,9 +75,11 @@ body footer.main {
     padding: 0 5px 0; }
 
 nav#apps {
-  /* width: 100% */
+  width: 100%;
   background-color: black;
   color: white; }
+  nav#apps ul {
+    margin: 0px; }
 
 nav.horizontal ul {
   list-style: none;
@@ -83,10 +94,6 @@ body section#content {
   body section#content article {
     text-align: justify; }
 
-.session-change {
-  float: right;
-  padding-right: 2px; }
-
 .money {
   text-align: right; }
 
@@ -97,13 +104,29 @@ dl dt {
   clear: left;
   width: 150px; }
 
-#main_menu ul li {
-  display: block;
-  width: 70px;
-  height: 50px;
-  border: 1px solid black; }
-  #main_menu ul li a {
-    text-decoration: none; }
+p.session-info {
+  margin: 0px 0px;
+  float: right; }
+
+.session-change {
+  padding-right: 2px; }
+
+#main_menu {
+  margin: 20px;
+  display: inline; }
+  #main_menu ul {
+    display: inline; }
+    #main_menu ul li {
+      float: left;
+      list-style: none;
+      margin: 5px; }
+      #main_menu ul li a {
+        display: block;
+        width: 200px;
+        border: 1px solid black;
+        text-decoration: none;
+        text-align: center;
+        padding: 15px 0px; }
 
 /* Typography presets
  * ------------------
@@ -133,10 +156,6 @@ dl dt {
 .small, small {
   font-size: 13px;
   line-height: 18px; }
-
-nav#main_menu {
-  border-top: 1px solid black;
-  overflow: auto; }
 
 section#content h1 {
   font-size: 42px; }
@@ -198,3 +217,6 @@ h1 a, h1 a:hover, h1 a:visited {
   .flash .notice {
     border-color: #009900;
     background-color: #bbffbb; }
+
+.clear {
+  clear: both; }

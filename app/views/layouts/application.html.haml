@@ -1,6 +1,6 @@
 !!! 
 %html
-  %head>
+  %head
     %title= render_title
     %meta{"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}
     %meta{:name=>"author", :content=>"Andreas Tarandi"}
@@ -8,7 +8,6 @@
     %meta{:name=>"description",:content=>""}
 
     = javascript_include_tag 'rails'
-    = stylesheet_link_tag 'less'
     = stylesheet_link_tag 'screen'
     = stylesheet_link_tag 'sticky'
     = stylesheet_link_tag 'jquery-ui.css'
@@ -20,27 +19,26 @@
 
     = csrf_meta_tag
   %body
+    = render :partial => 'menus/session'
+    = render :partial => 'menus/apps'
     #root
-      = render :partial => 'menus/session'
-      = render :partial => 'menus/apps'
-      .main_menu
-        - if user_signed_in?
-          = render_navigation(:level=>1)
-        .clear
-      .sub_menu
+      %header.main
+        %h1.title= link_to "MAGE", root_url
+        #main_menu
+          - if user_signed_in?
+            = render_navigation(:level=>1)
+          .clear
+      %nav#sub_menu.horizontal
         = render_navigation(:level=>2)
-      #page
-        .body
-          .content
-            - if flash[:notice]
-              %div.flash.notice
-                = flash[:notice]
-            - if flash[:error]
-              %div.flash.error
-                = flash[:error]
+      %section.clearfix#content
+        - if flash[:notice]
+          %div.flash.notice
+            = flash[:notice]
+        - if flash[:error]
+          %div.flash.error
+            = flash[:error]
 
-            = yield
-        .clear
-        .footer
-          :textile
-            Kontakta "kassören":mailto:kassor@d.kth.se vid frågor. Skapad av "Andreas Tarandi":http://www.datasektionen.se/people/taran 2011. För att rapportera eventuella buggar, klicka "här":https://github.com/datasektionen/mage/issues/new.
+        = yield
+    %footer.main
+      :textile
+        Kontakta "kassören":mailto:kassor@d.kth.se vid frågor. Skapad av "Andreas Tarandi":http://www.datasektionen.se/people/taran 2011. För att rapportera eventuella buggar, klicka "här":https://github.com/datasektionen/mage/issues/new.
