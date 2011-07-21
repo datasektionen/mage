@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  belongs_to :default_serie, :class_name => "Serie"
+  has_many :access, :class_name=>"UserAccess"
+
   devise :omniauthable
 
   # Setup accessible (or protected) attributes for your model
@@ -8,7 +11,6 @@ class User < ActiveRecord::Base
 
   has_friendly_id :login
 
-  has_one :default_serie
 
 
   # String representation of a user.
@@ -26,10 +28,13 @@ class User < ActiveRecord::Base
     "%s %s" % [first_name, last_name]
   end
 
-  # Returns the serie set in session[:current_serie] or default_serie if it is not set
-  def serie
-    return Series.from_id(session[:current_serie]) if session[:current_serie]
-    return default_serie
+
+  def has_access_to?(serie)
+    admin? or access.any? {|a| a.serie == serie}
+  end
+
+  def admin?
+    admin
   end
 
   # search KTH's LDAP server for a user.

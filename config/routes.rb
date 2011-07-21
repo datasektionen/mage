@@ -9,6 +9,18 @@ Mage::Application.routes.draw do
     resources :journals
     resources :series
     resources :users
+    resources :reports
+    resources :vouchers, :except => :destroy do 
+      collection do
+        get :search
+        post :search
+      end
+    end
+    
+    resources :administration, :only => [:index], :controller => "administration"
+    resources :accounting, :only => [:index], :controller => "accounting"
+
+    resources :bank_accounting, :only => [:index, :update, :show, :create, :destroy], :controller => :bank_accounting
 
     root :to => "welcome#index"
   end

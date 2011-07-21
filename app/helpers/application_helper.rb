@@ -23,11 +23,11 @@ module ApplicationHelper
     end
   end
 
-  def top_navigation_link(name, text, cur_menu)
-    css_class = (name == cur_menu) ? 'active' : ''
+  def top_navigation_link(menu_name, path, text, cur_menu)
+    css_class = (menu_name == cur_menu) ? 'active' : ''
     
     content_tag(:li, :class => css_class) do
-      link_to text, "/#{name}"
+      link_to text, path
     end
   end
 

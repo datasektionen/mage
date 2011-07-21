@@ -1,6 +1,7 @@
 $black: #000
 $white: #fff
 $cerise: #e2007f
+$light_grey: #d7d7d7
 nav
   a
     text-decoration: none
@@ -21,7 +22,7 @@ nav#apps
     a
       color: $cerise
 
-nav
+.menu
   li
     a, a:visited
       color: $black
@@ -30,6 +31,8 @@ nav
   li.selected
     a
       border-bottom: 1px solid $cerise
+
+
 
 p.session-info a, p.session-info:visited
   color: white
@@ -60,7 +63,6 @@ a:hover
 
 p.session-info
   color: white
-  float: right
   span.person
     color: #ccc
   a

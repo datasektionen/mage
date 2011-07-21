@@ -134,6 +134,8 @@ GEM
       rspec (~> 2.6.0)
     rubyntlm (0.1.1)
     sass (3.1.4)
+    simple-navigation (3.3.4)
+      activesupport (>= 2.3.2)
     simple_form (1.4.2)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
@@ -164,5 +166,6 @@ DEPENDENCIES
   rails (~> 3.0.9)
   rspec-rails
   sass
+  simple-navigation
   simple_form
   sqlite3

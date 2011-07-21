@@ -18,6 +18,7 @@ gem 'i18n_routing'
 gem 'friendly_id'
 gem 'net-ldap'
 gem 'haml'
+gem 'simple-navigation'
 
 group :production do
   gem 'mysql2', '~> 0.2.6'

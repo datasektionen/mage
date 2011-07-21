@@ -1,4 +1,5 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  skip_before_filter :authenticate_person!
 
   def new
     redirect_to user_omniauth_authorize_path(:cas)
@@ -7,10 +8,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def cas
     @user= User.find_for_cas_oath(env["omniauth.auth"], current_user)
     if @user.persisted?
-      flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "CAS"
       sign_in_and_redirect @user, :event => :authentication
     else
-      redirect_to root_url
+      redirect_to root_path
     end
   end
 
