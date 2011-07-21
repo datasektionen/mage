@@ -17,7 +17,11 @@ Mage::Application.routes.draw do
     end
     
     resources :administration, :only => [:index], :controller => "administration"
-    resources :accounting, :only => [:index], :controller => "accounting"
+    resources :accounting, :only => [:index], :controller => "accounting" do
+      collection do
+        post :index
+      end
+    end
 
     resources :bank_accounting, :only => [:index, :update, :show, :create, :destroy], :controller => :bank_accounting
 

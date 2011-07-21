@@ -3,16 +3,17 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
   before_filter :set_globals
 
+  helper_method :current_activity_year, :current_serie
   
   # Returns the serie set in session[:current_serie] or default_serie if it is not set
   def current_serie
-    return Series.from_id(session[:current_serie]) if session[:current_serie]
+    return Serie.find(session[:current_serie]) if session[:current_serie]
     return current_user.default_serie if current_user.default_serie
     return Serie.accessible_by(current_user).first
   end
 
   def current_activity_year
-    return ActivityYear.from_id(session[:current_activity_year]) if session[:current_activity_year]
+    return ActivityYear.find(session[:current_activity_year]) if session[:current_activity_year]
     return Time.now.year
   end
 

@@ -10,7 +10,10 @@ class Voucher < ActiveRecord::Base
 
   validates_uniqueness_of :number, :scope => [:serie_id, :activity_year_id]
 
-  scope :recent, order("vouchers.created_at DESC")
+  scope :recent, lambda {|s| 
+    where("serie_id = ?", s.id).
+    order("created_at DESC")
+  }
 
   def corrected?
     not corrected_by.nil?

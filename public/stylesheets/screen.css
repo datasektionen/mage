@@ -111,12 +111,12 @@ p.session-info {
 .session-change {
   padding-right: 2px; }
 
-#selectors form {
-  display: inline; }
-  #selectors form select {
-    padding: 4px;
-    background-color: white;
-    border: 1px solid black; }
+#selectors form select, #selectors form input {
+  padding: 4px;
+  background-color: white;
+  border: 1px solid black; }
+#selectors form input:hover {
+  background-color: #eeeeee; }
 
 #main_menu {
   margin: 20px;
