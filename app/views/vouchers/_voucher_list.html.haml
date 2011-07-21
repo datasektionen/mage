@@ -1,0 +1,6 @@
+.voucher_list
+  %ul
+    - vouchers.each do |v|
+      %li
+        = link_to "#{v.pretty_number} #{v.title}", voucher_path(v)
+    

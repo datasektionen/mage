@@ -12,8 +12,7 @@ Mage::Application.routes.draw do
     resources :reports
     resources :vouchers, :except => :destroy do 
       collection do
-        get :search
-        post :search
+        post :index
       end
     end
     

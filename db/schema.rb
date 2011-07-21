@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110721103243) do
+ActiveRecord::Schema.define(:version => 20110721140056) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "number"
@@ -66,6 +66,14 @@ ActiveRecord::Schema.define(:version => 20110721103243) do
     t.datetime "updated_at"
   end
 
+  create_table "tags_vouchers", :id => false, :force => true do |t|
+    t.integer "voucher_id"
+    t.integer "tag_id"
+  end
+
+  add_index "tags_vouchers", ["tag_id"], :name => "index_vouchers_tags_on_tag_id"
+  add_index "tags_vouchers", ["voucher_id"], :name => "index_vouchers_tags_on_voucher_id"
+
   create_table "user_accesses", :force => true do |t|
     t.integer  "user_id"
     t.integer  "serie_id"
@@ -107,18 +115,11 @@ ActiveRecord::Schema.define(:version => 20110721103243) do
     t.integer  "organ_id"
     t.datetime "accounting_date"
     t.integer  "created_by"
-    t.integer  "activity_year"
+    t.integer  "activity_year_id"
     t.integer  "corrects"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
   end
-
-  create_table "vouchers_tags", :id => false, :force => true do |t|
-    t.integer "voucher_id"
-    t.integer "tag_id"
-  end
-
-  add_index "vouchers_tags", ["tag_id"], :name => "index_vouchers_tags_on_tag_id"
-  add_index "vouchers_tags", ["voucher_id"], :name => "index_vouchers_tags_on_voucher_id"
 
 end

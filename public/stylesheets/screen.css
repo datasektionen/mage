@@ -111,6 +111,13 @@ p.session-info {
 .session-change {
   padding-right: 2px; }
 
+#selectors form {
+  display: inline; }
+  #selectors form select {
+    padding: 4px;
+    background-color: white;
+    border: 1px solid black; }
+
 #main_menu {
   margin: 20px;
   display: inline; }

@@ -47,7 +47,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :accounting, 'Bokför', accounting_index_path do |accounting|
       accounting.item :new_voucher, "Nytt verifikat", new_voucher_path
       accounting.item :bank_accounting, "Bankhändelser", bank_accounting_index_path
-      accounting.item :search_vouchers, "Sök verifikat", search_vouchers_path
+      accounting.item :search_vouchers, "Sök verifikat", vouchers_path
     end
 
 

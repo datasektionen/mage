@@ -28,9 +28,8 @@ class User < ActiveRecord::Base
     "%s %s" % [first_name, last_name]
   end
 
-
   def has_access_to?(serie)
-    admin? or access.any? {|a| a.serie == serie}
+   admin? or access.any? {|a| a.serie == serie}
   end
 
   def admin?

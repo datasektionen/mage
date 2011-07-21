@@ -1,12 +1,30 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  #before_filter :authenticate_user!
+  before_filter :authenticate_user!
+  before_filter :set_globals
 
   
   # Returns the serie set in session[:current_serie] or default_serie if it is not set
   def current_serie
     return Series.from_id(session[:current_serie]) if session[:current_serie]
-    return current_user.default_serie
+    return current_user.default_serie if current_user.default_serie
+    return Serie.accessible_by(current_user).first
+  end
+
+  def current_activity_year
+    return ActivityYear.from_id(session[:current_activity_year]) if session[:current_activity_year]
+    return Time.now.year
+  end
+
+  # Sets global session values (as specified above)
+  def set_globals
+    if params[:current_serie]
+      session[:current_serie] = params[:current_serie]
+    end
+
+    if params[:current_activity_year]
+      session[:current_activity_year] = params[:current_activity_year]
+    end
   end
 
   private

@@ -5,8 +5,14 @@ class Serie < ActiveRecord::Base
   belongs_to :default_organ, :class_name => "Organ"
 
   scope :accessible_by, lambda {|user|
-    joins(:user_accesses).
-    where("user_accessess.user_id = ? AND user_accesses.serie_id = ?", user.id, self.id)
+    if !user.admin?
+      joins(:user_accesses).
+      where("user_accesses.user_id = ? AND user_accesses.serie_id = ?", user.id, self.id)
+    end
   }
+
+  def title
+    return "#{letter} (#{name})"
+  end
 
 end

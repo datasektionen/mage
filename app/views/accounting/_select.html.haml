@@ -1,0 +1,7 @@
+#selectors
+  = form_tag :method=>:post do
+    = collection_select(self,:current_activity_year, ActivityYear.order("year DESC"), :id, :year)
+
+  = form_tag :method=>:post do
+    = collection_select(self,:current_serie, Serie.accessible_by(current_user), :id, :title)
+

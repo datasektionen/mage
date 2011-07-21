@@ -1,3 +1,6 @@
-= form_tag :method=>:post
-  
-  
+= render :partial => "select"
+- if @vouchers
+  %h4 Senaste verifikaten
+  = render :partial => "vouchers/voucher_list", :locals => { :vouchers => @vouchers }
+- else
+  %strong Du har inte rättigheter att visa den valda serien
