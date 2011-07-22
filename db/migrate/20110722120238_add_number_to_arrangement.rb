@@ -1,12 +1,9 @@
 class AddNumberToArrangement < ActiveRecord::Migration
   def self.up
-    add_column :arrangement, :number, :integer, :null=>false
-
-    add_index :arrangement, :number
+    add_column :arrangements, :number, :integer, :null=>false
   end
 
   def self.down
-    remove_index :arrangement, :number
-    remove_column :arrangement, :number
+    remove_index :arrangements, :number
   end
 end
