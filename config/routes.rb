@@ -15,6 +15,12 @@ Mage::Application.routes.draw do
         post :search
       end
     end
+
+    resources :accounts do
+      collection do
+        get :search, :defaults => {:format => :json}
+      end
+    end
     
     resources :administration, :only => [:index], :controller => "administration"
     resources :accounting, :only => [:index], :controller => "accounting" do

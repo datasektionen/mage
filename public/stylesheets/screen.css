@@ -161,6 +161,18 @@ label {
   display: block;
   font-size: 0.7em; }
 
+.autocomplete {
+  font-size: 0.6em; }
+
+.ui-menu .ui-menu-item a {
+  line-height: 1;
+  padding: 1px 1px; }
+
+#voucher_info {
+  font-style: italic;
+  font-size: 0.7em;
+  margin: 0px 5px 5px 8px; }
+
 /* Typography presets
  * ------------------
  */
@@ -181,7 +193,11 @@ label {
 
 .big, h3 {
   font-size: 26px;
-  line-height: 36px; }
+  line-height: 36px;
+  margin: 5px; }
+
+h4 {
+  margin: 5px; }
 
 .normal, body {
   font: 16px/1.5 Helvetica, Arial, sans-serif; }

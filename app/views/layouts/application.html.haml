@@ -8,13 +8,13 @@
     %meta{:name=>"author", :href=>"http://#{request.host}/humans.txt"}
     %meta{:name=>"description",:content=>""}
 
-    = javascript_include_tag 'rails'
-    = stylesheet_link_tag 'screen'
-    = stylesheet_link_tag 'sticky'
     = stylesheet_link_tag 'jquery-ui.css'
+    = stylesheet_link_tag 'sticky'
+    = stylesheet_link_tag 'screen'
     /[if lt IE 9]
       = javascript_include_tag 'http://html5shiv.googlecode.com/svn/trunk/html5.js'
     = javascript_include_tag "jquery/jquery.min.js"
+    = javascript_include_tag 'jquery_ujs.js'
 
     = yield(:head)
 

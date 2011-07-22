@@ -1,0 +1,4 @@
+The jquery custom contains:
+Core
+Widget
+Position

@@ -13,12 +13,12 @@ gem 'simple_form'
 gem 'devise'
 gem 'oa-enterprise', :git => 'https://github.com/intridea/omniauth.git'
 gem 'oa-oauth', :git => 'https://github.com/intridea/omniauth.git'
-gem 'jquery-rails'
 gem 'i18n_routing'
 gem 'friendly_id'
 gem 'net-ldap'
 gem 'haml'
 gem 'simple-navigation'
+gem 'jquery-rails', '>= 1.0.12'
 
 group :production do
   gem 'mysql2', '~> 0.2.6'
