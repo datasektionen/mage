@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110722112255) do
+ActiveRecord::Schema.define(:version => 20110722120238) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "number"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20110722112255) do
     t.integer  "organ_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "number",     :null => false
   end
 
   create_table "journal", :force => true do |t|
