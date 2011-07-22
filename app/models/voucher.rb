@@ -8,6 +8,8 @@ class Voucher < ActiveRecord::Base
   has_one :corrected_by, :class_name => "Voucher", :foreign_key => :corrects
   belongs_to :corrects, :class_name => "Voucher", :foreign_key => :corrects
 
+  before_validation :set_number
+
   validates_uniqueness_of :number, :scope => [:serie_id, :activity_year_id]
 
   scope :recent, lambda {|s| 
@@ -21,5 +23,20 @@ class Voucher < ActiveRecord::Base
 
   def pretty_number
     "#{serie.letter}#{number}"
+  end
+
+private
+  def set_number
+    if number.nil?
+      last_voucher = Voucher.
+                      where(:activity_year_id => activity_year_id, :serie_id => serie_id).
+                      order("number DESC").
+                      first(:select=>:number)
+      if last_voucher
+        self.number = last_voucher.number+1
+      else
+        self.number = 1
+      end
+    end
   end
 end

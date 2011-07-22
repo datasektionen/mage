@@ -1,0 +1,11 @@
+/* TEAM */
+	Andreas Tarandi
+	Contact: taran [at] kth [dot] se
+	Twitter: @Torandi
+	From: Stockholm, Sweden
+
+/* SITE */
+	Doctype: HTML5 with CSS3
+	Language: Ruby
+	Framework: Ruby on Rails
+	Tools: Vim 

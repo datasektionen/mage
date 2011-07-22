@@ -3,8 +3,9 @@
 = simple_form_for @voucher do |f|
   #voucher_head_form
     = f.input :title, :size=>20
-    = f.association :organ, :prompt => "Ingen nämnd", :default => current_serie.default_organ
+    = f.association :organ, :include_blank => false
     = f.input :accounting_date, :as => :date, :add_month_numbers=>true
+    - if @voucher.number
+      = f.input :number
     .clear
-    = f.button :submit
 
