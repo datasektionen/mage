@@ -1,0 +1,39 @@
+- # Partial for creating voucher rows. Should be inside a form
+- javascript %w(jquery/jquery.form.js jquery/jquery.ui.custom.min.js)
+- javascript %w(voucher.js)
+
+
+
+%h4 Lägg till rad
+= f.fields_for :add_row do |r|
+  %p.input
+    = r.label "Konto", :required => false
+    = r.text_field :account, :size=>5
+  %p.input
+    = r.label "Arrangemang", :required => false
+    = r.select :arrangment, options_from_collection_for_select(@voucher.organ.arrangements,:id, :to_s), {}, :disabled=>true
+  %p.input.money
+    = r.label "Summa (kr)", :required => false
+    = r.text_field :sum, :size => 20
+  .clear
+  %p#voucher_info
+  
+  %hr
+  %table#voucher_rows
+    %thead
+      %tr
+        %th.account_number Konto
+        %th.account_name Kontonamn
+        %th.arrangement Arrangemang
+        %th.debet Debet
+        %th.kredit Kredit
+    %tbody
+
+%hr
+= f.submit
+      
+- ActiveRecord::Base.include_root_in_json = false
+/ Below is data for javascript
+:javascript
+  var voucher_id = #{@voucher.id ? @voucher.id : -1}
+  var accounts = #{Account.order("number").select([:number,:name,:account_type]).to_json }

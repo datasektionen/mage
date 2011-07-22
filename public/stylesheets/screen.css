@@ -173,6 +173,38 @@ label {
   font-size: 0.7em;
   margin: 0px 5px 5px 8px; }
 
+table * {
+  font-size: 0.95em; }
+
+table {
+  border-spacing: 0px;
+  margin-left: 5px; }
+
+thead, tfoot {
+  background-color: #dddddd; }
+
+th {
+  text-align: left; }
+
+thead th {
+  border-bottom: 1px solid black; }
+
+tfoot th {
+  border-top: 1px solid black; }
+
+tr td, tr th {
+  border-right: 1px solid black;
+  padding: 1px 3px; }
+
+tr td:last-child, tr th:last-child {
+  border-right: none; }
+
+tr:nth-child(odd) {
+  background-color: #eeeeee; }
+
+tr:nth-child(even) {
+  background-color: white; }
+
 /* Typography presets
  * ------------------
  */

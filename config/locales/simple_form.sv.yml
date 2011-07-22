@@ -12,7 +12,7 @@ sv:
       default_message: "Kunde inte spara."
     # Labels and hints examples
     labels:
-      accounting_date: "Bokföringsdatum"
+      accounting_date: "Verifikatdatum"
       organ: "Nämnd"
       voucher:
          title: 'Beskriving'
