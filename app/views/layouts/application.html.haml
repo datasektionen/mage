@@ -1,4 +1,5 @@
 !!! 
+- render :partial => "layouts/#{controller.sub_layout}"
 %html
   %head
     %title= render_title
@@ -28,8 +29,11 @@
           - if user_signed_in?
             = render_navigation(:level=>1)
           .clear
-      %nav#sub_menu.horizontal
-        = render_navigation(:level=>2)
+      #sub
+        = yield(:serie)
+        %nav#sub_menu.horizontal
+          = render_navigation(:level=>2)
+        .clear
       %section.clearfix#content
         - if flash[:notice]
           %div.flash.notice
@@ -38,7 +42,7 @@
           %div.flash.error
             = flash[:error]
 
-        = yield
+        = yield(:content)
     %footer.main
       :textile
         Kontakta "kassören":mailto:kassor@d.kth.se vid frågor. Skapad av "Andreas Tarandi":http://www.datasektionen.se/people/taran 2011. För att rapportera eventuella buggar, klicka "här":https://github.com/datasektionen/mage/issues/new.

@@ -1,9 +1,10 @@
-class VouchersController < ApplicationController
+class VouchersController < InheritedResources::Base
+
   def index
     #search
   end
 
-  def new
-
+  def sub_layout
+    "accounting"
   end
 end

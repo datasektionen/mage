@@ -1,0 +1,9 @@
+- content_for :serie do
+  #serie
+    %strong Vald serie: 
+    %strong
+      = current_activity_year
+      ! - 
+      = current_serie
+- content_for :content do
+  = yield

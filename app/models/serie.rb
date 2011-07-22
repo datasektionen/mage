@@ -11,7 +11,7 @@ class Serie < ActiveRecord::Base
     end
   }
 
-  def title
+  def to_s
     return "#{letter} (#{name})"
   end
 

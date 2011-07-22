@@ -1,4 +1,5 @@
-= render :partial => "select"
+= render :partial => "accounting/select"
+
 - if @vouchers
   %h4 Senaste verifikaten
   = render :partial => "vouchers/voucher_list", :locals => { :vouchers => @vouchers }

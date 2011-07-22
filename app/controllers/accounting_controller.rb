@@ -7,4 +7,8 @@ class AccountingController < ApplicationController
       @vouchers = nil
     end
   end
+
+  def sub_layout
+    "accounting"
+  end
 end

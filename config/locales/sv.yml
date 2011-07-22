@@ -220,23 +220,11 @@
 
 # models
 
-  formtastic:
-    actions:
-      commit: "Spara %{model}"
-  
+
   edit: "Redigera"
   show: "Visa"
   destroy: "Ta bort"
   are_you_sure: "Är du säker?"
-  workflow_state:
-    new:        "Ny"
-    confirmed:  "Bekräftad"
-    edited:     "Ändrad"
-    paid:       "Utbetalad"
-    bookkept:   "Bokförd"
-    cancelled:  "Avslagen"
-    finalized:  "Avslutad"
-    anulled:    "Struken"
 
   resources: 
     users: "anvandare"
@@ -247,7 +235,14 @@
     new: "ny"
     edit: "redigera"
   routes:
-    accounting: bokfora
+    accounting: "bokfora"
+    vouchers:
+      path_names:
+        new: "nytt"
     #purchases:
     #  path_names:
     #    new: "nytt"
+  helpers:
+    submit:
+      create: "Skapa %{model}"
+      update: "Updatera %{model}"

@@ -118,6 +118,21 @@ p.session-info {
 #selectors form input:hover {
   background-color: #eeeeee; }
 
+#sub {
+  margin: 5px 10px 15px 10px;
+  border-bottom: 1px dashed black;
+  display: block;
+  height: 30px; }
+
+#serie {
+  float: left; }
+
+#sub_menu {
+  display: block;
+  float: left; }
+  #sub_menu ul {
+    margin: 0px 10px; }
+
 #main_menu {
   margin: 20px;
   display: inline; }
@@ -134,6 +149,15 @@ p.session-info {
         text-decoration: none;
         text-align: center;
         padding: 15px 0px; }
+
+p.input {
+  display: block;
+  float: left;
+  margin: 5px 5px; }
+
+label {
+  display: block;
+  font-size: 0.7em; }
 
 /* Typography presets
  * ------------------
