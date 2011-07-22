@@ -7,9 +7,4 @@ class VoucherRow < ActiveRecord::Base
   def canceled?
     return canceled
   end 
-
-  def arr
-    return Arrangement.new(:name=>"Övrigt", :number=>0, :organ=>voucher.organ) if arrangement.nil?
-    return arrangement
-  end
 end

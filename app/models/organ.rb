@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 class Organ < ActiveRecord::Base
   after_create :create_other_arr
 

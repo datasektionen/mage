@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 desc "Importerar kontoplan"
 task :import_kontoplan => :environment do 
   data = ActiveSupport::JSON.decode(File.open("kontoplan.json",'r').read)
