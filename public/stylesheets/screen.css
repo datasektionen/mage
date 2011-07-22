@@ -96,6 +96,8 @@ body section#content {
 
 .money {
   text-align: right; }
+  .money input {
+    text-align: right; }
 
 dl dt {
   font-weight: bold;
