@@ -2,7 +2,9 @@
 - javascript %w(jquery/jquery.form.js jquery/jquery.ui.custom.min.js)
 - javascript %w(voucher.js)
 
-
+- #Hidden attributes
+= f.input :serie_id, :as=>:hidden
+= f.input :activity_year_id, :as=>:hidden
 
 %h4 Lägg till rad
 = f.fields_for :add_row do |r|

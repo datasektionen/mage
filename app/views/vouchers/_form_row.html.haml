@@ -1,14 +1,14 @@
 %tr.voucher_row_form
   %td.account_number
     %span= form_row.account.number
-    = hidden_field_tag "voucher[voucher_rows][][account]", form_row.account.id
+    = hidden_field_tag "voucher[voucher_rows_attributes][][account_id]", form_row.account.id
   %td.account_name
     %span= form_row.account.name
   %td.arrangement
     %span= form_row.arrangement
-    = hidden_field_tag "voucher[voucher_rows][][arrangement]", form_row.arrangement_id
+    = hidden_field_tag "voucher[voucher_rows_attributes][][arrangement_id]", form_row.arrangement_id
   %td.debet
     %span= form_row.sum > 0 ? "#{form_row.sum} kr" : ""
-    = hidden_field_tag "voucher[voucher_rows][][sum]", form_row.sum
+    = hidden_field_tag "voucher[voucher_rows_attributes][][sum]", form_row.sum
   %td.kredit
     %span= form_row.sum < 0 ? "#{form_row.sum} kr" : ""

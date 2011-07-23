@@ -7,6 +7,15 @@ class VouchersController < InheritedResources::Base
   def new
     @voucher = Voucher.new
     @voucher.organ = current_serie.default_organ
+    @voucher.serie = current_serie
+    @voucher.activity_year_id = current_activity_year.id
+  end
+
+  def create
+    params[:voucher].delete(:add_row)
+    @voucher = Voucher.new(params[:voucher])
+    @voucher.set_number!
+    create!(:notice => "Verifikat #{@voucher.pretty_number} skapades") { new_voucher_path }
   end
 
   def sub_layout
