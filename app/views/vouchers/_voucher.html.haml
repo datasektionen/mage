@@ -11,10 +11,12 @@
     = r.text_field :account, :size=>5
   %p.input
     = r.label "Arrangemang", :required => false
-    = r.select :arrangment, options_from_collection_for_select(@voucher.organ.arrangements,:id, :to_s), {}, :disabled=>true
+    = r.select :arrangement, options_from_collection_for_select(@voucher.organ.arrangements,:id, :to_s), {}, :disabled=>true
   %p.input.money
     = r.label "Summa (kr)", :required => false
     = r.text_field :sum, :size => 20
+    %p#spinner.input{:style=>"display: none"}
+      = image_tag 'ajax-loader.gif', :class=>:spinner
   .clear
   %p#voucher_info
   
@@ -28,6 +30,11 @@
         %th.debet Debet
         %th.kredit Kredit
     %tbody
+    %tfoot
+      %tr
+        %td{:colspan=>3}
+        %td Diff:
+        %td#diff 0 kr
 
 %hr
 = f.submit
@@ -36,4 +43,7 @@
 / Below is data for javascript
 :javascript
   var voucher_id = #{@voucher.id ? @voucher.id : -1}
+  var total_sum = 0 //Total sum of voucher
   var accounts = #{Account.order("number").select([:number,:name,:account_type]).to_json }
+  var voucher_row_url = "#{rows_vouchers_path}"
+  var num_rows = #{@voucher.voucher_rows.count}

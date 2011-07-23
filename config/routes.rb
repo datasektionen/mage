@@ -13,7 +13,7 @@ Mage::Application.routes.draw do
     resources :vouchers, :except => :destroy do 
       collection do
         post :search
-        post :rows
+        get :rows, :defaults => {:format => :xml}
       end
     end
 

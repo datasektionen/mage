@@ -173,6 +173,13 @@ label {
   font-size: 0.7em;
   margin: 0px 5px 5px 8px; }
 
+.spinner {
+  margin-top: 20px; }
+
+#voucher_diff {
+  font-size: 0.8em;
+  text-align: right; }
+
 table * {
   font-size: 0.95em; }
 
@@ -199,11 +206,23 @@ tr td, tr th {
 tr td:last-child, tr th:last-child {
   border-right: none; }
 
-tr:nth-child(odd) {
+tr:nth-child(even) {
   background-color: #eeeeee; }
 
-tr:nth-child(even) {
+tr:nth-child(odd) {
   background-color: white; }
+
+thead tr {
+  background-color: #eeeeee !important; }
+
+#voucher_rows tfoot {
+  background-color: transparent; }
+  #voucher_rows tfoot td, #voucher_rows tfoot tr {
+    background-color: transparent;
+    border: none; }
+  #voucher_rows tfoot td {
+    padding-top: 10px;
+    border-top: 1px solid black; }
 
 /* Typography presets
  * ------------------

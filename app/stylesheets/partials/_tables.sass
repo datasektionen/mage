@@ -1,0 +1,46 @@
+table *
+  font-size: 0.95em
+
+table 
+  border-spacing: 0px
+  margin-left: 5px
+
+thead, tfoot 
+  background-color: #ddd
+
+th 
+  text-align: left
+
+thead th 
+  border-bottom: 1px solid black
+
+tfoot th 
+  border-top: 1px solid black
+
+tr td, tr th
+  border-right: 1px solid black
+  padding: 1px 3px
+
+tr td:last-child, tr th:last-child
+  border-right: none
+
+tr:nth-child(even)
+  background-color: #eee
+
+tr:nth-child(odd)
+  background-color: #fff
+
+thead tr
+  background-color: #eee !important
+  
+
+#voucher_rows
+  tfoot
+    background-color: transparent
+    td, tr
+      background-color: transparent
+      border: none
+    td
+      padding-top: 10px
+      border-top: 1px solid black
+  

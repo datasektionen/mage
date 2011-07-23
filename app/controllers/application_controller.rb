@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 
   def current_activity_year
     return ActivityYear.find(session[:current_activity_year]) if session[:current_activity_year]
-    return Time.now.year
+    return ActivityYear.order("year").last
   end
 
   # Sets global session values (as specified above)

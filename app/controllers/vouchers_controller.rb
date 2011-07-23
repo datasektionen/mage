@@ -15,7 +15,7 @@ class VouchersController < InheritedResources::Base
 
   # Renders rows for new and edit
   def rows
-    data = params[:voucher][:add_row]
+    data = params
     if data[:type] == "account"
       account = Account.find_by_number(data[:account])
       render :nothing=>true, :status=>400 and return if account.nil?
@@ -25,6 +25,6 @@ class VouchersController < InheritedResources::Base
     else
       render :nothing=>true, :status=>500 and return
     end
-    render :layout=>false, :partial => "form_row", :collection=>@rows and return
+    @sum = @rows.reduce(0) { |memo, r| memo+=r.sum } 
   end
 end
