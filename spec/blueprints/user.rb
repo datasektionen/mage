@@ -5,7 +5,7 @@ User.blueprint do
   last_name     { "#{sn}" }
   email         { "user-#{sn}@example.org" }
   default_serie { Serie.make }
-  initials      { "U#{SN}" }
+  initials      { "U#{sn}" }
 end
 
 User.blueprint :admin do
