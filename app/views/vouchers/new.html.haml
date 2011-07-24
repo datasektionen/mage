@@ -15,3 +15,7 @@
 
   = render :partial => "voucher", :locals=>{:f=>f}
 
+:javascript
+  $(function() {
+    $("#voucher_organ_id").change(organ_changed)
+  })

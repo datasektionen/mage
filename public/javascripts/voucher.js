@@ -195,3 +195,11 @@ function update_sum(diff) {
   total_sum += diff
   $("#diff").html(diff+" kr")
 }
+
+function organ_changed() {
+  var new_html = ""
+  $.each(arrs[parseInt($("#voucher_organ_id").val())],function(index, arr) {
+    new_html += "<option value='"+arr.id+"'>"+arr.name+" ("+arr.number+")</option>"
+  })
+  $("#voucher_add_row_arrangement").html(new_html)
+}
