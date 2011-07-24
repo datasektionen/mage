@@ -59,6 +59,7 @@ class Voucher < ActiveRecord::Base
     return voucher_rows if self.id.nil?
     return VoucherRow.find(:all,:conditions=>{:voucher_id=>self.id})
   end
+
   # Validations
 
   def check_row_delet(rows)
