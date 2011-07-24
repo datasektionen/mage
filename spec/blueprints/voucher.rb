@@ -6,5 +6,9 @@ Voucher.blueprint do
   accounting_date { DateTime.now }
   created_by      { User.make }
   activity_year   { ActivityYear.make }
-  voucher_rows    { [VoucherRow.make :voucher => object] }
+  sum = (sn % 1000).to_i
+  voucher_rows    {[
+    VoucherRow.make(:voucher => object, :sum => sum),
+    VoucherRow.make(:voucher => object, :sum => -sum)
+  ]}
 end
