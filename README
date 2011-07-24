@@ -1,9 +1,0 @@
-Magic Accounting Generating Environment (MAGE)
-
-This is a accounting app intended to decrease the work load on the people doing accounting 
-for Datasektionen KTH.
-
-Planned features:
-* Templates with support for formulas
-* Bank integration (connect vouchers to bank transaction)
-* API for adding voucher from other applications
