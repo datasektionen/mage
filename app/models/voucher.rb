@@ -15,8 +15,8 @@ class Voucher < ActiveRecord::Base
   validates_presence_of :number, :serie_id, :organ_id, :accounting_date, :activity_year_id, :created_by
   validates_uniqueness_of :number, :scope => [:serie_id, :activity_year_id]
 
-  validates :no_voucher_row_deleted, :if=>:id
-  validates :added_rows_has_signature, :if=>:id
+  validate :no_voucher_row_deleted, :if=>:id
+  validate :added_rows_has_signature, :if=>:id
 
   accepts_nested_attributes_for :voucher_rows
 
@@ -61,8 +61,8 @@ private
     return voucher_rows if self.id.nil?
     return VoucherRow.find_by_voucher_id(self.id)
   end
+
   # Validations
-  
   def no_voucher_row_deleted
     unless current_voucher_rows.all? {|vr| voucher_rows.include? vr }
       errors[:base] << "Rader har raderats"
