@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110722174109) do
+ActiveRecord::Schema.define(:version => 20110724122809) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "number"
@@ -96,10 +96,10 @@ ActiveRecord::Schema.define(:version => 20110722174109) do
     t.integer  "account_id"
     t.decimal  "sum",            :precision => 10, :scale => 0
     t.integer  "arrangement_id"
-    t.boolean  "canceled"
-    t.integer  "changed_by"
+    t.integer  "signature_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "canceled",                                      :default => false, :null => false
   end
 
   create_table "vouchers", :force => true do |t|

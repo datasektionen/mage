@@ -15,6 +15,7 @@ class VouchersController < InheritedResources::Base
     params[:voucher].delete(:add_row)
     @voucher = Voucher.new(params[:voucher])
     @voucher.set_number!
+    @voucher.created_by = current_user
     create!(:notice => "Verifikat #{@voucher.pretty_number} skapades") { new_voucher_path }
   end
 
