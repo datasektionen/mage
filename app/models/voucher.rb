@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 class Voucher < ActiveRecord::Base
   belongs_to :serie
   belongs_to :organ
@@ -18,6 +20,7 @@ class Voucher < ActiveRecord::Base
   accepts_nested_attributes_for :voucher_rows, :allow_destroy => false
 
   validate :added_rows_has_signature, :if=>:id
+  validate :sum_is_zero
 
   attr_readonly :number, :serie_id, :organ_id, :accounting_date, :created_by, :title, :activity_year_id
 
@@ -71,8 +74,12 @@ class Voucher < ActiveRecord::Base
   end
   
   def added_rows_has_signature 
-      if (voucher_rows-current_voucher_rows).any? {|vr| vr.signature.nil? }
-        errors[:base] << "Tillagd rad saknar signatur"
-      end
+    if (voucher_rows-current_voucher_rows).any? {|vr| vr.signature.nil? }
+      errors[:base] << "Tillagd rad saknar signatur"
+    end
+  end
+
+  def sum_is_zero
+    errors[:base] << "Summan är inte 0 kr" unless voucher_rows.reduce(0) {|sum,vr| sum + vr.sum } == 0
   end
 end
