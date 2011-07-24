@@ -24,11 +24,14 @@ group :production do
   gem 'mysql2', '~> 0.2.6'
 end
 
-group :development do
-  gem 'mysql2', '~> 0.2.6'
+group :development, :test do
   gem 'rspec-rails'
 end
 
+group :development do
+  gem 'mysql2', '~> 0.2.6'
+end
+
 group :test do
-  gem 'rspec-rails'
+  gem 'machinist', '>= 2.0.0.beta2'
 end
