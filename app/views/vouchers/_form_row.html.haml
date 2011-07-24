@@ -8,7 +8,9 @@
     %span= form_row.arrangement
     = hidden_field_tag "voucher[voucher_rows_attributes][][arrangement_id]", form_row.arrangement_id
   %td.debet
-    %span= form_row.sum > 0 ? "#{form_row.sum} kr" : ""
+    %span= form_row.sum >= 0 ? "#{form_row.sum} kr" : ""
     = hidden_field_tag "voucher[voucher_rows_attributes][][sum]", form_row.sum
   %td.kredit
     %span= form_row.sum < 0 ? "#{form_row.sum} kr" : ""
+  %td.actions
+    =link_to  "x","#", {:onclick=>"delete_row(this); return false"}

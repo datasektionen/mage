@@ -13,6 +13,7 @@ class Voucher < ActiveRecord::Base
 
   validates_presence_of :number, :serie_id, :organ_id, :accounting_date, :activity_year_id 
   validates_uniqueness_of :number, :scope => [:serie_id, :activity_year_id]
+  validates_presence_of :corrected_by, :unless=>Proc.new {|v| v.corrects.nil? and v.canceled.nil? }
 
   accepts_nested_attributes_for :voucher_rows
 

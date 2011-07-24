@@ -136,7 +136,7 @@ function add_row() {
     return
   }
   if(current_account == undefined) {
-    alert("Inget konto valt")
+    alert("Inget eller ogiltligt konto valt")
     return
   }
 
@@ -202,4 +202,15 @@ function organ_changed() {
     new_html += "<option value='"+arr.id+"'>"+arr.name+" ("+arr.number+")</option>"
   })
   $("#voucher_add_row_arrangement").html(new_html)
+}
+
+function delete_row(link) {
+  row = $(link.parentElement.parentElement)
+  if(voucher_id != -1 && confirm("Stryka raden?")) {
+    $(link.parentElement).html("<input type='hidden' voucher[voucher_rows_attributes][][cancel] value='1'/>")
+    row.css("text-decoration","line-through")
+  } else if(voucher_id == -1 && confirm("Radera raden?")){
+    row.remove()
+  }
+  return false
 }
