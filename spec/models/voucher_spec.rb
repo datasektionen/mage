@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Voucher do
   it "works" do
-    nil.should be_nil
+    voucher = Voucher.make
+    voucher.should be_valid
   end
 end
