@@ -54,8 +54,13 @@ class Voucher < ActiveRecord::Base
   def destroy
     raise "[Voucher] Tried to delete voucher!"
   end
+    
+  # sum(abs(row.sum))/2
+  def enfoldment
+    voucher_rows.reduce(0) {|sum, vr| sum + (vr.canceled? ? 0 : vr.sum.abs) } / 2
+  end
 
-
+private
   # Returns the voucher_rows set in the database for this voucher
   # or the ones i voucher_rows if id.nil?
   def current_voucher_rows
@@ -80,6 +85,6 @@ class Voucher < ActiveRecord::Base
   end
 
   def sum_is_zero
-    errors[:base] << "Summan är inte 0 kr" unless voucher_rows.reduce(0) {|sum,vr| sum + vr.sum } == 0
+    errors[:base] << "Summan är inte 0 kr" unless voucher_rows.reduce(0) {|sum,vr| sum + (vr.canceled? ? 0 : vr.sum)} == 0
   end
 end

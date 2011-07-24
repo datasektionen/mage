@@ -77,6 +77,7 @@ class User < ActiveRecord::Base
       user.login = u.ugUsername.first
       user.ugid = u.ugkthid.first
       user.email = u.mail.first
+      user.initials = "#{user.first_name.chr}#{user.last_name.chr}".upcase
       return user
     end
     return nil

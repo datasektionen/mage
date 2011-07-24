@@ -204,13 +204,15 @@ function organ_changed() {
   $("#voucher_add_row_arrangement").html(new_html)
 }
 
-function delete_row(link) {
+function delete_row(link,sum) {
   row = $(link.parentElement.parentElement)
   if(voucher_id != -1 && confirm("Stryka raden?")) {
     $(link.parentElement).html("<input type='hidden' voucher[voucher_rows_attributes][][cancel] value='1'/>")
     row.css("text-decoration","line-through")
+    total_sum -= sum
   } else if(voucher_id == -1 && confirm("Radera raden?")){
     row.remove()
+    total_sum -= sum
   }
   return false
 }

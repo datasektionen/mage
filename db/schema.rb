@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110724122809) do
+ActiveRecord::Schema.define(:version => 20110724221147) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "number"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(:version => 20110724122809) do
     t.integer  "default_serie_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "initials",          :null => false
   end
 
   create_table "voucher_rows", :force => true do |t|

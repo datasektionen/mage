@@ -13,4 +13,4 @@
   %td.kredit
     %span= form_row.sum < 0 ? "#{form_row.sum} kr" : ""
   %td.actions
-    =link_to  "x","#", {:onclick=>"delete_row(this); return false"}
+    =link_to  "x","#", {:onclick=>"delete_row(this,#{form_row.sum}); return false"}

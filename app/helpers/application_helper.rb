@@ -51,4 +51,8 @@ module ApplicationHelper
   def short_time(date_or_time)
     I18n.l date_or_time, :format => :short
   end
+
+  def format_date(date_or_time) 
+    I18n.l date_or_time.to_date
+  end
 end

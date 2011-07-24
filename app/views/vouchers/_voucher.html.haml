@@ -1,0 +1,54 @@
+%h3 Verifikat #{voucher.pretty_number} - #{voucher.title}
+#voucher_data
+  -if voucher.corrected?
+    %p.voucher_corrected
+      %strong= Rättas av
+      %span= link_to voucher.corrected_by.pretty_number, voucher_path(voucher.corrected_by)
+  -if voucher.corrects?
+    %p.voucher_corrects
+      %strong= Rättar
+      %span= link_to voucher.corrects.pretty_number, voucher_path(voucher.corrects)
+  %p.voucher_date
+    %strong Datum:
+    %span.date= format_date(voucher.accounting_date)
+  %p
+    %strong Bokfört av:
+    %span= link_to voucher.created_by, user_path(voucher.created_by)
+  %p
+    %strong Nämnd:
+    %span= voucher.organ.name
+%hr
+%table#voucher_rows
+  %thead
+    %tr
+      %th.account_number Konto
+      %th.account_name Kontonamn
+      %th.arrangement Arrangemang
+      %th.debet Debet
+      %th.kredit Kredit
+      %th.changed Ändrad av
+  %tbody
+    - voucher.voucher_rows.each do |vr|
+      -cancel_class = vr.canceled? ? "canceled" : ""
+      %tr.voucher_row
+        %td.account_number{:class=>cancel_class}
+          %span= vr.account.number
+        %td.account_name{:class=>cancel_class}
+          %span= vr.account.name
+        %td.arrangement{:class=>cancel_class}
+          %span= vr.arrangement
+        %td.debet{:class=>cancel_class}
+          %span= vr.sum >= 0 ? "#{vr.sum} kr" : ""
+        %td.kredit{:class=>cancel_class}
+          %span= vr.sum < 0 ? "#{vr.sum} kr" : ""
+        %td
+          - unless vr.signature.nil?
+            %span.date= format_date(vr.updated_at)
+            ! -
+            %span= link_to vr.signature.initials, user_path(vr.signature)
+  %tfoot
+    %tr
+      %td{:colspan=>3}
+      %td Omslutning:
+      %td#enfoldment #{voucher.enfoldment} kr
+      %td

@@ -223,6 +223,12 @@ thead tr {
   #voucher_rows tfoot td {
     padding-top: 10px;
     border-top: 1px solid black; }
+#voucher_rows .actions {
+  min-width: 20px;
+  text-align: center; }
+
+.canceled {
+  text-decoration: line-through; }
 
 /* Typography presets
  * ------------------
