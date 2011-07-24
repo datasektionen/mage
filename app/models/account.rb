@@ -26,7 +26,7 @@ class Account < ActiveRecord::Base
 
 private 
   def set_account_type
-    if account_type.nil? or type == 0
+    if account_type.nil? or account_type == 0
       guess_account_type!
     end
   end
