@@ -33,6 +33,7 @@
         %th.kredit Kredit
         %th.actions 
     %tbody
+      = render :partial=>"form_row", :collection=>@voucher.voucher_rows
     %tfoot
       %tr
         %td{:colspan=>3}

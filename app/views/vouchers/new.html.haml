@@ -1,6 +1,8 @@
 %h3 Nytt verifikat
+- Rails.logger.debug @voucher.errors.inspect
 
 = simple_form_for @voucher do |f|
+  = f.error :base
   - #Hidden fields
   = f.input :serie_id, :as=>:hidden
   = f.input :activity_year_id, :as=>:hidden
@@ -9,11 +11,9 @@
     = f.input :title, :size=>20, :required => false
     = f.association :organ, :include_blank => false, :required => false
     = f.input :accounting_date, :as => :date, :add_month_numbers=>true, :required => false
-    - if @voucher.number
-      = f.input :number, :required => false
     .clear
 
-  = render :partial => "voucher", :locals=>{:f=>f}
+  = render :partial => "voucher_form", :locals=>{:f=>f}
 
 :javascript
   $(function() {

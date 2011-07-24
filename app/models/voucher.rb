@@ -3,7 +3,7 @@ class Voucher < ActiveRecord::Base
   belongs_to :organ
   has_one :activity_year
 
-  has_many :voucher_rows, :autosave => true
+  has_many :voucher_rows, :inverse_of => :voucher, :before_add=>:check_signature, :before_remove => :check_row_delet
 
   has_and_belongs_to_many :tags
   has_one :corrected_by, :class_name => "Voucher", :foreign_key => :corrects
@@ -15,10 +15,9 @@ class Voucher < ActiveRecord::Base
   validates_presence_of :number, :serie_id, :organ_id, :accounting_date, :activity_year_id, :created_by
   validates_uniqueness_of :number, :scope => [:serie_id, :activity_year_id]
 
-  validates :no_voucher_row_deleted, :if=>:id
-  validates :added_rows_has_signature, :if=>:id
+  accepts_nested_attributes_for :voucher_rows, :allow_destroy => false
 
-  accepts_nested_attributes_for :voucher_rows
+  validate :added_rows_has_signature, :if=>:id
 
   attr_readonly :number, :serie_id, :organ_id, :accounting_date, :created_by, :title, :activity_year_id
 
@@ -50,28 +49,29 @@ class Voucher < ActiveRecord::Base
   end
 
   def destroy
-    Rails.warning "[Voucher] Tried to delete voucher!"
+    raise "[Voucher] Tried to delete voucher!"
   end
 
-private
 
   # Returns the voucher_rows set in the database for this voucher
   # or the ones i voucher_rows if id.nil?
   def current_voucher_rows
     return voucher_rows if self.id.nil?
-    return VoucherRow.find_by_voucher_id(self.id)
+    return VoucherRow.find(:all,:conditions=>{:voucher_id=>self.id})
   end
   # Validations
-  
-  def no_voucher_row_deleted
-    unless current_voucher_rows.all? {|vr| voucher_rows.include? vr }
-      errors[:base] << "Rader har raderats"
-    end
+
+  def check_row_delet(rows)
+    raise "[Voucher] Tried to delete VoucherRows!" unless self.id.nil?
   end
 
+  def check_signature(row) 
+    raise "[Voucher] Added row lacks signature" if not self.id.nil? and row.signature.nil?
+  end
+  
   def added_rows_has_signature 
-    if (voucher_rows-current_voucher_rows).any? {|vr| vr.signature.nil? }
-      errors[:base] << "Tillagd rad saknar signatur"
-    end
+      if (voucher_rows-current_voucher_rows).any? {|vr| vr.signature.nil? }
+        errors[:base] << "Tillagd rad saknar signatur"
+      end
   end
 end
