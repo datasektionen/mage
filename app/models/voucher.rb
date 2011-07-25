@@ -29,8 +29,14 @@ class Voucher < ActiveRecord::Base
     order("created_at DESC")
   }
 
-  def self.search(title)
-    where("title like ?", "%#{title}%")
+  def self.search(search, current_activity_year)
+    unless search.nil?
+      q = where("activity_year_id = ? and title like ?", search[:activity_year], "%#{search[:title]}%")
+      q = q.where("serie_id = ?",search[:series]) unless search[:series].empty?
+      q
+    else
+      where("activity_year_id = ?", current_activity_year.id)
+    end
   end
 
   def corrected?

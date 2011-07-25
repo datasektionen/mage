@@ -3,9 +3,15 @@
 - javascript %w(voucher_list.js voucher_list_sort.js)
 
 - form_tag vouchers_path, :method=>:get, :remote=>true do
-  %p
-    = text_field_tag :search, params[:search]
-    = submit_tag "Sök", :name=>nil
+  #search_box
+    %p
+      = label_tag "Sök i serie:"
+      = select_tag("search[activity_year]", options_from_collection_for_select(ActivityYear.order("year DESC"), :id, :year,current_activity_year.id))
+      = collection_select(:search,:series,Serie.accessible_by(current_user), :id, :to_s, {:prompt=>"Alla"})
+    %p
+      = label_tag "Beskrivning:"
+      = text_field_tag "search[title]"
+      = submit_tag "Sök", :name=>nil
 
 = render :partial=>"voucher_list", :object => @vouchers, :locals=>{:long=>true}
 
