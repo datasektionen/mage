@@ -215,14 +215,14 @@ tr:nth-child(odd) {
 thead tr {
   background-color: #eeeeee !important; }
 
-.voucher_rows tfoot {
+.voucher_rows tfoot, #voucher_rows tfoot {
   background-color: transparent; }
-  .voucher_rows tfoot td, .voucher_rows tfoot tr {
+  .voucher_rows tfoot td, .voucher_rows tfoot tr, #voucher_rows tfoot td, #voucher_rows tfoot tr {
     background-color: transparent;
     border: none; }
-  .voucher_rows tfoot td {
+  .voucher_rows tfoot td, #voucher_rows tfoot td {
     border-top: 1px solid black; }
-.voucher_rows .actions {
+.voucher_rows .actions, #voucher_rows .actions {
   min-width: 10px;
   text-align: center; }
 
@@ -271,15 +271,15 @@ thead tr {
     width: 100px;
     text-align: right;
     margin-right: 5px; }
-  #voucher_list .voucher:nth-child(odd) {
-    background-color: #dddddd; }
   #voucher_list .voucher:nth-child(even) {
+    background-color: #dddddd; }
+  #voucher_list .voucher:nth-child(odd) {
     background-color: white; }
   #voucher_list .voucher:hover {
     cursor: pointer; }
-  #voucher_list .voucher:nth-child(odd):hover {
-    background-color: #a0aadc !important; }
   #voucher_list .voucher:nth-child(even):hover {
+    background-color: #a0aadc !important; }
+  #voucher_list .voucher:nth-child(odd):hover {
     background-color: #bac4f8 !important; }
   #voucher_list .voucher .full hr {
     border: none;

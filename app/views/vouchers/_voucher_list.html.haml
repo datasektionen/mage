@@ -9,24 +9,5 @@
       %span.created_by Bokfört av
       %span.correcting 
     %span.enfoldment Omslutning
-  - voucher_list.each do |voucher|
-    .voucher
-      .short
-        %span.number= voucher.pretty_number
-        %span.accounting_date.date= format_date(voucher.accounting_date)
-        %span.title{:title=>voucher.title}
-          = truncate(voucher.title,:length=>26)
-        %span.organ= voucher.organ
-        - if use_long_format
-          %span.created_by= link_to voucher.created_by, user_path(voucher.created_by)
-          %span.correcting
-            -if voucher.corrected?
-              Rättat av
-              =link_to voucher.corrected_by.pretty_number, voucher_path(voucher.corrected_by)
-            -if voucher.corrects?
-              Rättar
-              = link_to voucher.corrects.pretty_number, voucher_path(voucher.corrects)
-        %span.enfoldment.money= currency(voucher.enfoldment)
-      .full{:style=>"display:none"}
-        %hr
-        = render :partial=>voucher, :locals=>{:foot=>link_to("Till verifikatet", voucher_path(voucher)),:foot_colspan=>1}
+  #list_body
+    = render :partial=>"vouchers/voucher_list_row", :collection=>voucher_list, :locals=>{:use_long_format=>use_long_format}
