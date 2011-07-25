@@ -3,6 +3,9 @@ require 'spec_helper'
 describe Voucher do
   it "should enforce sum == 0" do
     voucher = Voucher.make
+    voucher.valid?
+    puts voucher.inspect
+    puts voucher.errors.inspect
     voucher.should be_valid
 
     voucher.voucher_rows.first.sum = 100

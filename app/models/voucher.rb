@@ -3,7 +3,7 @@
 class Voucher < ActiveRecord::Base
   belongs_to :serie
   belongs_to :organ
-  has_one :activity_year
+  belongs_to :activity_year
 
   has_many :voucher_rows, :inverse_of => :voucher, :before_add=>:check_signature, :before_remove => :check_row_delet
 
@@ -14,7 +14,7 @@ class Voucher < ActiveRecord::Base
 
   before_validation :set_number!
 
-  validates_presence_of :number, :serie_id, :organ_id, :accounting_date, :activity_year_id, :created_by
+  validates_presence_of :number, :serie, :organ, :accounting_date, :activity_year, :created_by
   validates_uniqueness_of :number, :scope => [:serie_id, :activity_year_id]
 
   accepts_nested_attributes_for :voucher_rows, :allow_destroy => false

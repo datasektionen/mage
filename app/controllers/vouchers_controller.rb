@@ -8,7 +8,7 @@ class VouchersController < InheritedResources::Base
     @voucher = Voucher.new
     @voucher.organ = current_serie.default_organ
     @voucher.serie = current_serie
-    @voucher.activity_year_id = current_activity_year.id
+    @voucher.activity_year = current_activity_year
   end
 
   def create
