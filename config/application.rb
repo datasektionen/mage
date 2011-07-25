@@ -47,5 +47,7 @@ module Mage
       g.test_framework :rspec
       g.fixture_replacement :machinist
     end
+
+    config.autoload_paths << "#{Rails.root}/app/pdfs"
   end
 end

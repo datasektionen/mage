@@ -23,6 +23,20 @@ class VouchersController < InheritedResources::Base
     "accounting"
   end
 
+  def print
+    @vouchers = Voucher.find(:all,:conditions=>{:id=>params[:vouchers]})
+    output = VoucherPDF.new(@vouchers.first).to_pdf
+    #output = VoucherPDF.new.to_pdf
+
+    respond_to do |format| 
+      format.pdf do
+        send_data output, :filename => "verifikat.pdf",
+                          :type => "application/pdf",
+                          :disposition=>'inline'
+      end
+    end
+  end
+
   # Renders rows for new and edit
   def rows
     data = params

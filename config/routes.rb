@@ -12,8 +12,9 @@ Mage::Application.routes.draw do
     resources :reports
     resources :vouchers, :except => :destroy do 
       collection do
-        post :search
         get :rows, :defaults => {:format => :xml}
+        post :print, :default => {:format => :pdf}
+        get :print, :default => {:format => :pdf}
       end
     end
 
