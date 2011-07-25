@@ -265,6 +265,12 @@ thead tr {
     width: 100px; }
   #voucher_list .enfoldment {
     width: 70px; }
+  #voucher_list .created_by {
+    width: 150px; }
+  #voucher_list .correcting {
+    width: 100px;
+    text-align: right;
+    margin-right: 5px; }
   #voucher_list .voucher:nth-child(odd) {
     background-color: #dddddd; }
   #voucher_list .voucher:nth-child(even) {
@@ -278,6 +284,9 @@ thead tr {
   #voucher_list .voucher .full hr {
     border: none;
     border-bottom: 1px dashed; }
+
+#voucher_list.long {
+  width: 775px; }
 
 .canceled {
   text-decoration: line-through; }

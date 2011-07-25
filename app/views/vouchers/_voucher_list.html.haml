@@ -7,6 +7,7 @@
     %span.organ Nämnd
     - if use_long_format
       %span.created_by Bokfört av
+      %span.correcting 
     %span.enfoldment Omslutning
   - voucher_list.each do |voucher|
     .voucher
@@ -18,15 +19,14 @@
         %span.organ= voucher.organ
         - if use_long_format
           %span.created_by= link_to voucher.created_by, user_path(voucher.created_by)
-        %span.enfoldment.money= currency(voucher.enfoldment)
-        - if use_long_format
           %span.correcting
             -if voucher.corrected?
               Rättat av
               =link_to voucher.corrected_by.pretty_number, voucher_path(voucher.corrected_by)
             -if voucher.corrects?
               Rättar
-              = link_to @voucher.corrects.pretty_number, voucher_path(voucher.corrects)
+              = link_to voucher.corrects.pretty_number, voucher_path(voucher.corrects)
+        %span.enfoldment.money= currency(voucher.enfoldment)
       .full{:style=>"display:none"}
         %hr
         = render :partial=>voucher, :locals=>{:foot=>link_to("Till verifikatet", voucher_path(voucher)),:foot_colspan=>1}

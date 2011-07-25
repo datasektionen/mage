@@ -1,0 +1,11 @@
+%h2 Verifikat
+
+- javascript %w(voucher_list.js voucher_list_sort.js)
+
+- form_tag vouchers_path, :method=>:get, :remote=>true do
+  %p
+    = text_field_tag :search, params[:search]
+    = submit_tag "Sök", :name=>nil
+
+= render :partial=>"voucher_list", :object => @vouchers, :locals=>{:long=>true}
+
