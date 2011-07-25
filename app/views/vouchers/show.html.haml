@@ -2,11 +2,11 @@
 #voucher_data
   -if @voucher.corrected?
     %p.voucher_corrected
-      %strong= Rättat av
+      %strong Rättat av
       %span= link_to @voucher.corrected_by.pretty_number, voucher_path(@voucher.corrected_by)
   -if @voucher.corrects?
     %p.voucher_corrects
-      %strong= Rättar
+      %strong Rättar
       %span= link_to @voucher.corrects.pretty_number, voucher_path(@voucher.corrects)
   %p.voucher_date
     %strong Datum:

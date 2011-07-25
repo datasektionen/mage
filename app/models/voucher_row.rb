@@ -13,7 +13,19 @@ class VoucherRow < ActiveRecord::Base
     return canceled
   end 
 
+  def signed?
+    return (not signature.nil?)
+  end
+
   def destroy
     raise "[VoucherRow] Tried to delete voucher_row!"
+  end
+
+  def debet
+    sum >=0 ? sum : nil
+  end
+
+  def kredit
+    sum < 0 ? sum : nil
   end
 end

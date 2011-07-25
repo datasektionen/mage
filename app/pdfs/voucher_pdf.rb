@@ -1,6 +1,8 @@
 # -*- encoding: utf-8 -*-
 class VoucherPDF < Prawn::Document
   include ActionController::UrlWriter
+  include ActionView::Helpers::NumberHelper
+  include ApplicationHelper
 
   def initialize(voucher)
     @voucher = voucher
@@ -34,7 +36,7 @@ class VoucherPDF < Prawn::Document
     stroken_box grid([1,4],[2,5]) do
       text "Verifikat Nr:", :size => 10, :style=>:bold
       move_down(2)
-      text voucher.pretty_number, :size=>16, :align=>:right
+      text voucher.pretty_number, :size=>16, :align=>:right, :style=>:bold
     end
     stroken_box grid([3,0],[4,1]) do
       if voucher.corrects?
@@ -57,8 +59,31 @@ class VoucherPDF < Prawn::Document
         qrcode(qr,4,1)
       end
     end
-    stroken_box grid([5,2],[43,5]) do
 
+    table_data = voucher.voucher_rows.map do |r|
+        [
+          r.account.number,
+          r.arrangement.to_s,
+          currency(r.debet).to_s.to_str, #Workaround for nil and then errors when doing in place
+          currency(r.kredit).to_s.to_str, #modififications on a html_safe string..
+          r.signed? ? "#{format_date(r.created_at)} #{r.signature.initials}" : ""
+        ]
+    end
+
+    #Insert header:
+    table_data.insert(0,[
+      "Konto",
+      "Arrangemang",
+      "Debet",
+      "Kredit",
+      ""
+    ])
+    
+    Rails.logger.debug(table_data.inspect)
+
+    grid([5,2],[43,5]).bounding_box do
+      stroke_bounds
+      table table_data
     end
     #grid.show_all
     render
