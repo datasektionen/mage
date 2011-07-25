@@ -29,6 +29,10 @@ class Voucher < ActiveRecord::Base
     order("created_at DESC")
   }
 
+  def self.search(title)
+    where("title like ?", "%#{title}%")
+  end
+
   def corrected?
     not corrected_by.nil?
   end

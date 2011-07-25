@@ -5,6 +5,10 @@ class Organ < ActiveRecord::Base
 
   has_many :arrangements
 
+  def to_s
+    name
+  end
+
 private
   def create_other_arr
     Arrangement.create(:organ_id=>self.id, :name=>"Övrigt", :number=>0)

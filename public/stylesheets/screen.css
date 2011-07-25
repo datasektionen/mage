@@ -215,17 +215,69 @@ tr:nth-child(odd) {
 thead tr {
   background-color: #eeeeee !important; }
 
-#voucher_rows tfoot {
+.voucher_rows tfoot {
   background-color: transparent; }
-  #voucher_rows tfoot td, #voucher_rows tfoot tr {
+  .voucher_rows tfoot td, .voucher_rows tfoot tr {
     background-color: transparent;
     border: none; }
-  #voucher_rows tfoot td {
-    padding-top: 10px;
+  .voucher_rows tfoot td {
     border-top: 1px solid black; }
-#voucher_rows .actions {
-  min-width: 20px;
+.voucher_rows .actions {
+  min-width: 10px;
   text-align: center; }
+
+.voucher .full .voucher_rows {
+  background-color: white;
+  border: 1px solid;
+  margin: 5px auto; }
+
+#voucher_list {
+  border: 1px solid;
+  width: 500px;
+  font-size: 0.8em; }
+  #voucher_list span {
+    float: left;
+    display: block;
+    height: 17px;
+    margin: 0px 2px 0px 2px;
+    padding-top: 3px; }
+  #voucher_list #voucher_header {
+    background: #dddddd;
+    font-weight: bold;
+    height: 20px;
+    padding: 2px; }
+  #voucher_list .voucher {
+    clear: both;
+    padding: 1px; }
+    #voucher_list .voucher * {
+      overflow: hidden; }
+  #voucher_list .voucher:nth-child(odd) {
+    background-color: #dddddd; }
+  #voucher_list .voucher:nth-child(even) {
+    background-color: white; }
+  #voucher_list .number {
+    width: 45px; }
+  #voucher_list .accounting_date {
+    width: 70px; }
+  #voucher_list .title {
+    width: 190px; }
+  #voucher_list .organ {
+    width: 100px; }
+  #voucher_list .enfoldment {
+    width: 70px; }
+  #voucher_list .voucher:nth-child(odd) {
+    background-color: #dddddd; }
+  #voucher_list .voucher:nth-child(even) {
+    background-color: white; }
+  #voucher_list .voucher:hover {
+    cursor: pointer; }
+  #voucher_list .voucher:nth-child(odd):hover {
+    background-color: #a0aadc !important; }
+  #voucher_list .voucher:nth-child(even):hover {
+    background-color: #bac4f8 !important; }
+  #voucher_list .voucher .full hr {
+    border: none;
+    border-bottom: 1px dashed; }
 
 .canceled {
   text-decoration: line-through; }

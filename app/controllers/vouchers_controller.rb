@@ -1,7 +1,7 @@
 class VouchersController < InheritedResources::Base
 
   def index
-    #search
+      @vouchers = Voucher.search(params[:search])
   end
 
   def new

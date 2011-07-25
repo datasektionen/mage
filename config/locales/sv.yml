@@ -21,6 +21,7 @@
       format:
         # Where is the currency sign? %u is the currency unit, %n the number (default: $5.00)
         format: "%n %u"
+        negative_format: "-%n %u"
         unit: "kr"
 
     # Used in number_to_human_size()
