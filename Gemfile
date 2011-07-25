@@ -21,7 +21,7 @@ gem 'simple-navigation'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'prawn', :git=>'https://github.com/sandal/prawn.git', :submodules=>true
 gem 'rqrcode'
-gem 'prawn-qrcode'#, :git=>'git://github.com/torandi/prawn-qrcode.git'
+gem 'prawn-qrcode', '~> 0.1.1', :git=>'https://github.com/torandi/prawn-qrcode.git'
 
 group :production do
   gem 'mysql2', '~> 0.2.6'

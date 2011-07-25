@@ -1,5 +1,5 @@
 - use_long_format = defined? long
-= form_tag print_vouchers_path do
+= form_tag print_vouchers_path(:format=>:pdf) do
   #voucher_list{:class=>use_long_format ? "long" : ""}
     #voucher_header
       %span.select

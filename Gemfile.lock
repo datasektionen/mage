@@ -27,6 +27,14 @@ GIT
       pdf-reader (>= 0.9.0)
       ttfunk (~> 1.0.0)
 
+GIT
+  remote: https://github.com/torandi/prawn-qrcode.git
+  revision: 6904cf82242c35e1a793971d8bf559dbbdff831d
+  specs:
+    prawn-qrcode (0.1.1)
+      prawn
+      rqrcode
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -109,9 +117,6 @@ GEM
     pdf-reader (0.10.0)
       Ascii85 (~> 1.0.0)
     polyglot (0.3.1)
-    prawn-qrcode (0.1.0)
-      prawn
-      rqrcode
     pyu-ruby-sasl (0.0.3.3)
     rack (1.2.3)
     rack-mount (0.6.14)
@@ -182,7 +187,7 @@ DEPENDENCIES
   oa-enterprise!
   oa-oauth!
   prawn!
-  prawn-qrcode
+  prawn-qrcode (~> 0.1.1)!
   rails (~> 3.0.9)
   rqrcode
   rspec-rails

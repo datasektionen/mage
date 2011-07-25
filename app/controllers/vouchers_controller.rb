@@ -25,8 +25,7 @@ class VouchersController < InheritedResources::Base
 
   def print
     @vouchers = Voucher.find(:all,:conditions=>{:id=>params[:vouchers]})
-    output = VoucherPDF.new(@vouchers.first).to_pdf
-    #output = VoucherPDF.new.to_pdf
+    output = VoucherPDF.new(@vouchers).to_pdf
 
     respond_to do |format| 
       format.pdf do

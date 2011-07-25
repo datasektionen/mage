@@ -233,7 +233,7 @@ thead tr {
 
 #voucher_list {
   border: 1px solid;
-  width: 500px;
+  width: 525px;
   font-size: 0.8em; }
   #voucher_list span {
     float: left;
@@ -255,6 +255,8 @@ thead tr {
     background-color: #dddddd; }
   #voucher_list .voucher:nth-child(even) {
     background-color: white; }
+  #voucher_list .select {
+    width: 20px; }
   #voucher_list .number {
     width: 45px; }
   #voucher_list .accounting_date {
@@ -286,7 +288,7 @@ thead tr {
     border-bottom: 1px dashed; }
 
 #voucher_list.long {
-  width: 775px; }
+  width: 800px; }
 
 .canceled {
   text-decoration: line-through; }

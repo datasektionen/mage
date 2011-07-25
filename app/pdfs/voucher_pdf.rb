@@ -4,14 +4,22 @@ class VoucherPDF < Prawn::Document
   include ActionView::Helpers::NumberHelper
   include ApplicationHelper
 
-  def initialize(voucher)
-    @voucher = voucher
+  def initialize(vouchers)
+    @vouchers = vouchers
     super(:page_size=>'A4')
   end
 
   def to_pdf
+    @vouchers[0..-2].each do |v|
+      render_voucher(v)
+      start_new_page
+    end
+    render_voucher(@vouchers[-1])
+    render
+  end
 
-    voucher = @voucher #Prepare for future loop
+  def render_voucher(voucher)
+
     font_families.update( "Arial" => {
       :normal=>"#{Rails.root}/fonts/Arial.ttf",
       :bold=>"#{Rails.root}/fonts/Arial_Bold.ttf",
@@ -85,8 +93,7 @@ class VoucherPDF < Prawn::Document
       stroke_bounds
       table table_data
     end
-    #grid.show_all
-    render
+
   end
 
   def stroken_box(g, options={}, &block) 
