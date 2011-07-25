@@ -2,5 +2,5 @@
 %voucher
   %sum= @sum
   %html_content
-    :ruby
-      puts render :partial => "form_row.html", :collection=>@rows
+    :cdata
+      #{render :partial => "form_row.html", :collection=>@rows}
