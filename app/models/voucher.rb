@@ -14,7 +14,7 @@ class Voucher < ActiveRecord::Base
 
   before_validation :set_number!
 
-  validates_presence_of :number, :serie, :organ, :accounting_date, :activity_year, :created_by
+  validates_presence_of :number, :serie_id, :organ_id, :accounting_date, :activity_year_id, :created_by
   validates_uniqueness_of :number, :scope => [:serie_id, :activity_year_id]
 
   accepts_nested_attributes_for :voucher_rows, :allow_destroy => false
@@ -44,7 +44,7 @@ class Voucher < ActiveRecord::Base
   def set_number!
     if number.nil?
       last_voucher = Voucher.
-                      where(:activity_year => self.activity_year, :serie => self.serie).
+                      where(:activity_year_id => self.activity_year_id, :serie_id => self.serie).
                       order("number DESC").
                       first(:select=>:number)
       if last_voucher
