@@ -31,7 +31,7 @@ class VoucherPDF < Prawn::Document
     define_grid(:columns=>6,:rows=>45)
 
 
-    text "Konglig Datasektionen (#{voucher.organ})", :align=>:center, :size=>18, :style=>:bold
+    text "#{Mage::Application.settings[:organization_name]} (#{voucher.organ})", :align=>:center, :size=>18, :style=>:bold
     stroken_box grid([1,0],[2,1]) do
       text "Transaktionsdatum:", :size=>10, :style=>:bold
       move_down(2)
@@ -102,7 +102,6 @@ class VoucherPDF < Prawn::Document
     
     font_size(10)
 
-    Rails.logger.debug(table_data.inspect)
     grid([5,2],[43,5]).bounding_box do
       stroke_bounds
       wf = bounds.width/100 #width fraction

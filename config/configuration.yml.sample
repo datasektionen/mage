@@ -1,6 +1,7 @@
 common: 
   ldap_basedn: ou=Addressbook,dc=kth,dc=se
   default_host: "www.d.kth.se/staging/cashflow"
+  organization_name: "Konglig Datasektionen"
 
 production: &production
   ldap_host: ldap.sys.kth.se
