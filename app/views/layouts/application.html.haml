@@ -25,6 +25,7 @@
     #root
       %header.main
         %h1.title= link_to "MAGE", root_url
+        =image_tag "merlin2.png"
         #main_menu
           - if user_signed_in?
             = render_navigation(:level=>1)
