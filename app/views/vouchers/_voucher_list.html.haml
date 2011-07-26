@@ -2,7 +2,7 @@
 - sortable = defined?(sort) && sort
 - javascript "voucher_list.js"
 - javascript "voucher_list_sort.js" if sortable
-= form_tag print_vouchers_path(:format=>:pdf) do
+= form_tag print_vouchers_path(:format=>:pdf), :target=>:_blank do
   %p
     = submit_tag "Skriv ut valda verifikat", :class=>"icon print"
     = submit_tag "Markera alla", :class=>"select_all icon tick"
