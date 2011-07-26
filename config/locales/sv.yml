@@ -188,6 +188,7 @@
       # You can provide other formats here if you like!
       default: "%Y-%m-%d"
       short: "%e %b"
+      slash_notation: "%d/%m-%y"
       long: "%e %B %Y"
 
     day_names: [söndag, måndag, tisdag, onsdag, torsdag, fredag, lördag]

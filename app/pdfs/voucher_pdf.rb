@@ -68,14 +68,21 @@ class VoucherPDF < Prawn::Document
       end
     end
 
+    # Rader
+
     table_data = voucher.voucher_rows.map do |r|
-        [
+        d = [
           r.account.number,
           r.arrangement.to_s,
           currency(r.debet).to_s.to_str, #Workaround for nil and then errors when doing in place
           currency(r.kredit).to_s.to_str, #modififications on a html_safe string..
-          r.signed? ? "#{format_date(r.created_at)} #{r.signature.initials}" : ""
+          r.signed? ? "#{I18n.l r.created_at.to_date, :format=>:slash_notation} #{r.signature.initials}" : ""
         ]
+        if r.canceled?
+          d[0..-2].map { |i| "<strikethrough>#{i}</strikethrough>" } + [d[-1]] # Don't strike last
+        else 
+          d
+        end
     end
 
     #Insert header:
@@ -86,12 +93,29 @@ class VoucherPDF < Prawn::Document
       "Kredit",
       ""
     ])
-    
-    Rails.logger.debug(table_data.inspect)
 
+    if table_data.length < 33
+      (33 - table_data.length).times do 
+        table_data << ["","","","",""]
+      end
+    end
+    
+    font_size(10)
+
+    Rails.logger.debug(table_data.inspect)
     grid([5,2],[43,5]).bounding_box do
       stroke_bounds
-      table table_data
+      wf = bounds.width/100 #width fraction
+      table table_data, 
+          :row_colors => ['dddddd','ffffff'], 
+          :column_widths => [11*wf, 33*wf,19*wf, 19*wf, 18*wf] ,
+          :cell_style => {:height=>20.21},
+          do |t|
+            t.rows(0).font_style = :bold
+            t.columns(2..3).align = :right
+            t.columns(0..4).style(:overflow => :shrink_to_fit,:inline_format=>true)
+            t.rows(0).columns(0..4).align = :center
+          end
     end
 
   end
