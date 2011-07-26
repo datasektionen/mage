@@ -116,7 +116,6 @@ class VoucherPDF < Prawn::Document
             t.rows(0).columns(0..4).align = :center
           end
     end
-
   end
 
   def stroken_box(g, options={}, &block) 
