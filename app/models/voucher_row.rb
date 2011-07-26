@@ -7,7 +7,7 @@ class VoucherRow < ActiveRecord::Base
   validates_presence_of  :signature, :if=>:canceled
   validates_presence_of :voucher, :sum, :account
   
-  attr_readonly :account_id, :sum, :arrangement_id, :voucher_id
+  attr_readonly :account_number, :sum, :arrangement_id, :voucher_id
 
   def canceled?
     return canceled
