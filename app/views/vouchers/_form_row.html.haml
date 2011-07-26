@@ -1,7 +1,7 @@
 %tr.voucher_row_form
   %td.account_number
     %span= form_row.account.number
-    = hidden_field_tag "voucher[voucher_rows_attributes][][account_id]", form_row.account.id
+    = hidden_field_tag "voucher[voucher_rows_attributes][][account_number]", form_row.account.number
   %td.account_name
     %span= form_row.account.name
   %td.arrangement

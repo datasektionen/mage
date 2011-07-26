@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110724221147) do
+ActiveRecord::Schema.define(:version => 20110726154119) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "number"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(:version => 20110724221147) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "accounts", ["number"], :name => "index_accounts_on_number", :unique => true
 
   create_table "activity_years", :force => true do |t|
     t.integer  "year"
@@ -94,13 +96,13 @@ ActiveRecord::Schema.define(:version => 20110724221147) do
 
   create_table "voucher_rows", :force => true do |t|
     t.integer  "voucher_id"
-    t.integer  "account_id"
     t.decimal  "sum",            :precision => 10, :scale => 0
     t.integer  "arrangement_id"
     t.integer  "signature_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "canceled",                                      :default => false, :null => false
+    t.integer  "account_number",                                                   :null => false
   end
 
   create_table "vouchers", :force => true do |t|

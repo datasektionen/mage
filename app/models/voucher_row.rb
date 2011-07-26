@@ -1,11 +1,11 @@
 class VoucherRow < ActiveRecord::Base
   belongs_to :voucher, :inverse_of => :voucher_rows
-  belongs_to :account
+  belongs_to :account, :foreign_key => :account_number, :primary_key => :number
   belongs_to :arrangement
   belongs_to :signature , :class_name => "User"
 
   validates_presence_of  :signature, :if=>:canceled
-  validates_presence_of :voucher, :sum
+  validates_presence_of :voucher, :sum, :account
   
   attr_readonly :account_id, :sum, :arrangement_id, :voucher_id
 
