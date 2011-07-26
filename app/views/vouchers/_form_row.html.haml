@@ -13,4 +13,4 @@
   %td.kredit
     %span= form_row.sum < 0 ? "#{form_row.sum} kr" : ""
   %td.actions
-    =link_to  "x","#", {:onclick=>"delete_row(this,#{form_row.sum}); return false"}
+    =link_to  image_tag("icons/cross.png",:alt=>'x') ,"#", {:onclick=>"delete_row(this,#{form_row.sum}); return false", :title=>form_row.id.nil? ? "Radera rad" : "Stryk rad",:class=>"delete_row_link"}

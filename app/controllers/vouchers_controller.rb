@@ -30,8 +30,8 @@ class VouchersController < InheritedResources::Base
     respond_to do |format| 
       format.pdf do
         send_data output, :filename => "verifikat.pdf",
-                          :type => "application/pdf",
-                          :disposition=>'inline'
+                          :type => :pdf,
+                          :disposition=>'attachment'
       end
     end
   end

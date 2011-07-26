@@ -152,6 +152,11 @@ p.session-info {
         text-align: center;
         padding: 15px 0px; }
 
+input, select {
+  padding: 4px;
+  background-color: white;
+  border: 1px solid black; }
+
 p.input {
   display: block;
   float: left;
@@ -179,6 +184,15 @@ label {
 #voucher_diff {
   font-size: 0.8em;
   text-align: right; }
+
+.icon {
+  padding-left: 22px; }
+
+.print {
+  background: url("../images/icons/printer.png") no-repeat 2% 50%; }
+
+.tick {
+  background: url("../images/icons/tick.png") no-repeat 2% 50%; }
 
 table * {
   font-size: 0.95em; }
@@ -293,6 +307,10 @@ thead tr {
 .canceled {
   text-decoration: line-through; }
 
+.delete_row_link, .delete_row_link:hover {
+  border: none;
+  vertical-align: middle; }
+
 /* Typography presets
  * ------------------
  */
@@ -315,6 +333,9 @@ thead tr {
   font-size: 26px;
   line-height: 36px;
   margin: 5px; }
+
+p {
+  margin: 8px 0px; }
 
 h4 {
   margin: 5px; }

@@ -1,5 +1,8 @@
 - use_long_format = defined? long
 = form_tag print_vouchers_path(:format=>:pdf) do
+  %p
+    = submit_tag "Skriv ut valda verifikat", :class=>"icon print"
+    = submit_tag "Markera alla", :class=>"select_all icon tick"
   #voucher_list{:class=>use_long_format ? "long" : ""}
     #voucher_header
       %span.select
@@ -14,5 +17,7 @@
     #list_body
       = render :partial=>"vouchers/voucher_list_row", :collection=>voucher_list, :locals=>{:use_long_format=>use_long_format} 
 
-  = submit_tag "Skriv ut valda verifikat"
+  %p
+    = submit_tag "Skriv ut valda verifikat", :class=>"icon print"
+    = submit_tag "Markera alla", :class=>"select_all icon tick"
 

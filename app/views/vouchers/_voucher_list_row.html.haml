@@ -1,7 +1,7 @@
 - voucher = voucher_list_row
 .voucher
   .short
-    %span.select= check_box_tag "vouchers[]", voucher.id
+    %span.select= check_box_tag "vouchers[]", voucher.id, false, :class=>"voucher_select"
     %span.number= voucher.pretty_number
     %span.accounting_date.date= format_date(voucher.accounting_date)
     %span.title{:title=>voucher.title}
