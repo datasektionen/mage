@@ -5,7 +5,7 @@ class Voucher < ActiveRecord::Base
   belongs_to :organ
   belongs_to :activity_year
 
-  has_many :voucher_rows, :inverse_of => :voucher, :before_add=>:check_signature, :before_remove => :check_row_delet
+  has_many :voucher_rows, :inverse_of => :voucher, :before_add=>:check_signature, :before_remove => :check_row_delete
 
   has_and_belongs_to_many :tags
   has_one :corrected_by, :class_name => "Voucher", :foreign_key => :corrects
@@ -22,7 +22,7 @@ class Voucher < ActiveRecord::Base
   validate :added_rows_has_signature, :if=>:id
   validate :sum_is_zero
 
-  attr_readonly :number, :serie_id, :organ_id, :accounting_date, :created_by, :title, :activity_year_id
+  attr_readonly :number, :serie_id, :organ_id, :accounting_date, :created_by, :activity_year_id
 
   scope :recent, lambda {|s| 
     where("serie_id = ?", s.id).
@@ -70,6 +70,10 @@ class Voucher < ActiveRecord::Base
     voucher_rows.reduce(0) {|sum, vr| sum + (vr.canceled? ? 0 : vr.sum.abs) } / 2
   end
 
+  def sum
+    voucher_rows.reduce(0) {|sum,vr| sum + (vr.canceled? ? 0 : vr.sum)}
+  end
+
 private
   # Returns the voucher_rows set in the database for this voucher
   # or the ones i voucher_rows if id.nil?
@@ -80,12 +84,12 @@ private
 
   # Validations
 
-  def check_row_delet(rows)
+  def check_row_delete(rows)
     raise "[Voucher] Tried to delete VoucherRows!" unless self.id.nil?
   end
 
   def check_signature(row) 
-    raise "[Voucher] Added row lacks signature" if not self.id.nil? and row.signature.nil?
+    raise "[Voucher] Added row lacks signature" if not self.id.nil? and row.signature.nil? and not current_voucher_rows.include?(row)
   end
   
   def added_rows_has_signature 
@@ -95,6 +99,6 @@ private
   end
 
   def sum_is_zero
-    errors[:base] << "Summan är inte 0 kr" unless voucher_rows.reduce(0) {|sum,vr| sum + (vr.canceled? ? 0 : vr.sum)} == 0
+    errors[:base] << "Summan är inte 0 kr" unless sum == 0
   end
 end

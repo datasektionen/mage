@@ -119,7 +119,7 @@ function add_row() {
   }
   $("#spinner").show()
 
-  params = {"type" : current_account.type, "account" : current_account.number, "sum" : sum}
+  params = {"type" : current_account.type, "account" : current_account.number, "sum" : sum, "voucher_id": voucher_id}
   if(has_arrangements(current_account)) {
     params.arrangement = $("#voucher_add_row_arrangement").val()
   }
@@ -154,7 +154,7 @@ function add_row() {
 
 function update_sum(diff) {
   total_sum += diff
-  $("#diff").html(diff+" kr")
+  $("#diff").html(total_sum+" kr")
 }
 
 function organ_changed() {
@@ -168,12 +168,15 @@ function organ_changed() {
 function delete_row(link,sum) {
   row = $(link.parentElement.parentElement)
   if(voucher_id != -1 && confirm("Stryka raden?")) {
-    $(link.parentElement).html("<input type='hidden' voucher[voucher_rows_attributes][][cancel] value='1'/>")
+    $(link.parentElement).html(
+      "<input type='hidden' name='voucher[voucher_rows_attributes][][canceled]' value='1'/>" +
+      "<input type='hidden' name='voucher[voucher_rows_attributes][][signature_id]' value='1'/> <!-- Changed server side -->"
+    )
     row.css("text-decoration","line-through")
-    total_sum -= sum
+    update_sum(-sum)
   } else if(voucher_id == -1 && confirm("Radera raden?")){
     row.remove()
-    total_sum -= sum
+    update_sum(-sum)
   }
   return false
 }

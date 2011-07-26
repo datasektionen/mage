@@ -1,6 +1,7 @@
 %tr.voucher_row_form
   %td.account_number
     %span= form_row.account.number
+    = hidden_field_tag "voucher[voucher_rows_attributes][][id]", form_row.id
     = hidden_field_tag "voucher[voucher_rows_attributes][][account_number]", form_row.account.number
   %td.account_name
     %span= form_row.account.name
@@ -8,9 +9,10 @@
     %span= form_row.arrangement
     = hidden_field_tag "voucher[voucher_rows_attributes][][arrangement_id]", form_row.arrangement_id
   %td.debet
-    %span= form_row.sum >= 0 ? "#{form_row.sum} kr" : ""
+    %span= currency(form_row.debet)
     = hidden_field_tag "voucher[voucher_rows_attributes][][sum]", form_row.sum
   %td.kredit
-    %span= form_row.sum < 0 ? "#{form_row.sum} kr" : ""
+    %span= currency(form_row.kredit) 
   %td.actions
     =link_to  image_tag("icons/cross.png",:alt=>'x') ,"#", {:onclick=>"delete_row(this,#{form_row.sum}); return false", :title=>form_row.id.nil? ? "Radera rad" : "Stryk rad",:class=>"delete_row_link"}
+    = hidden_field_tag "voucher[voucher_rows_attributes][][signature_id]", current_user.id if @signature

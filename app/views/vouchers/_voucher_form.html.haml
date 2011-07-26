@@ -38,7 +38,7 @@
       %tr
         %td{:colspan=>3}
         %td Diff:
-        %td#diff 0 kr
+        %td#diff #{@voucher.sum} kr
         %td
 
 %hr
@@ -48,8 +48,9 @@
 / Below is data for javascript
 :javascript
   var voucher_id = #{@voucher.id ? @voucher.id : -1}
-  var total_sum = 0 //Total sum of voucher
+  var total_sum = #{@voucher.sum} //Total sum of voucher
   var accounts = #{Account.order("number").select([:number,:name,:account_type]).to_json }
   var voucher_row_url = "#{rows_vouchers_path}"
   var arrs = #{Organ.all.reduce(Hash.new) {|h,o| h[o.id] = o.arrangements.select([:id,:number,:name]) ; h }.to_json}
   var num_rows = #{@voucher.voucher_rows.count}
+  var user_initials = "#{current_user.initials}"

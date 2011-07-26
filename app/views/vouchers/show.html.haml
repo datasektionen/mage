@@ -1,21 +1,5 @@
 %h3 Verifikat #{@voucher.pretty_number} - #{@voucher.title}
-#voucher_data
-  -if @voucher.corrected?
-    %p.voucher_corrected
-      %strong Rättat av
-      %span= link_to @voucher.corrected_by.pretty_number, voucher_path(@voucher.corrected_by)
-  -if @voucher.corrects?
-    %p.voucher_corrects
-      %strong Rättar
-      %span= link_to @voucher.corrects.pretty_number, voucher_path(@voucher.corrects)
-  %p.voucher_date
-    %strong Datum:
-    %span.date= format_date(@voucher.accounting_date)
-  %p
-    %strong Bokfört av:
-    %span= link_to @voucher.created_by, user_path(@voucher.created_by)
-  %p
-    %strong Nämnd:
-    %span= @voucher.organ.name
+%p#voucher_link= link_to "Redigera", edit_voucher_path(@voucher)
+= render :partial=>'voucher_info', :object=>@voucher
 %hr
 = render @voucher

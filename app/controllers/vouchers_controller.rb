@@ -19,6 +19,16 @@ class VouchersController < InheritedResources::Base
     create!(:notice => "Verifikat #{@voucher.pretty_number} skapades") { new_voucher_path }
   end
 
+  def update
+    params[:voucher].delete(:add_row)
+    params[:voucher][:voucher_rows_attributes].each do |vr|
+      vr[:signature_id] = current_user.id if vr[:signature_id] 
+    end
+    @voucher = Voucher.find(params[:id])
+    logger.debug(params[:voucher].inspect)
+    update!(:notice => "Verifikat #{@voucher.pretty_number} har uppdaterats") { voucher_path(@voucher) }
+  end
+
   def sub_layout
     "accounting"
   end
@@ -38,6 +48,8 @@ class VouchersController < InheritedResources::Base
 
   # Renders rows for new and edit
   def rows
+    @signature = (params[:voucher_id].to_i>0)
+
     data = params
     if data[:type] == "account"
       account = Account.find_by_number(data[:account])

@@ -1,16 +1,14 @@
-%h3 Nytt verifikat
+%h3 Redigerar verifikat #{@voucher.pretty_number}
+%p#voucher_link= link_to "Till verifikatet", voucher_path(@voucher)
+
+= render :partial => 'voucher_info', :object=>@voucher
+
 - Rails.logger.debug @voucher.errors.inspect
 
 = simple_form_for @voucher do |f|
   = f.error :base
-  /Hidden fields
-  = f.input :serie_id, :as=>:hidden
-  = f.input :activity_year_id, :as=>:hidden
-
   #voucher_head_form
     = f.input :title, :size=>20, :required => false
-    = f.association :organ, :include_blank => false, :required => false
-    = f.input :accounting_date, :as => :date, :add_month_numbers=>true, :required => false
     .clear
 
   = render :partial => "voucher_form", :locals=>{:f=>f}
