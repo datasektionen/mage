@@ -8,9 +8,9 @@ class Voucher < ActiveRecord::Base
   has_many :voucher_rows, :inverse_of => :voucher, :before_add=>:check_signature, :before_remove => :check_row_delete
 
   has_and_belongs_to_many :tags
-  has_one :corrected_by, :class_name => "Voucher", :foreign_key => :corrects
-  belongs_to :corrects, :class_name => "Voucher", :foreign_key => :corrects
-  belongs_to :created_by, :class_name => "User", :foreign_key => :created_by
+  has_one :corrected_by, :class_name => "Voucher", :foreign_key => :corrects_id
+  belongs_to :corrects, :class_name => "Voucher"
+  belongs_to :created_by, :class_name => "User"
 
   before_validation :set_number!
 
@@ -22,7 +22,7 @@ class Voucher < ActiveRecord::Base
   validate :added_rows_has_signature, :if=>:id
   validate :sum_is_zero
 
-  attr_readonly :number, :serie_id, :organ_id, :accounting_date, :created_by, :activity_year_id
+  attr_readonly :number, :serie_id, :organ_id, :accounting_date, :created_by_id, :activity_year_id
 
   scope :recent, lambda {|s| 
     where("serie_id = ?", s.id).
@@ -41,6 +41,10 @@ class Voucher < ActiveRecord::Base
 
   def corrected?
     not corrected_by.nil?
+  end
+
+  def corrects?
+    not corrects.nil?
   end
 
   def pretty_number
