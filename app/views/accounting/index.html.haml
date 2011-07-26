@@ -1,7 +1,5 @@
 = render :partial => "accounting/select"
 
-- javascript %w(voucher_list.js)
-
 - if @vouchers
   %h4 Senaste verifikaten
   = render :partial=>"vouchers/voucher_list", :object => @vouchers

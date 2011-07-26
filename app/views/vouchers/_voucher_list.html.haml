@@ -1,10 +1,13 @@
 - use_long_format = defined? long
+- sortable = defined?(sort) && sort
+- javascript "voucher_list.js"
+- javascript "voucher_list_sort.js" if sortable
 = form_tag print_vouchers_path(:format=>:pdf) do
   %p
     = submit_tag "Skriv ut valda verifikat", :class=>"icon print"
     = submit_tag "Markera alla", :class=>"select_all icon tick"
   #voucher_list{:class=>use_long_format ? "long" : ""}
-    #voucher_header
+    #voucher_header{:class=>sortable ? "sortable" : ""}
       %span.select
       %span.number Ver.Nr.
       %span.accounting_date Ver.Datum.
@@ -14,8 +17,7 @@
         %span.created_by Bokfört av
         %span.correcting 
       %span.enfoldment Omslutning
-    #list_body
-      = render :partial=>"vouchers/voucher_list_row", :collection=>voucher_list, :locals=>{:use_long_format=>use_long_format} 
+    #list_body= render :partial=>"vouchers/voucher_list_row", :collection=>voucher_list, :locals=>{:use_long_format=>use_long_format} 
 
   %p
     = submit_tag "Skriv ut valda verifikat", :class=>"icon print"

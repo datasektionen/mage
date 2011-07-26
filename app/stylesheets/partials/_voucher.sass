@@ -1,6 +1,8 @@
+#voucher_list.long
+  width: 845px
 #voucher_list
   border: 1px solid
-  width: 525px
+  width: 565px
   font-size: 0.8em
   span
     float: left
@@ -8,11 +10,32 @@
     height: 17px
     margin: 0px 2px 0px 2px
     padding-top: 3px
+  #voucher_header.sortable 
+    cursor: pointer
   #voucher_header
     background: #ddd
     font-weight: bold
     height: 20px
     padding: 2px
+
+
+    .number
+      width: 45px
+      padding-right: 15px
+    .accounting_date
+      width: 70px
+      padding-right: 15px
+    .title
+      width: 190px
+    .organ
+      width: 97px
+    .enfoldment
+      width: 70px
+      padding-right: 15px
+    .created_by
+      width: 150px
+    .correcting
+      width: 110px
 
   .voucher
     clear: both
@@ -28,19 +51,20 @@
   .select
     width: 20px
   .number
-    width: 45px
+    width: 60px
   .accounting_date
-    width: 70px
+    width: 85px
   .title
     width: 190px
   .organ
-    width: 100px
+    width: 90px
   .enfoldment
-    width: 70px
+    width: 85px
+    padding-right: 5px
   .created_by
     width: 150px
   .correcting
-    width: 100px
+    width: 90px
     text-align: right
     margin-right: 5px
 
@@ -60,8 +84,6 @@
     border: none
     border-bottom: 1px dashed
 
-#voucher_list.long
-  width: 800px
 
 .canceled 
   text-decoration: line-through
@@ -70,3 +92,11 @@
 .delete_row_link, .delete_row_link:hover
   border: none
   vertical-align: middle
+
+.cur_sort
+  text-decoration: underline
+
+.sort_asc
+  background: url("../images/icons/arrow_down.png") no-repeat 100% 70%
+.sort_desc
+  background: url("../images/icons/arrow_up.png") no-repeat 100% 70%

@@ -245,9 +245,12 @@ thead tr {
   border: 1px solid;
   margin: 5px auto; }
 
+#voucher_list.long {
+  width: 845px; }
+
 #voucher_list {
   border: 1px solid;
-  width: 525px;
+  width: 565px;
   font-size: 0.8em; }
   #voucher_list span {
     float: left;
@@ -255,11 +258,30 @@ thead tr {
     height: 17px;
     margin: 0px 2px 0px 2px;
     padding-top: 3px; }
+  #voucher_list #voucher_header.sortable {
+    cursor: pointer; }
   #voucher_list #voucher_header {
     background: #dddddd;
     font-weight: bold;
     height: 20px;
     padding: 2px; }
+    #voucher_list #voucher_header .number {
+      width: 45px;
+      padding-right: 15px; }
+    #voucher_list #voucher_header .accounting_date {
+      width: 70px;
+      padding-right: 15px; }
+    #voucher_list #voucher_header .title {
+      width: 190px; }
+    #voucher_list #voucher_header .organ {
+      width: 97px; }
+    #voucher_list #voucher_header .enfoldment {
+      width: 70px;
+      padding-right: 15px; }
+    #voucher_list #voucher_header .created_by {
+      width: 150px; }
+    #voucher_list #voucher_header .correcting {
+      width: 110px; }
   #voucher_list .voucher {
     clear: both;
     padding: 1px; }
@@ -272,19 +294,20 @@ thead tr {
   #voucher_list .select {
     width: 20px; }
   #voucher_list .number {
-    width: 45px; }
+    width: 60px; }
   #voucher_list .accounting_date {
-    width: 70px; }
+    width: 85px; }
   #voucher_list .title {
     width: 190px; }
   #voucher_list .organ {
-    width: 100px; }
+    width: 90px; }
   #voucher_list .enfoldment {
-    width: 70px; }
+    width: 85px;
+    padding-right: 5px; }
   #voucher_list .created_by {
     width: 150px; }
   #voucher_list .correcting {
-    width: 100px;
+    width: 90px;
     text-align: right;
     margin-right: 5px; }
   #voucher_list .voucher:nth-child(even) {
@@ -301,15 +324,21 @@ thead tr {
     border: none;
     border-bottom: 1px dashed; }
 
-#voucher_list.long {
-  width: 800px; }
-
 .canceled {
   text-decoration: line-through; }
 
 .delete_row_link, .delete_row_link:hover {
   border: none;
   vertical-align: middle; }
+
+.cur_sort {
+  text-decoration: underline; }
+
+.sort_asc {
+  background: url("../images/icons/arrow_down.png") no-repeat 100% 70%; }
+
+.sort_desc {
+  background: url("../images/icons/arrow_up.png") no-repeat 100% 70%; }
 
 /* Typography presets
  * ------------------
