@@ -20,11 +20,13 @@ $(function() {
       cur_sort = cur_class
     }
     listitems = $(".voucher").sort(function(a,b) {
-      av = $(a).children(".short").children("."+cur_class).text();
-      bv = $(b).children(".short").children("."+cur_class).text();
+      av = sort_data(a, cur_class)
+      bv = sort_data(b, cur_class)
       return (av < bv ? -1 : (av > bv ? 1 : 0))*sort_direction
     })
-    $.each(listitems, function(idx, itm) { $("#list_body").append(itm); });
+    $.each(listitems, function(idx, itm) {
+      $("#list_body").append(itm)
+    })
 
     //Decoration
     $("#voucher_header ."+cur_sort).addClass("cur_sort")
@@ -36,3 +38,11 @@ $(function() {
   })
 })
 
+function sort_data(itm, cls) {
+  sort_item = $(itm).children(".short").children("."+cls)
+  if(sort_item.attr("numerical_value") == undefined) {
+    return sort_item.text()
+  } else {
+    return parseInt(sort_item.attr("numerical_value"))
+  }
+}

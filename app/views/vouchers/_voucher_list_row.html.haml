@@ -2,7 +2,7 @@
 .voucher
   .short
     %span.select= check_box_tag "vouchers[]", voucher.id, false, :class=>"voucher_select"
-    %span.number= voucher.pretty_number
+    %span.number{:numerical_value=>voucher.number}= voucher.pretty_number
     %span.accounting_date.date= format_date(voucher.accounting_date)
     %span.title{:title=>voucher.title}
       = truncate(voucher.title,:length=>26)
@@ -15,7 +15,7 @@
         -if voucher.corrects?
           Rättar
           = link_to voucher.corrects.pretty_number, voucher_path(voucher.corrects)
-    %span.enfoldment.money= currency(voucher.enfoldment)
+    %span.enfoldment.money{:numerical_value=>voucher.enfoldment}= currency(voucher.enfoldment)
   .full{:style=>"display:none"}
     %hr
     = render :partial=>voucher, :locals=>{:foot=>link_to("Till verifikatet", voucher_path(voucher)),:foot_colspan=>1}
