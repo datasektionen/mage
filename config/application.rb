@@ -48,6 +48,6 @@ module Mage
       g.fixture_replacement :machinist
     end
 
-    config.autoload_paths << "#{Rails.root}/app/pdfs"
+    config.autoload_paths += %W(#{config.root}/app/pdfs #{config.root}/lib)
   end
 end
