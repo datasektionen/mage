@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110727124938) do
+ActiveRecord::Schema.define(:version => 20110727215851) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "number"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(:version => 20110727124938) do
   create_table "journal", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "message",     :null => false
+    t.text     "message",     :null => false
     t.integer  "user_id",     :null => false
     t.integer  "api_key_id"
     t.integer  "object_id"

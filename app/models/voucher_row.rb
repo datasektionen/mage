@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 class VoucherRow < ActiveRecord::Base
   belongs_to :voucher, :inverse_of => :voucher_rows
   belongs_to :account, :foreign_key => :account_number, :primary_key => :number
@@ -27,5 +28,10 @@ class VoucherRow < ActiveRecord::Base
 
   def kredit
     sum < 0 ? sum : nil
+  end
+
+  # Define output in log, used by Voucher.to_log
+  def to_log
+    "#{canceled? ? "STRUKET " : ""}#{account_number} - Arr: #{arrangement} - Summa: #{sum} #{signed? ? " - Ändrat: #{I18n.l updated_at.to_date} #{signature.initials}" : ""}"
   end
 end

@@ -13,6 +13,8 @@ class Voucher < ActiveRecord::Base
   belongs_to :authorized_by , :class_name => "User"
   belongs_to :bookkept_by , :class_name => "User"
 
+  belongs_to :api_key
+
   before_validation :set_number!
 
   validates_presence_of :number, :serie, :organ, :accounting_date, :activity_year, :material_from
@@ -83,6 +85,34 @@ class Voucher < ActiveRecord::Base
 
   def sum
     voucher_rows.reduce(0) {|sum,vr| sum + (vr.canceled? ? 0 : vr.sum)}
+  end
+
+  # Returns name or name + api key name
+  def authorized_by_to_s
+    unless authorized_by.nil?
+      r = authorized_by.name
+      r = "#{r} via #{api_key.name}" unless api_key.nil?
+    else
+      r = " - "
+      r = " Unknown via #{api_key.name}" unless api_key.nil?
+    end
+    r
+  end 
+
+  # Define output in log
+  def to_log
+    # Pretty - ain't it? :D
+    voucher_rows.reduce("#{pretty_number} - #{title}
+Datum: #{I18n.l accounting_date.to_date}
+Nämnd: #{organ}
+Underlag från: #{material_from}
+Bokfört av: #{bookkept_by}
+Utlägg godkänt av: #{authorized_by_to_s}
+    -----
+    ") do |acc,vr|
+      acc << "#{vr.to_log}
+    "
+    end
   end
 
 private
