@@ -8,7 +8,6 @@
       = truncate(voucher.title,:length=>26)
     %span.organ= voucher.organ
     - if use_long_format
-      %span.created_by= link_to voucher.created_by, user_path(voucher.created_by)
       %span.correcting
         -if voucher.corrected?
           Rättat av

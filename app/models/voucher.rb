@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-
 class Voucher < ActiveRecord::Base
   belongs_to :serie
   belongs_to :organ
@@ -10,11 +9,13 @@ class Voucher < ActiveRecord::Base
   has_and_belongs_to_many :tags
   has_one :corrected_by, :class_name => "Voucher", :foreign_key => :corrects_id
   belongs_to :corrects, :class_name => "Voucher"
-  belongs_to :created_by, :class_name => "User"
+  belongs_to :material_from , :class_name => "User"
+  belongs_to :authorized_by , :class_name => "User"
+  belongs_to :bookkept_by , :class_name => "User"
 
   before_validation :set_number!
 
-  validates_presence_of :number, :serie, :organ, :accounting_date, :activity_year, :created_by
+  validates_presence_of :number, :serie, :organ, :accounting_date, :activity_year, :material_from
   validates_uniqueness_of :number, :scope => [:serie_id, :activity_year_id]
 
   accepts_nested_attributes_for :voucher_rows, :allow_destroy => false
@@ -22,7 +23,13 @@ class Voucher < ActiveRecord::Base
   validate :added_rows_has_signature, :if=>:id
   validate :sum_is_zero
 
-  attr_readonly :number, :serie_id, :organ_id, :accounting_date, :created_by_id, :activity_year_id
+  attr_readonly :number, :serie_id, :organ_id, :accounting_date, :material_from_id, :activity_year_id, :corrects_id
+#  WRITE_ONCE = %w{authorized_by_id bookkept_by_id}
+  attr_writeonce :authorized_by_id, :bookkept_by_id
+
+#  before_save do |record|
+#    return false if WRITE_ONCE.any? { |attr| puts send("#{attr}_was").inspect;  (not send("#{attr}_was").nil?) && record.changed.include?(attr) }
+#  end
 
   scope :recent, lambda {|s| 
     where("serie_id = ?", s.id).

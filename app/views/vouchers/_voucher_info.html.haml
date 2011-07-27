@@ -1,8 +1,5 @@
 - voucher = voucher_info
 #voucher_data
-  %p.activity_year
-    %strong Verksamhetsår:
-    %span= voucher.activity_year
   -if voucher.corrected?
     %p.voucher_corrected
       %strong Rättat av
@@ -14,9 +11,6 @@
   %p.voucher_date
     %strong Datum:
     %span.date= format_date(voucher.accounting_date)
-  %p
-    %strong Bokfört av:
-    %span= link_to voucher.created_by, user_path(voucher.created_by)
   %p
     %strong Nämnd:
     %span= voucher.organ.name

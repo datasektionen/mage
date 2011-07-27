@@ -251,7 +251,7 @@ thead tr {
   margin: 5px auto; }
 
 #voucher_list.long {
-  width: 845px; }
+  width: 685px; }
 
 #voucher_list {
   border: 1px solid;
@@ -283,8 +283,6 @@ thead tr {
     #voucher_list #voucher_header .enfoldment {
       width: 70px;
       padding-right: 15px; }
-    #voucher_list #voucher_header .created_by {
-      width: 150px; }
     #voucher_list #voucher_header .correcting {
       width: 110px; }
   #voucher_list .voucher {
@@ -309,8 +307,6 @@ thead tr {
   #voucher_list .enfoldment {
     width: 85px;
     padding-right: 5px; }
-  #voucher_list .created_by {
-    width: 150px; }
   #voucher_list .correcting {
     width: 90px;
     text-align: right;
@@ -344,6 +340,25 @@ thead tr {
 
 .sort_desc {
   background: url("../images/icons/arrow_up.png") no-repeat 100% 70%; }
+
+#voucher_users {
+  font-size: 0.95em;
+  margin-left: 5px;
+  margin-bottom: 3px; }
+  #voucher_users p {
+    margin: 0px 0px; }
+    #voucher_users p span {
+      float: none;
+      display: inline; }
+
+#voucher_data {
+  font-size: 0.95em;
+  margin-left: 5px; }
+  #voucher_data p {
+    margin: 0px 0px; }
+
+#voucher {
+  font-size: 0.9em; }
 
 /* Typography presets
  * ------------------

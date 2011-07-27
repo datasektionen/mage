@@ -1,7 +1,8 @@
 %h3 Redigerar verifikat #{@voucher.pretty_number}
 %p#voucher_link= link_to "Till verifikatet", voucher_path(@voucher)
 
-= render :partial => 'voucher_info', :object=>@voucher
+#voucher
+  = render :partial => 'voucher_info', :object=>@voucher
 
 - Rails.logger.debug @voucher.errors.inspect
 
