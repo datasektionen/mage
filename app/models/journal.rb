@@ -1,3 +1,15 @@
 class Journal < ActiveRecord::Base
-  set_table_name :journal
+  belongs_to :user
+  belongs_to :api_key
+  belongs_to :object, :polymorphic=>true
+
+  def self.log(action, obj, user, api_key=nil)
+    # suppress warning about changing object_id:
+    silence_warnings do 
+      create(:message=>"#{I18n.t("action." << action.to_s)} #{I18n.t('activerecord.models.' << obj.class.to_s.downcase)}:\n #{obj.inspect}", :user=>user, :api_key=>api_key, :object=>obj) or return false
+    end
+    # Delete old posts
+    delete_all(["created_at < ?", Mage::Application.settings[:keep_journal_days].days.ago])
+    return true
+  end
 end

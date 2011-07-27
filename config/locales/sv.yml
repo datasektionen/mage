@@ -220,8 +220,14 @@
 
   back: "Tillbaka"
 
-# models
+#journal
 
+  action:
+    create: "Skapade"
+    update: "Uppdaterade"
+    destroy: "Raderade"
+# models
+  
 
   edit: "Redigera"
   show: "Visa"

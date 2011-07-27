@@ -8,6 +8,10 @@ module Mage
   end
 end
 
+ActiveSupport::Inflector.inflections do |inflection| 
+  inflection.uncountable "journal"
+end
+
 # Initialize the rails application
 Mage::Application.initialize!
 

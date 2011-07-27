@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110726185254) do
+ActiveRecord::Schema.define(:version => 20110727124938) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "number"
@@ -28,6 +28,29 @@ ActiveRecord::Schema.define(:version => 20110726185254) do
     t.datetime "updated_at"
   end
 
+  create_table "api_accesses", :force => true do |t|
+    t.integer  "api_key_id",                     :null => false
+    t.integer  "serie_id",                       :null => false
+    t.integer  "granted_by_id"
+    t.string   "read_write",    :default => "r", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "api_accesses", ["api_key_id"], :name => "index_api_accesses_on_api_key_id"
+  add_index "api_accesses", ["serie_id"], :name => "index_api_accesses_on_serie_id"
+
+  create_table "api_keys", :force => true do |t|
+    t.string   "key",                              :null => false
+    t.string   "name",                             :null => false
+    t.boolean  "revoked",       :default => false
+    t.integer  "created_by_id",                    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "api_keys", ["key"], :name => "index_api_keys_on_key", :unique => true
+
   create_table "arrangements", :force => true do |t|
     t.string   "name"
     t.integer  "organ_id"
@@ -39,6 +62,11 @@ ActiveRecord::Schema.define(:version => 20110726185254) do
   create_table "journal", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "message",     :null => false
+    t.integer  "user_id",     :null => false
+    t.integer  "api_key_id"
+    t.integer  "object_id"
+    t.string   "object_type"
   end
 
   create_table "organs", :force => true do |t|
@@ -110,12 +138,14 @@ ActiveRecord::Schema.define(:version => 20110726185254) do
     t.integer  "serie_id"
     t.integer  "organ_id"
     t.datetime "accounting_date"
-    t.integer  "created_by_id"
+    t.integer  "bookkept_by_id"
     t.integer  "activity_year_id"
     t.integer  "corrects_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
+    t.integer  "authorized_by_id"
+    t.integer  "material_from_id"
   end
 
 end
