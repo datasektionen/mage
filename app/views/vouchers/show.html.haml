@@ -1,5 +1,7 @@
 %h3 Verifikat #{@voucher.pretty_number} - #{@voucher.title}
-%p#voucher_link= link_to "Redigera", edit_voucher_path(@voucher)
+%p#voucher_links
+  = link_to "Redigera", edit_voucher_path(@voucher)
+  = link_to "Skapa rättningsverifikat", new_voucher_path(:correct=>@voucher.id) unless @voucher.corrected?
 #voucher
   = render :partial=>'voucher_info', :object=>@voucher
   = render @voucher
