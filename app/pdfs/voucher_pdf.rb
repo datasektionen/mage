@@ -118,9 +118,9 @@ class VoucherPDF < Prawn::Document
     end
 
     stroken_box grid([41,2],[43,5]),:padding_left=>6 do
-      text "<b><i>Bokfört av:</i></b> #{voucher.bookkept_by.name}", :size=>14, :inline_format=>true
+      text "<b><i>Bokfört av:</i></b> #{voucher.bookkept_by}", :size=>14, :inline_format=>true
       move_down(2)
-      text "<b><i>Attesterat av:</i></b> #{voucher.authorized_by.name}", :size=>14, :inline_format=>true
+      text "<b><i>Attesterat av:</i></b> #{voucher.authorized_by}", :size=>14, :inline_format=>true
       move_down(2)
       text "Reviderat av: ", :size=>14, :style=>:bold_italic
     end
