@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110727215851) do
+ActiveRecord::Schema.define(:version => 20110728121728) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "number"
@@ -131,6 +131,13 @@ ActiveRecord::Schema.define(:version => 20110727215851) do
     t.datetime "updated_at"
     t.boolean  "canceled",                                      :default => false, :null => false
     t.integer  "account_number",                                                   :null => false
+  end
+
+  create_table "voucher_users", :force => true do |t|
+    t.integer "user_id",    :null => false
+    t.integer "voucher_id", :null => false
+    t.integer "api_key_id"
+    t.string  "role",       :null => false
   end
 
   create_table "vouchers", :force => true do |t|
