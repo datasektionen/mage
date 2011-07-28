@@ -324,6 +324,9 @@ thead tr {
   #voucher_list .voucher .full hr {
     border: none;
     border-bottom: 1px dashed; }
+  #voucher_list .voucher .full span {
+    float: none;
+    display: inline; }
 
 .canceled {
   text-decoration: line-through; }
@@ -340,16 +343,6 @@ thead tr {
 
 .sort_desc {
   background: url("../images/icons/arrow_up.png") no-repeat 100% 70%; }
-
-#voucher_users {
-  font-size: 0.95em;
-  margin-left: 5px;
-  margin-bottom: 3px; }
-  #voucher_users p {
-    margin: 0px 0px; }
-    #voucher_users p span {
-      float: none;
-      display: inline; }
 
 #voucher_data {
   font-size: 0.95em;

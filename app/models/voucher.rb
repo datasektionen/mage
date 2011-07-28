@@ -87,6 +87,10 @@ class Voucher < ActiveRecord::Base
     voucher_rows.reduce(0) {|sum,vr| sum + (vr.canceled? ? 0 : vr.sum)}
   end
 
+  def to_s
+    return pretty_number
+  end 
+
   # Returns name or name + api key name
   def authorized_by_to_s
     unless authorized_by.nil?
@@ -112,6 +116,18 @@ Utlägg godkänt av: #{authorized_by_to_s}
     ") do |acc,vr|
       acc << "#{vr.to_log}
     "
+    end
+  end
+
+  # Returns all rows with flipped sum sign
+  # By default all canceled rows are ignored, specify :canceled=>true to show them
+  def inverted_rows(options={})
+    rows = voucher_rows
+    rows.reject! {|i| i.canceled? } unless options[:canceled]
+    rows.map do |old|
+      vr = old.clone
+      vr.sum *= -1
+      vr
     end
   end
 

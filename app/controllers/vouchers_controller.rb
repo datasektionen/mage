@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 class VouchersController < InheritedResources::Base 
   actions :all, :except => [:destroy]
   after_filter LogFilter , :only=>[:create,:update]
@@ -11,6 +12,11 @@ class VouchersController < InheritedResources::Base
     @voucher.organ = current_serie.default_organ
     @voucher.serie = current_serie
     @voucher.activity_year = current_activity_year
+    if params[:correct]
+      @voucher.corrects = Voucher.find(params[:correct])
+      @voucher.voucher_rows = @voucher.corrects.inverted_rows
+      @voucher.title = "Rättar #{@voucher.corrects}"
+    end
   end
 
   def create

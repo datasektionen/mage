@@ -52,5 +52,5 @@
   var accounts = #{Account.order("number").select([:number,:name,:account_type]).to_json }
   var voucher_row_url = "#{rows_vouchers_path}"
   var arrs = #{Organ.all.reduce(Hash.new) {|h,o| h[o.id] = o.arrangements.select([:id,:number,:name]) ; h }.to_json}
-  var num_rows = #{@voucher.voucher_rows.count}
+  var num_rows = #{@voucher.voucher_rows.size}
   var user_initials = "#{current_user.initials}"

@@ -1,8 +1,16 @@
 %h3 Nytt verifikat
 - Rails.logger.debug @voucher.errors.inspect
 
+  
+
 = simple_form_for @voucher do |f|
   = f.error :base
+  - if @voucher.corrects?
+    #voucher
+      %strong Rättar verifikat
+      %span= link_to @voucher.corrects, voucher_path(@voucher.corrects), :target=>:_blank
+      = f.input :corrects_id, :as=>:hidden
+
   /Hidden fields
   = f.input :serie_id, :as=>:hidden
   = f.input :activity_year_id, :as=>:hidden
