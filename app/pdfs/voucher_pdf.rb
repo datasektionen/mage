@@ -93,21 +93,22 @@ class VoucherPDF < Prawn::Document
       ""
     ])
 
-    if table_data.length < 33
-      (33 - table_data.length).times do 
+    num_rows = 31
+    if table_data.length < num_rows
+      (num_rows - table_data.length).times do 
         table_data << ["","","","",""]
       end
     end
     
     font_size(10)
 
-    grid([5,2],[43,5]).bounding_box do
+    grid([5,2],[40,5]).bounding_box do
       stroke_bounds
       wf = bounds.width/100 #width fraction
       table table_data, 
           :row_colors => ['dddddd','ffffff'], 
           :column_widths => [11*wf, 33*wf,19*wf, 19*wf, 18*wf] ,
-          :cell_style => {:height=>20.21},
+          :cell_style => {:height=>19.84},
           do |t|
             t.rows(0).font_style = :bold
             t.columns(2..3).align = :right
@@ -115,14 +116,25 @@ class VoucherPDF < Prawn::Document
             t.rows(0).columns(0..4).align = :center
           end
     end
+
+    stroken_box grid([41,2],[43,5]),:padding_left=>6 do
+      text "<b><i>Bokfört av:</i></b> #{voucher.bookkept_by.name}", :size=>14, :inline_format=>true
+      move_down(2)
+      text "<b><i>Attesterat av:</i></b> #{voucher.authorized_by.name}", :size=>14, :inline_format=>true
+      move_down(2)
+      text "Reviderat av: ", :size=>14, :style=>:bold_italic
+    end
   end
 
   def stroken_box(g, options={}, &block) 
+    options[:padding_left] ||= 2
+    options[:padding_right] ||= 2
+    options[:padding_top] ||= 3
     g.bounding_box {
       stroke_bounds
-      bounds.add_right_padding(2)
-      bounds.add_left_padding(2)
-      pad_top(3) do
+      bounds.add_right_padding(options[:padding_right])
+      bounds.add_left_padding(options[:padding_left])
+      pad_top(options[:padding_top]) do
         block.call
       end
     }

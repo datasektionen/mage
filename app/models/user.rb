@@ -1,21 +1,15 @@
 class User < ActiveRecord::Base
   belongs_to :default_serie, :class_name => "Serie"
-  has_many :access, :class_name=>"UserAccess"
+  has_many :accesses, :class_name=>"UserAccess"
+  has_many :series, :through => :accesses, :source => :serie
 
   devise :omniauthable
-
-  # Setup accessible (or protected) attributes for your model
-  #attr_accessible :email, :password, :password_confirmation, :remember_me
 
   validates_presence_of :first_name, :last_name, :email, :login, :ugid
 
   has_friendly_id :login
 
-
-
-  # String representation of a user.
-  # Basically the same as the cn column in the LDAP server, that is:
-  # "Firstname Lastname (ugid)"
+  # String representation of a user
   def to_s
     name
   end
@@ -29,7 +23,7 @@ class User < ActiveRecord::Base
   end
 
   def has_access_to?(serie)
-   admin? or access.any? {|a| a.serie == serie}
+   accesses.any? {|a| a.serie == serie}
   end
 
   def admin?

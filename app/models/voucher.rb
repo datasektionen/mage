@@ -26,17 +26,16 @@ class Voucher < ActiveRecord::Base
   validate :sum_is_zero
 
   attr_readonly :number, :serie_id, :organ_id, :accounting_date, :material_from_id, :activity_year_id, :corrects_id
-#  WRITE_ONCE = %w{authorized_by_id bookkept_by_id}
   attr_writeonce :authorized_by_id, :bookkept_by_id
 
-#  before_save do |record|
-#    return false if WRITE_ONCE.any? { |attr| puts send("#{attr}_was").inspect;  (not send("#{attr}_was").nil?) && record.changed.include?(attr) }
-#  end
+  default_scope where('bookkept_by_id is not null') # By default only show bookkept vouchers
 
   scope :recent, lambda {|s| 
     where("serie_id = ?", s.id).
     order("created_at DESC")
   }
+
+
 
   def self.search(search, current_activity_year)
     unless search.nil?

@@ -1,3 +1,3 @@
-class ApiKey < ActiveRecord:Base
+class ApiKey < ActiveRecord::Base
 
 end

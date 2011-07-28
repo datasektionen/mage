@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110727215851) do
+ActiveRecord::Schema.define(:version => 20110728125711) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "number"
@@ -103,23 +103,25 @@ ActiveRecord::Schema.define(:version => 20110727215851) do
     t.integer  "granted_by_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "write_access",  :default => false
   end
 
   add_index "user_accesses", ["serie_id"], :name => "index_user_accesses_on_serie_id"
   add_index "user_accesses", ["user_id"], :name => "index_user_accesses_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "ugid",              :null => false
-    t.string   "login",             :null => false
-    t.string   "first_name",        :null => false
-    t.string   "last_name",         :null => false
-    t.string   "email",             :null => false
+    t.string   "ugid",                                 :null => false
+    t.string   "login",                                :null => false
+    t.string   "first_name",                           :null => false
+    t.string   "last_name",                            :null => false
+    t.string   "email",                                :null => false
     t.string   "persistence_token"
     t.boolean  "admin"
     t.integer  "default_serie_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "initials",          :null => false
+    t.string   "initials",                             :null => false
+    t.boolean  "has_access",        :default => false
   end
 
   create_table "voucher_rows", :force => true do |t|
