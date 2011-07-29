@@ -135,6 +135,13 @@ ActiveRecord::Schema.define(:version => 20110728125711) do
     t.integer  "account_number",                                                   :null => false
   end
 
+  create_table "voucher_users", :force => true do |t|
+    t.integer "user_id",    :null => false
+    t.integer "voucher_id", :null => false
+    t.integer "api_key_id"
+    t.string  "role",       :null => false
+  end
+
   create_table "vouchers", :force => true do |t|
     t.integer  "number"
     t.integer  "serie_id"
