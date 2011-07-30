@@ -1,9 +1,19 @@
+module Mage
+  class Unauthorized < ::Exception
+  end
+end
+
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :authenticate_user!
+  before_filter :authorize_user!
   before_filter :set_globals
 
   helper_method :current_activity_year, :current_serie
+
+  rescue_from Mage::Unauthorized do |exception|
+    render :file => "#{Rails.root}/public/401.html", :layout => false, :status => 401
+  end
   
   # Returns the serie set in session[:current_serie] or default_serie if it is not set
   def current_serie
@@ -19,6 +29,10 @@ class ApplicationController < ActionController::Base
   def current_activity_year
     return ActivityYear.find(session[:current_activity_year]) if session[:current_activity_year]
     return ActivityYear.order("year").last
+  end
+
+  def authorize_user!
+    raise Mage::Unauthorized.new unless current_user.has_access?
   end
 
   # Sets global session values (as specified above)

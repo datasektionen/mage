@@ -30,6 +30,10 @@ class User < ActiveRecord::Base
     admin
   end
 
+  def has_access?
+    has_access
+  end
+
   # search KTH's LDAP server for a user.
   # This method will return a new User object if it finds any information from the LDAP server.
   # The options hash should contain search filters.
