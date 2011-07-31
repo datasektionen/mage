@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :authenticate_user!
+  before_filter :verify_user!
   before_filter :set_globals
 
   helper_method :current_activity_year, :current_serie
@@ -34,6 +35,12 @@ class ApplicationController < ActionController::Base
 
   def sub_layout
     "main"
+  end
+
+  protected
+
+  def verify_user!
+    redirect_to root_path unless current_user.has_access?
   end
 
   private

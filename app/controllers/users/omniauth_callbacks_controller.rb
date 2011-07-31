@@ -1,5 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_filter :authenticate_person!
+  skip_before_filter :verify_user!
 
   def new
     redirect_to user_omniauth_authorize_path(:cas)
