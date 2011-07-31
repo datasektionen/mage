@@ -4,7 +4,7 @@ class VouchersController < InheritedResources::Base
   after_filter LogFilter , :only=>[:create,:update]
 
   def index
-      @vouchers = Voucher.search(params[:search], current_activity_year)
+    @vouchers = Voucher.search(params[:search], current_activity_year, current_user)
   end
 
   def new
@@ -12,6 +12,9 @@ class VouchersController < InheritedResources::Base
     @voucher.organ = current_serie.default_organ
     @voucher.serie = current_serie
     @voucher.activity_year = current_activity_year
+
+    authorize! :write, @voucher
+
     if params[:correct]
       @voucher.corrects = Voucher.find(params[:correct])
       @voucher.voucher_rows = @voucher.corrects.inverted_rows
@@ -25,6 +28,7 @@ class VouchersController < InheritedResources::Base
     @voucher.set_number!
     @voucher.bookkept_by = current_user
     @voucher.material_from = current_user
+    authorize! :write, @voucher
     create!(:notice => "Verifikat #{@voucher.pretty_number} skapades") { new_voucher_path }
   end
 
@@ -33,7 +37,7 @@ class VouchersController < InheritedResources::Base
     params[:voucher][:voucher_rows_attributes].each do |vr|
       vr[:signature_id] = current_user.id if vr[:signature_id] 
     end
-    @voucher = Voucher.find(params[:id])
+    authorize! :write, resource
     logger.debug(params[:voucher].inspect)
     update!(:notice => "Verifikat #{@voucher.pretty_number} har uppdaterats") { voucher_path(@voucher) }
   end
@@ -44,6 +48,7 @@ class VouchersController < InheritedResources::Base
 
   def print
     @vouchers = Voucher.find(:all,:conditions=>{:id=>params[:vouchers]})
+    authorize! :read, @vouchers
     output = VoucherPDF.new(@vouchers).to_pdf
 
     respond_to do |format| 
@@ -53,6 +58,11 @@ class VouchersController < InheritedResources::Base
                           :disposition=>'inline'
       end
     end
+  end
+
+  def edit
+    authorize! :write, resource
+    edit!
   end
 
   # Renders rows for new and edit
@@ -70,5 +80,11 @@ class VouchersController < InheritedResources::Base
       render :nothing=>true, :status=>500 and return
     end
     @sum = @rows.reduce(0) { |memo, r| memo+=r.sum } 
+  end
+
+protected 
+  def resource
+    @voucher ||= end_of_association_chain.find(params[:id])
+    authorize! :read, @voucher
   end
 end
