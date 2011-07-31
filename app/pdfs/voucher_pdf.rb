@@ -13,19 +13,17 @@ class VoucherPDF < Prawn::Document
       render_voucher(v)
       start_new_page
     end
-    render_voucher(@vouchers[-1])
+    render_voucher(@vouchers[-1]) unless @vouchers.blank?
     render
   end
 
   def render_voucher(voucher)
-
-    font_families.update( "Arial" => {
-      :normal=>"#{Rails.root}/fonts/Arial.ttf",
-      :bold=>"#{Rails.root}/fonts/Arial_Bold.ttf",
-      :italic=>"#{Rails.root}/fonts/Arial_Italic.ttf",
-      :bold_italic=>"#{Rails.root}/fonts/Arial_Bold_Italic.ttf"
-    }
-    )
+    font_families.update("Arial" => {
+      :normal => "#{Rails.root}/fonts/Arial.ttf",
+      :bold => "#{Rails.root}/fonts/Arial_Bold.ttf",
+      :italic => "#{Rails.root}/fonts/Arial_Italic.ttf",
+      :bold_italic => "#{Rails.root}/fonts/Arial_Bold_Italic.ttf"
+    })
     font("Arial")
     define_grid(:columns=>6,:rows=>45)
 

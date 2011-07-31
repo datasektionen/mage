@@ -13,21 +13,25 @@ class User < ActiveRecord::Base
   def to_s
     name
   end
-  
+
   def cn
     "%s %s (%s)" % [first_name, last_name, login]
   end
-  
+
   def name
     "%s %s" % [first_name, last_name]
   end
 
   def has_access_to?(serie)
-   accesses.any? {|a| a.serie == serie}
+    self.admin? || accesses.any? {|a| a.serie == serie }
   end
 
   def admin?
     admin
+  end
+
+  def has_access?
+    has_access
   end
 
   # search KTH's LDAP server for a user.
