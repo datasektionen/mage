@@ -24,6 +24,10 @@ class Account < ActiveRecord::Base
     where("number LIKE ? or name LIKE ?", s, s)
   end
 
+  def has_arrangements?
+    return account_type > 2
+  end
+
 private 
   def set_account_type
     if account_type.nil? or account_type == 0

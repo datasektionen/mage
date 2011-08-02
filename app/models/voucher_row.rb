@@ -5,8 +5,9 @@ class VoucherRow < ActiveRecord::Base
   belongs_to :arrangement
   belongs_to :signature , :class_name => "User"
 
-  validates_presence_of  :signature, :if=>:canceled
+  validates_presence_of :signature, :if=>:canceled
   validates_presence_of :voucher, :sum, :account
+  validates_presence_of :arrangement, :if => Proc.new { account.has_arrangements? }
   
   attr_readonly :account_number, :sum, :arrangement_id, :voucher_id
 
