@@ -226,6 +226,8 @@
     create: "Skapade"
     update: "Uppdaterade"
     destroy: "Raderade"
+    import: "Importerade"
+    update_import: "Uppdaterade via import" 
 # models
   
 

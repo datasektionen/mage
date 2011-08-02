@@ -55,7 +55,7 @@ namespace "import" do
     @organ_translate = Hash.new
     @arr_translate = Hash.new
 
-    current_user = User.first #TODO: FIX!!
+    current_user = nil
 
     material_from = nil
 
@@ -80,6 +80,7 @@ namespace "import" do
           exit
         else
           puts "Sparade verifikat #{@voucher.pretty_number}"
+          Journal.log(:import,@voucher,current_user)
         end
         @voucher = nil
       end
@@ -87,6 +88,7 @@ namespace "import" do
       case item.first
         when "GEN"
           material_from = User.find_by_initials(item[2])
+          current_user = material_from
           if material_from.nil?
             puts "Ogiltlig användarsignatur (#{item[2]}) i importfilen, avbryter."
             exit
@@ -95,12 +97,14 @@ namespace "import" do
           # Add account
           if Account.where(:number=>item[1].to_i).count == 0
             # Create:
-            Account.create(:number=>item[1],:name=>item[2])
+            a = Account.create(:number=>item[1],:name=>item[2])
+            Journal.log(:import,a,current_user)
           end
         when "KTYP"
           a = Account.find_by_number(item[1].to_i)
           a.account_type = kontotyper[item[2]]
           a.save
+          Journal.log(:update_import,a,current_user)
         when "VER"
           # Skapa verifikat
           serie = Serie.find_by_letter(item[1])
@@ -125,6 +129,7 @@ namespace "import" do
             o = Organ.find_by_name(item[3])
             if o.nil?
               o = Organ.create(:name=>item[3])
+              Journal.log(:import,o,current_user)
             end
             @organ_translate[item[2]] = o
           elsif item[1] == "1" && item[2] != "0"
@@ -139,6 +144,7 @@ namespace "import" do
                 a.organ = Organ.find_by_name("Centralt")
               end
               a.save
+              Journal.log(:import,a,current_user)
               @arr_translate[item[2]] = a
             else
               @arr_translate[item[2]] = Arrangement.find_by_number(item[2])
