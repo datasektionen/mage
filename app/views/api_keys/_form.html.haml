@@ -1,0 +1,28 @@
+= simple_form_for(@api_key) do |f|
+  - if @api_key.errors.any?
+    #error_explanation
+      %h2
+        = t 'errors.template.header', :model => t('.api_key'), :count => @api_key.errors.count
+      %ul
+        - @api_key.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.input :name
+
+  .clear
+
+  %fieldset{:title=>t('rights')}
+    %table
+      %thead
+        %tr
+          %th Serie
+          %th= t 'rights'
+      %tbody
+        -# @api_key.series_access(Serie.all).each do |acc|
+        = f.simple_fields_for :api_accesses do |fa|
+          %tr
+            %td= fa.object.serie
+            %td=fa.input :read_write, :hint => 'Endast r/w/rw', :label=>false
+    
+  .actions
+    = f.submit
