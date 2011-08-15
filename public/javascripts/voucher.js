@@ -46,10 +46,11 @@ $(function() {
     return true
   })
 
-  //Bind enter
-  $("form input, form select").keypress(function(e) {
-    if(e.which == 13) {
-      if(this.id == "voucher_add_row_sum") {
+  //Bind keys
+  $("form input, form select").live('keydown', function(e) { 
+    var keyCode = e.keyCode || e.which
+    if(keyCode == 13 ||(keyCode == 9 && !e.shiftKey)) {
+      if(this.id == "voucher_add_row_sum" && keyCode == 13) {
         //Add this row (after checks)
         add_row()
       } else {
@@ -64,23 +65,22 @@ $(function() {
         }
       }
       return false
-    } else if(e.which == 43) { //+
+    } else if(keyCode == 43) { //+
       sum = parseFloat($("#voucher_add_row_sum").val())
       if(!isNaN(sum)) {
         sum = Math.abs(sum)
         $("#voucher_add_row_sum").val(sum)
         return false
       }
-      } else if(e.which == 45) { //-
+      } else if(keyCode == 45) { //-
       sum = parseFloat($("#voucher_add_row_sum").val())
       if(!isNaN(sum)) {
         sum = Math.abs(sum)*-1.0
         $("#voucher_add_row_sum").val(sum)
         return false
       }
-    }
+    } 
   })
-
 })
 
 
