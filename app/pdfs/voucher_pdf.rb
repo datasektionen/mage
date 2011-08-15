@@ -49,12 +49,18 @@ class VoucherPDF < Prawn::Document
         text voucher.corrects.pretty_number, :size=>16, :align=>:right,:style=>:bold
       end
     end
+    stroken_box grid([5,0],[6,1]) do
+      if voucher.corrected?
+        text "Rättas av verifikat:", :size=>14,:style=>:bold_italic
+        text voucher.corrected_by.pretty_number, :size=>16, :align=>:right,:style=>:bold
+      end
+    end
     stroken_box grid([3,2],[4,5]) do 
       text "Underlag från:", :size=>14, :style=>:bold_italic
       text_box voucher.material_from.name,:at=>[0,cursor], :size=>16, :align=>:right, :overflow=>:shrink_to_fit
     end
 
-    stroken_box grid([5,0],[33,1]) do
+    stroken_box grid([7,0],[33,1]) do
       text "Kvitto:", :size=>14, :style=>:bold
     end
 
