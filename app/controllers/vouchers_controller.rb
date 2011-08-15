@@ -12,6 +12,7 @@ class VouchersController < InheritedResources::Base
     @voucher.organ = current_serie.default_organ
     @voucher.serie = current_serie
     @voucher.activity_year = current_activity_year
+    @voucher.accounting_date = Voucher.where(:serie_id=>current_serie.id).last.accounting_date
 
     authorize! :write, @voucher
 
