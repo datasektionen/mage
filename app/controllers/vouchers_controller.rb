@@ -69,12 +69,12 @@ class VouchersController < InheritedResources::Base
   # Renders rows for new and edit
   def rows
     @signature = (params[:voucher_id].to_i>0)
-
+  
     data = params
     if data[:type] == "account"
       account = Account.find_by_number(data[:account])
       render :nothing=>true, :status=>400 and return if account.nil?
-      @rows = [VoucherRow.new(:account=>account, :sum=>data[:sum], :arrangement_id=>data[:arrangement])]
+      @rows = [VoucherRow.new(:account=>account, :sum=>data[:sum].to_f, :arrangement_id=>data[:arrangement])]
     elsif data[:type] == "template"
       #TODO: Templates
     else
