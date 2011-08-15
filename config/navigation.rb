@@ -53,7 +53,9 @@ SimpleNavigation::Configuration.run do |navigation|
 
     primary.item :reports, 'Rapporter', reports_path
 
-    primary.item :administration, 'Administrera', administration_index_path, :if => Proc.new { current_user.admin? }
+    primary.item :administration, 'Administrera', administration_index_path, :if => Proc.new { current_user.admin? } do |admin|
+      admin.item :users, "Användare", users_path
+    end
 
     # you can also specify a css id or class to attach to this particular level
     # works for all levels of the menu

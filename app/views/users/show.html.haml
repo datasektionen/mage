@@ -1,0 +1,13 @@
+%h3= @user
+
+%dl
+  %dt Har åtkomst?
+  %dd= @user.has_access? ? "Ja" : "Nej"
+  %dt Är admin?
+  %dd= @user.admin? ? "Ja" : "Nej"
+  %dt Email
+  %dd= auto_link(@user.email).html_safe
+  %dt Initialer
+  %dd= @user.initials
+
+%p= link_to "Redigera", edit_user_path(@user)

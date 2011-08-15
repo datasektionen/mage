@@ -1,0 +1,9 @@
+%h2 Användare
+
+%table.datatable
+  %thead
+    %th Namn
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= link_to user, user

@@ -1,0 +1,11 @@
+= simple_form_for @user do |f|
+  %dl
+    %dt= f.label :has_access
+    %dd= f.check_box :has_access
+    %dt= f.label :admin
+    %dd= f.check_box :admin
+    %dt= f.label :email
+    %dd= f.text_field :email
+    %dt= f.label :initials
+    %dd= f.text_field :initials
+  = f.submit
