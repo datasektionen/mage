@@ -43,6 +43,7 @@ group :test do
   gem 'rcov'
   gem 'capybara'
   gem 'cucumber-rails'
+  gem 'database_cleaner'
   gem 'machinist', '>= 2.0.0.beta2'
   gem 'autotest'
 end
