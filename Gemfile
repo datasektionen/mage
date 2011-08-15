@@ -16,7 +16,7 @@ gem 'oa-oauth', :git => 'https://github.com/intridea/omniauth.git'
 gem 'i18n_routing'
 gem 'friendly_id'
 gem 'net-ldap'
-gem 'haml'
+gem 'haml-rails'
 gem 'simple-navigation'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'prawn', :git=>'https://github.com/sandal/prawn.git', :submodules=>true
