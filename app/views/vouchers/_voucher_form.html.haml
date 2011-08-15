@@ -13,7 +13,7 @@
     = r.text_field :account, :size=>5
   %p.input
     = r.label "Arrangemang", :required => false
-    = r.select :arrangement, options_from_collection_for_select(@voucher.organ.arrangements,:id, :to_s), {}, :disabled=>true
+    = r.select :arrangement, options_from_collection_for_select(@voucher.organ.arrangements,:id, :list_print), {}, :disabled=>true
   %p.input.money
     = r.label "Summa (kr)", :required => false
     = r.text_field :sum, :size => 20

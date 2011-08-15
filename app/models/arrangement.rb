@@ -5,4 +5,8 @@ class Arrangement < ActiveRecord::Base
   def to_s
     "#{name} (#{number})"
   end
+
+  def list_print
+    "#{number} - #{name}"
+  end
 end
