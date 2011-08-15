@@ -59,7 +59,7 @@ class VoucherPDF < Prawn::Document
     end
 
     stroken_box grid([34,0],[43,1]) do
-      qr = RQRCode::QRCode.new(Rails.application.routes.url_helpers.voucher_url(voucher),:size=>5,:level=>:l)
+      qr = RQRCode::QRCode.new(Rails.application.routes.url_helpers.voucher_url(voucher,:host=>Mage::Application.settings[:default_host]),:size=>5,:level=>:l)
       bounding_box([11,10],:width=>100) do
         qrcode(qr,4,1)
       end
