@@ -166,9 +166,9 @@ function organ_changed() {
 }
 
 function delete_row(link,sum) {
-  row = $(link.parentElement.parentElement)
+  row = $(link).parent().parent()
   if(voucher_id != -1 && confirm("Stryka raden?")) {
-    $(link.parentElement).html(
+    $(link).parent().html(
       "<input type='hidden' name='voucher[voucher_rows_attributes][][canceled]' value='1'/>" +
       "<input type='hidden' name='voucher[voucher_rows_attributes][][signature_id]' value='1'/> <!-- Changed server side -->"
     )
