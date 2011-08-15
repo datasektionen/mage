@@ -91,7 +91,7 @@ function add_row() {
     $("#voucher_add_row_sum").val("0")
   }
   sum = parseFloat($("#voucher_add_row_sum").val().replace(",","."))
-  console.log(sum)
+  sum = Math.round(sum*100.0)/100.0
   if(isNaN(sum)) {
     alert("Summa måste vara ett nummer")
     return
