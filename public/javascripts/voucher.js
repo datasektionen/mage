@@ -138,7 +138,13 @@ function add_row() {
     url: voucher_row_url,
     data: params,
     success: function(data, textStatus, xhr) {
-      update_sum(parseFloat($(data).find("sum").text()))
+      ///DEBUG CODE: TODO: Remove
+        sum_to_add = parseFloat($(data).find("sum").text())
+        if(sum_to_add == 0) {
+          alert("Warning, sum to add was 0 (<sum>: "+$(data).find("sum").text()+")")
+        }
+      //End debug code
+      update_sum(sum_to_add)
       $("#voucher_rows tbody").append($(data).find("html_content").text())
       num_rows++
       $("#spinner").hide()
