@@ -48,7 +48,7 @@
 / Below is data for javascript
 :javascript
   var voucher_id = #{@voucher.id ? @voucher.id : -1}
-  var total_sum = #{@voucher.sum} //Total sum of voucher
+  set_diff(#{@voucher.sum})
   var accounts = #{Account.order("number").select([:number,:name,:account_type]).to_json }
   var voucher_row_url = "#{rows_vouchers_path}"
   var arrs = #{Organ.all.reduce(Hash.new) {|h,o| h[o.id] = o.arrangements.select([:id,:number,:name]) ; h }.to_json}
