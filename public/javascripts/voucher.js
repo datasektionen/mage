@@ -41,8 +41,7 @@ $(function() {
 
   //Catch submit
   $("form").submit(function(obj,submit) {
-    if(total_sum != 0) {
-      alert("Totalsumman måste vara 0 kr")
+    if(total_sum != 0 && !confirm("Totalsumman är inte 0, fortsätta ändå?")) {
       return false
     }
     if(num_rows == 0) {
