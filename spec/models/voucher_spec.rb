@@ -71,4 +71,10 @@ describe Voucher do
     post[:created_by_id].should == pre[:created_by_id]
     post[:activity_year_id].should == pre[:activity_year_id]
   end
+
+  it "should not allow empty vouchers" do
+    voucher = Voucher.make
+    voucher.voucher_rows = []
+    voucher.should_not be_valid
+  end
 end
