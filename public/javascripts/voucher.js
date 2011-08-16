@@ -81,7 +81,7 @@ $(function() {
       sum = parseFloat($("#voucher_add_row_sum").val())
       if(!isNaN(sum)) {
         sum = Math.abs(sum)
-        $("#voucher_add_row_sum").val(sum)
+        $("#voucher_add_row_sum").val("+"+sum)
         return false
       }
       } else if(keyCode == 45) { //-
@@ -101,7 +101,8 @@ function add_row() {
   if($("#voucher_add_row_sum").val().trim() == "") {
     $("#voucher_add_row_sum").val("0")
   }
-  sum = parseFloat($("#voucher_add_row_sum").val().replace(",","."))
+  sum_str = $("#voucher_add_row_sum").val().replace(",",".").trim()
+  sum = parseFloat(sum_str)
   sum = Math.round(sum*100.0)/100.0 //Trim to 2 decimals
   if(isNaN(sum)) {
     alert("Summa måste vara ett nummer")
@@ -117,6 +118,14 @@ function add_row() {
     return
   } else if(sum == 0) {
     sum = get_diff()*-1.0;
+  }
+
+  if(sum_str.charAt(0) != "+" && sum_str != "-") {
+    //Try to guess sign 
+    if(current_account.account_type == 3) {
+      sum = -1*sum;
+    } 
+    // positive for account_type 4
   }
 
   if(current_account.account_type == 3 && sum > 0 &&
