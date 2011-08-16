@@ -1,3 +1,5 @@
+var total_sum = 0
+
 $(function() {
   //Autocomplete accounts
   $("#voucher_add_row_account").autocomplete({
@@ -26,17 +28,20 @@ $(function() {
 
   //Always set account:
   $("#voucher_add_row_account").blur(function() {
-    account = find_account($(this).val())[0]
+    voucher_add_row_account_blur_callback(this)
+  })
+
+  function voucher_add_row_account_blur_callback(item) {
+    account = find_account($(item).val())[0]
     if(account != undefined) {
-      $(this).val(account.number)
+      $(item).val(account.number)
     }
     update_account(account)
-  })
+  }
 
   //Catch submit
   $("form").submit(function(obj,submit) {
-    if(total_sum != 0) {
-      alert("Totalsumman måste vara 0 kr")
+    if(total_sum != 0 && !confirm("Totalsumman är inte 0, fortsätta ändå?")) {
       return false
     }
     if(num_rows == 0) {
@@ -49,23 +54,30 @@ $(function() {
   //Bind keys
   $("form input, form select").live('keydown', function(e) { 
     var keyCode = e.keyCode || e.which
-    if(keyCode == 13 ||(keyCode == 9 && !e.shiftKey)) {
+    if((keyCode == 9 && !e.shiftKey) || keyCode == 13) {
       if(this.id == "voucher_add_row_sum" && keyCode == 13) {
         //Add this row (after checks)
         add_row()
       } else {
-        $(this).blur()
-        next = this
-        do {
-          next = $("form input, form select")[$("form input, form select").index(next)+1]
-        } while(next != undefined && (next.type == "hidden" || $(next).attr("disabled")))
+        $(this).triggerHandler('blur')
+        if(keyCode == 13) {
+          next = this
+          do {
+            next = $("form input, form select")[$("form input, form select").index(next)+1]
+          } while(next != undefined && (next.type == "hidden" || $(next).attr("disabled")))
 
-        if(next != undefined) {
-          next.focus()
+          if(next != undefined) {
+            next.focus()
+          }
         }
       }
-      return false
-    } else if(keyCode == 43) { //+
+      if(keyCode == 13)
+        return false
+    }
+  })
+  $("form input, form select").keypress(function(e) {
+    var keyCode = e.keyCode || e.which
+    if(keyCode == 43) { //+
       sum = parseFloat($("#voucher_add_row_sum").val())
       if(!isNaN(sum)) {
         sum = Math.abs(sum)
@@ -84,14 +96,13 @@ $(function() {
 })
 
 
-
 //Tries to add the row to the voucher
 function add_row() {
   if($("#voucher_add_row_sum").val().trim() == "") {
     $("#voucher_add_row_sum").val("0")
   }
   sum = parseFloat($("#voucher_add_row_sum").val().replace(",","."))
-  sum = Math.round(sum*100.0)/100.0
+  sum = Math.round(sum*100.0)/100.0 //Trim to 2 decimals
   if(isNaN(sum)) {
     alert("Summa måste vara ett nummer")
     return
@@ -105,7 +116,7 @@ function add_row() {
       !confirm("Summan är 0 kr, fortsätta?")) {
     return
   } else if(sum == 0) {
-    sum = total_sum*-1.0;
+    sum = get_diff()*-1.0;
   }
 
   if(current_account.account_type == 3 && sum > 0 &&
@@ -127,7 +138,13 @@ function add_row() {
     url: voucher_row_url,
     data: params,
     success: function(data, textStatus, xhr) {
-      update_sum(parseFloat($(data).find("sum").text()))
+      ///DEBUG CODE: TODO: Remove
+        sum_to_add = parseFloat($(data).find("sum").text())
+        if(sum_to_add == 0) {
+          alert("Warning, sum to add was 0 (<sum>: "+$(data).find("sum").text()+")")
+        }
+      //End debug code
+      update_sum(sum_to_add)
       $("#voucher_rows tbody").append($(data).find("html_content").text())
       num_rows++
       $("#spinner").hide()
@@ -152,9 +169,18 @@ function add_row() {
 
 }
 
+function set_diff(diff) {
+  total_sum = Math.floor(diff*100)
+  update_sum(0)
+}
+
+function get_diff() {
+  return total_sum/100.0
+}
+
 function update_sum(diff) {
-  total_sum += diff
-  $("#diff").html(total_sum+" kr")
+  total_sum += Math.floor(diff*100) //save as int internaly
+  $("#diff").html((total_sum/100.0)+" kr")
 }
 
 function organ_changed() {
@@ -174,9 +200,11 @@ function delete_row(link,sum) {
     )
     row.css("text-decoration","line-through")
     update_sum(-sum)
+    num_rows--;
   } else if(voucher_id == -1 && confirm("Radera raden?")){
     row.remove()
     update_sum(-sum)
+    num_rows--;
   }
   return false
 }

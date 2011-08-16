@@ -5,6 +5,8 @@
 #   * Henrik Nyh (henrik@nyh.se)
 
 "sv":
+  rights: "Rättigheter"
+
   number:
     # Used in number_with_delimiter()
     # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
@@ -157,6 +159,7 @@
       account: "Konto"
       activity_year: "Verksamhetsår"
       arrangement: "Arrangemang"
+      api_key: "Apinyckel"
       journal: "Journal"
       organ: "Nämnd"
       serie: "Serie"

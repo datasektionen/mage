@@ -1,0 +1,7 @@
+%h2 Redigerar apinyckel #{@api_key.name}
+
+%p
+  = link_to t('back'), api_keys_path
+  = link_to t('show'), @api_key
+
+= render 'form'

@@ -1,0 +1,30 @@
+%h2 Apinyckel #{@api_key.name}
+%p
+  = link_to t('back'), api_keys_path
+  = link_to t('edit'), edit_api_key_path(@api_key)
+
+- if @api_key.revoked?
+  %h3{:style=>"color: red"} Nyckeln har inaktiverats
+
+%p
+  %strong Nyckel
+  %span= @api_key.key
+
+%p
+  %strong Skapad av
+  %span= @api_key.created_by
+
+%h3= t 'rights'
+
+%table
+  %thead
+    %tr
+      %th Serie
+      %th= t 'rights'
+
+  %tbody
+    - @api_key.api_accesses.each do |acc|
+      %tr
+        %td= acc.serie
+        %td= acc.read_write
+    

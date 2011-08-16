@@ -1,0 +1,20 @@
+%h2 Apinycklar
+
+%p= link_to "Ny apinyckel", new_api_key_path
+
+%table
+  %thead
+    %tr
+      %th Namn
+      %th API-nyckel
+      %th{:colspan => 3}= t 'actions'
+  
+  %tbody
+    - for api_key in @api_keys
+      %tr{ :class => cycle(:odd, :even) }
+        %td= api_key.name
+        %td= truncate api_key.key, :length => 15
+        %td.action= link_to t('show'), api_key
+        %td.action= link_to t('edit'), edit_api_key_path(api_key)
+        %td.action= link_to t('destroy'), api_key, :confirm => t('are_you_sure', :default => 'Are you sure?'), :method => :delete
+

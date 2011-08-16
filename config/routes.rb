@@ -31,6 +31,8 @@ Mage::Application.routes.draw do
       end
     end
 
+    resources :api_keys
+
     resources :bank_accounting, :only => [:index, :update, :show, :create, :destroy], :controller => :bank_accounting
 
     root :to => "welcome#index"

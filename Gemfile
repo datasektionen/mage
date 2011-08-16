@@ -16,7 +16,7 @@ gem 'oa-oauth', :git => 'https://github.com/intridea/omniauth.git'
 gem 'i18n_routing'
 gem 'friendly_id'
 gem 'net-ldap'
-gem 'haml'
+gem 'haml-rails'
 gem 'simple-navigation'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'prawn', :git=>'https://github.com/sandal/prawn.git', :submodules=>true
@@ -39,5 +39,11 @@ group :development do
 end
 
 group :test do
+  gem 'ruby-debug19'
+  gem 'rcov'
+  gem 'capybara'
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
   gem 'machinist', '>= 2.0.0.beta2'
+  gem 'autotest'
 end

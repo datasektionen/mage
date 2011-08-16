@@ -29,10 +29,9 @@ ActiveRecord::Schema.define(:version => 20110815091935) do
   end
 
   create_table "api_accesses", :force => true do |t|
-    t.integer  "api_key_id",                     :null => false
-    t.integer  "serie_id",                       :null => false
-    t.integer  "granted_by_id"
-    t.string   "read_write",    :default => "r", :null => false
+    t.integer  "api_key_id",                 :null => false
+    t.integer  "serie_id",                   :null => false
+    t.string   "read_write", :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
