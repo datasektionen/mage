@@ -103,7 +103,9 @@ function add_row() {
   }
   sum_str = $("#voucher_add_row_sum").val().replace(",",".").trim()
   sum = parseFloat(sum_str)
+  console.log(sum)
   sum = Math.round(sum*100.0)/100.0 //Trim to 2 decimals
+  console.log(sum_str.charAt(0))
   if(isNaN(sum)) {
     alert("Summa måste vara ett nummer")
     return
@@ -118,14 +120,14 @@ function add_row() {
     return
   } else if(sum == 0) {
     sum = get_diff()*-1.0;
-  }
-
-  if(sum_str.charAt(0) != "+" && sum_str != "-") {
-    //Try to guess sign 
-    if(current_account.account_type == 3) {
-      sum = -1*sum;
-    } 
-    // positive for account_type 4
+  } else {
+    if(!(sum_str.charAt(0) == "+" || sum_str.charAt(0) == "-")) {
+      //Try to guess sign 
+      if(current_account.account_type == 3) {
+        sum = -1*sum;
+      } 
+      // positive for account_type 4
+    }
   }
 
   if(current_account.account_type == 3 && sum > 0 &&
