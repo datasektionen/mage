@@ -13,6 +13,7 @@ class ApiKeysController < InheritedResources::Base
 
   def create
     authorize! :write, ApiKey
+    @api_key = ApiKey.generate_key(params[:api_key][:name],current_user)
     create!
   end
 
