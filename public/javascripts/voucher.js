@@ -157,7 +157,7 @@ function add_row() {
       //End debug code
       update_sum(sum_to_add)
       $("#voucher_rows tbody").append($(data).find("html_content").text())
-      num_rows++
+      num_rows += parseInt($(data).find("num_rows").text())
       $("#spinner").hide()
     },
     error: function(data, textStatus, xhr) {
@@ -165,7 +165,7 @@ function add_row() {
       if(textStatus == "400") {
         alert("Ogiltligt konto angivet")
       } else {
-        alert("Ett internt fel uppstod. Rapportera gärna felet")
+        alert("Ett fel uppstod när raderna skulle hämtas. Försök igen. Rapportera gärna felet om det kvarstår.")
       }
     }
   })
@@ -199,7 +199,7 @@ function organ_changed() {
   $.each(arrs[parseInt($("#voucher_organ_id").val())],function(index, arr) {
     new_html += "<option value='"+arr.id+"'>"+arr.name+" ("+arr.number+")</option>"
   })
-  $("#voucher_add_row_arrangement").html(new_html)
+  $(".arr_select").html(new_html)
 }
 
 function delete_row(link,sum) {

@@ -1,13 +1,13 @@
 #-*- encoding: utf-8 -*-
-class Template < ActiveRecord::Base
+class VoucherTemplate < ActiveRecord::Base
   has_many :input_fields, :class_name=>"TemplateInputField"
   has_many :output_fields, :class_name=>"TemplateOutputField"
 
   TYPE_MULTIROW = 0
   TYPE_SINGLEROW = 1
 
-  scope :multirow, where("type=#{TYPE_MULTIROW}")
-  scope :singlerow, where("type=#{TYPE_SINGLEROW}")
+  scope :multirow, where("template_type=#{TYPE_MULTIROW}")
+  scope :singlerow, where("template_type=#{TYPE_SINGLEROW}")
 
   def parse(fields, arr)
     values = Hash.new

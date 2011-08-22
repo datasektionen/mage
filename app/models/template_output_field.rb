@@ -1,6 +1,6 @@
 #-*- encoding: utf-8 -*-
 class TemplateOutputField < ActiveRecord::Base
-  belongs_to :template, :inverse_of => :output_fields
+  belongs_to :template, :inverse_of => :output_fields, :class_name=>"VoucherTemplate"
 
   def parse(values,arr) 
     complete = true

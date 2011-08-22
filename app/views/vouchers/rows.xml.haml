@@ -1,6 +1,7 @@
 !!! XML
 %voucher
   %sum= @sum
+  %num_rows= @rows.size
   %html_content
     :cdata
-      #{render :partial => "form_row.html", :collection=>@rows}
+      #{render :partial => "vouchers/form_row.html", :collection=>@rows}

@@ -1,0 +1,12 @@
+%p.description= @template.description
+= fields_for :voucher do |fv|
+  = fv.fields_for :add_row do |f|
+    - @template.input_fields.each do |field|
+      %p.input
+        = f.label field.name
+        = f.text_field field.script_name, :class => :template_input, :script_name => field.script_name
+        %span.hint= field.description
+
+    .clear
+
+    = f.submit "Lägg till rader", :id=>"template_add_button"
