@@ -79,7 +79,7 @@ class VoucherPDF < Prawn::Document
           r.arrangement.to_s,
           currency(r.debet).to_s.to_str, #Workaround for nil and then errors when doing in place
           currency(r.kredit).to_s.to_str, #modififications on a html_safe string..
-          r.signed? ? "#{I18n.l r.created_at.to_date, :format=>:slash_notation} #{r.signature.initials}" : ""
+          r.signed? ? "#{I18n.l r.updated_at.to_date, :format=>:slash_notation} #{r.signature.initials}" : ""
         ]
         if r.canceled?
           d[0..-2].map { |i| "<strikethrough>#{i}</strikethrough>" } + [d[-1]] # Don't strike last
