@@ -25,6 +25,7 @@ class Voucher < ActiveRecord::Base
   validate :added_rows_has_signature, :if=>:id
   validate :sum_is_zero
   validate :not_empty
+  validates_associated :voucher_rows
 
   attr_readonly :number, :serie_id, :organ_id, :accounting_date, :material_from_id, :activity_year_id, :corrects_id
   attr_writeonce :authorized_by_id, :bookkept_by_id

@@ -55,6 +55,8 @@ $(function() {
   $("form input, form select").live('keydown', function(e) { 
     var keyCode = e.keyCode || e.which
     if((keyCode == 9 && !e.shiftKey) || keyCode == 13) {
+      if(keyCode == 13)
+        e.preventDefault()
       if(this.id == "voucher_add_row_sum" && keyCode == 13) {
         //Add this row (after checks)
         add_row()
@@ -71,8 +73,6 @@ $(function() {
           }
         }
       }
-      if(keyCode == 13)
-        return false
     }
   })
   $("form input, form select").keypress(function(e) {
@@ -141,7 +141,7 @@ function add_row() {
   }
   $("#spinner").show()
 
-  params = {"type" : current_account.type, "account" : current_account.number, "sum" : sum, "voucher_id": voucher_id}
+  params = {"type" : current_account.type, "account" : current_account.number, "sum" : sum, "voucher_id": voucher_id,"id":current_account.id}
   if(has_arrangements(current_account)) {
     params.arrangement = $("#voucher_add_row_arrangement").val()
   }
@@ -157,7 +157,7 @@ function add_row() {
       //End debug code
       update_sum(sum_to_add)
       $("#voucher_rows tbody").append($(data).find("html_content").text())
-      num_rows++
+      num_rows += parseInt($(data).find("num_rows").text())
       $("#spinner").hide()
     },
     error: function(data, textStatus, xhr) {
@@ -165,7 +165,7 @@ function add_row() {
       if(textStatus == "400") {
         alert("Ogiltligt konto angivet")
       } else {
-        alert("Ett internt fel uppstod. Rapportera gärna felet")
+        alert("Ett fel uppstod när raderna skulle hämtas. Försök igen. Rapportera gärna felet om det kvarstår.")
       }
     }
   })
@@ -194,12 +194,16 @@ function update_sum(diff) {
   $("#diff").html((total_sum/100.0)+" kr")
 }
 
+function organ_val() {
+  return parseInt($("#voucher_organ_id").val())
+}
+
 function organ_changed() {
   var new_html = ""
-  $.each(arrs[parseInt($("#voucher_organ_id").val())],function(index, arr) {
+  $.each(arrs[organ_val()],function(index, arr) {
     new_html += "<option value='"+arr.id+"'>"+arr.name+" ("+arr.number+")</option>"
   })
-  $("#voucher_add_row_arrangement").html(new_html)
+  $(".arr_select").html(new_html)
 }
 
 function delete_row(link,sum) {
@@ -212,7 +216,7 @@ function delete_row(link,sum) {
     row.css("text-decoration","line-through")
     update_sum(-sum)
     num_rows--;
-  } else if(voucher_id == -1 && confirm("Radera raden?")){
+  } else if(voucher_id == -1) { // && confirm("Radera raden?")){
     row.remove()
     update_sum(-sum)
     num_rows--;

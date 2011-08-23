@@ -11,7 +11,6 @@ function find_account(term) {
   }
   $.each(accounts,function(index,account) {
     if ((account.number.toString().indexOf(term) == 0) || (account.name.toLowerCase().indexOf(term.toLowerCase()) >= 0)) {
-      account.type = "account"
       results.push(account)
     }
   })
@@ -35,5 +34,5 @@ function update_account(account) {
 }
 
 function has_arrangements(account) {
-  return (account.account_type > 2)
+  return (account.has_arrangements)
 }

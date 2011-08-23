@@ -77,4 +77,16 @@ describe Voucher do
     voucher.voucher_rows = []
     voucher.should_not be_valid
   end
+
+  it "should enforce arr on voucher_rows correctly" do
+    voucher = Voucher.make
+    voucher.voucher_rows[0].account.account_type = Account::ASSET_ACCOUNT
+    voucher.voucher_rows[0].arrangement = nil
+    voucher.should be_valid
+    voucher.voucher_rows[0].arrangement = Arrangement.make
+    voucher.should_not be_valid
+
+    voucher.voucher_rows[0].account.account_type = Account::COST_ACCOUNT
+    voucher.should be_valid
+  end
 end

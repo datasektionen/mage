@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110815091935) do
+ActiveRecord::Schema.define(:version => 20110822125226) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "number"
@@ -96,6 +96,24 @@ ActiveRecord::Schema.define(:version => 20110815091935) do
   add_index "tags_vouchers", ["tag_id"], :name => "index_vouchers_tags_on_tag_id"
   add_index "tags_vouchers", ["voucher_id"], :name => "index_vouchers_tags_on_voucher_id"
 
+  create_table "template_input_fields", :force => true do |t|
+    t.integer "voucher_template_id"
+    t.string  "name"
+    t.string  "description"
+    t.string  "script_name"
+  end
+
+  add_index "template_input_fields", ["voucher_template_id"], :name => "index_template_input_fields_on_template_id"
+
+  create_table "template_output_fields", :force => true do |t|
+    t.integer "voucher_template_id"
+    t.integer "account_number"
+    t.string  "formula"
+    t.string  "script_name"
+  end
+
+  add_index "template_output_fields", ["voucher_template_id"], :name => "index_template_output_fields_on_template_id"
+
   create_table "user_accesses", :force => true do |t|
     t.integer  "user_id"
     t.integer  "serie_id"
@@ -132,6 +150,14 @@ ActiveRecord::Schema.define(:version => 20110815091935) do
     t.datetime "updated_at"
     t.boolean  "canceled",                                      :default => false, :null => false
     t.integer  "account_number",                                                   :null => false
+  end
+
+  create_table "voucher_templates", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "template_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "vouchers", :force => true do |t|

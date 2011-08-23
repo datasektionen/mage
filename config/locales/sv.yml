@@ -6,6 +6,7 @@
 
 "sv":
   rights: "Rättigheter"
+  templates: "Mallar"
 
   number:
     # Used in number_with_delimiter()
