@@ -11,7 +11,7 @@ class VoucherTemplate < ActiveRecord::Base
 
   def parse(fields, arr)
     values = Hash.new
-    fields.each { |k,f| values[k] = f.to_f }
+    fields.each { |k,f| values[k.to_s] = f.to_f }
     result = Hash.new
     to_parse = output_fields.clone
     last_size = to_parse.size

@@ -76,7 +76,9 @@ class VouchersController < InheritedResources::Base
       render :nothing=>true, :status=>400 and return if account.nil?
       @rows = [VoucherRow.new(:account=>account, :sum=>data[:sum].to_f, :arrangement_id=>data[:arrangement])]
     elsif data[:type] == "template"
-      #TODO: Templates
+      template = VoucherTemplate.find(data[:id])
+      render :nothing=>true, :status=>400 and return if template.nil?
+      @rows = template.parse({:sum=>data[:sum].to_f},data[:arrangement])
     else
       render :nothing=>true, :status=>500 and return
     end
