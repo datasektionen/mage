@@ -1,6 +1,7 @@
 #-*- encoding: utf-8 -*-
 class TemplateOutputField < ActiveRecord::Base
   belongs_to :template, :inverse_of => :output_fields, :class_name=>"VoucherTemplate"
+  belongs_to :account, :foreign_key => :account_number, :primary_key => :number
 
   def parse(values,arr) 
     complete = true
@@ -18,7 +19,7 @@ class TemplateOutputField < ActiveRecord::Base
     if complete
       sum = eval(_formula)
       Rails.logger.debug("#{script_name}: #{_formula} => #{sum}")
-
+      arr = account.has_arrangements? ? arr : nil
       VoucherRow.new(:account_number=>account_number, :arrangement_id => arr, :sum=>sum)
     else
       nil

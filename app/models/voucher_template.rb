@@ -33,4 +33,7 @@ class VoucherTemplate < ActiveRecord::Base
     result
   end
 
+  def has_arrangements?
+    output_fields.any? { |f| f.account.has_arrangements? }
+  end
 end
