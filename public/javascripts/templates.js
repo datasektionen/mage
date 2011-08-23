@@ -29,14 +29,6 @@ $(function() {
 
   $("#template_add_button").live('click', add_template_rows)
 
-  $(".template_input").live('keydown', function(e) {
-    var keyCode = e.keyCode || e.which
-    if(keyCode == 13) {
-      add_template_rows()
-      return false
-    }
-  })
-
   function add_template_rows() {
     fields = {}
     $(".template_input").each(function(i,o) {

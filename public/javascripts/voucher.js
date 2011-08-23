@@ -54,9 +54,11 @@ $(function() {
   //Bind keys
   $("form input, form select").live('keydown', function(e) { 
     var keyCode = e.keyCode || e.which
+    if(keyCode == 13)
+      e.preventDefault()
+
     if((keyCode == 9 && !e.shiftKey) || keyCode == 13) {
-      if(keyCode == 13)
-        e.preventDefault()
+
       if(this.id == "voucher_add_row_sum" && keyCode == 13) {
         //Add this row (after checks)
         add_row()
@@ -64,8 +66,9 @@ $(function() {
         $(this).triggerHandler('blur')
         if(keyCode == 13) {
           next = this
+          items = $("form input, form select").filter(":visible")
           do {
-            next = $("form input, form select")[$("form input, form select").index(next)+1]
+            next = items[items.index(next)+1]
           } while(next != undefined && (next.type == "hidden" || $(next).attr("disabled")))
 
           if(next != undefined) {
@@ -77,6 +80,8 @@ $(function() {
   })
   $("form input, form select").keypress(function(e) {
     var keyCode = e.keyCode || e.which
+    if(keyCode == 13)
+      e.preventDefault()
     if(keyCode == 43) { //+
       sum = parseFloat($("#voucher_add_row_sum").val())
       if(!isNaN(sum)) {
