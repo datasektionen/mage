@@ -18,10 +18,7 @@
     #templates{:style=>"display:none"}
       %p.input
         = r.label "Mall", :required=>false
-        = r.select :template, options_from_collection_for_select(VoucherTemplate.multirow, :id, :name)
-      %p.input
-        = r.label "Arrangemang", :required=>false
-        = r.select :template_arrangement, options_from_collection_for_select(@voucher.organ.arrangements,:id, :list_print),{}, :class=>"arr_select"
+        = r.select :template, "<option/>"+options_from_collection_for_select(VoucherTemplate.multirow, :id, :name)
       #template_fields.clear
       
 

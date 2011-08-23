@@ -1,6 +1,12 @@
 %p.description= @template.description
 = fields_for :voucher do |fv|
   = fv.fields_for :add_row do |f|
+    - if @template.has_arrangements?
+      %p.input
+        = f.label "Arrangemang", :required=>false
+        = f.select :template_arrangement, options_from_collection_for_select(@organ.arrangements,:id, :list_print),{}, :class=>"arr_select"
+      .clear
+
     - @template.input_fields.each do |field|
       %p.input
         = f.label field.name

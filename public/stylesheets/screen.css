@@ -366,9 +366,11 @@ thead tr {
   padding-top: 0px;
   padding-bottom: 0px; }
   #templates_fieldset legend {
-    font-size: 0.85em; }
-    #templates_fieldset legend img {
+    font-size: 0.7em; }
+    #templates_fieldset legend a {
       border: none; }
+    #templates_fieldset legend img {
+      width: 12px; }
 
 /* Typography presets
  * ------------------

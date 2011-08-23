@@ -14,13 +14,17 @@ $(function() {
   })
 
   $("#voucher_add_row_template").change(function() {
-    $.ajax( {
-      url: template_fields_url,
-      data: {"template" : $("#voucher_add_row_template").val() },
-      success: function(data, textStatus, xhr) {
-        $("#template_fields").html(data)
-      }
-    })
+    if($("#voucher_add_row_template").val() == "") {
+      $("#template_fields").html("")
+    } else {
+      $.ajax( {
+        url: template_fields_url,
+        data: {"template" : $("#voucher_add_row_template").val(), "organ":organ_val() },
+        success: function(data, textStatus, xhr) {
+          $("#template_fields").html(data)
+        }
+      })
+    }
   })
 
   $("#template_add_button").live('click', add_template_rows)
@@ -38,22 +42,23 @@ $(function() {
     $(".template_input").each(function(i,o) {
       fields[$(o).attr("script_name")] = $(o).val()
     })
-    params =  {"template": $("#voucher_add_row_template").val(), "arrangement" : $("#voucher_add_row_template_arrangement").val(), "fields" : fields }
+    params =  {
+      "template": $("#voucher_add_row_template").val(), 
+      "arrangement" : $("#voucher_add_row_template_arrangement").val(),
+      "fields" : fields
+    }
 
     $.ajax( {
       url: template_parse_url, 
       type: "POST",
       data: params,
       success: function(data, textStatus, xhr) {
-        ///DEBUG CODE: TODO: Remove
-          sum_to_add = parseFloat($(data).find("sum").text())
-          if(sum_to_add == 0) {
-            alert("Warning, sum to add was 0 (<sum>: "+$(data).find("sum").text()+")")
-          }
-        //End debug code
+        sum_to_add = parseFloat($(data).find("sum").text())
         update_sum(sum_to_add)
         $("#voucher_rows tbody").append($(data).find("html_content").text())
         num_rows += parseInt($(data).find("num_rows").text())
+        $("#template_fields").html("")
+        $("#voucher_add_row_template").val("")
       },
       error: function(data, textStatus, xhr) {
         if(textStatus == "400") {
@@ -65,8 +70,5 @@ $(function() {
     })
     return false
   }
-
-  //Trigger change for template select:
-  $("#voucher_add_row_template").change()
 
 })

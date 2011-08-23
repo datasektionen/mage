@@ -1,6 +1,6 @@
 #-*- encoding: utf-8 -*-
 class TemplateOutputField < ActiveRecord::Base
-  belongs_to :template, :inverse_of => :output_fields, :class_name=>"VoucherTemplate"
+  belongs_to :template, :inverse_of => :output_fields, :class_name=>"VoucherTemplate", :foreign_key => :voucher_template_id
   belongs_to :account, :foreign_key => :account_number, :primary_key => :number
 
   def parse(values,arr) 
