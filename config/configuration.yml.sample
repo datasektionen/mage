@@ -3,6 +3,7 @@ common:
   default_host: "www.d.kth.se/staging/cashflow"
   organization_name: "Konglig Datasektionen"
   keep_journal_days: 366
+  google_analytics: UA-BLARGH
 
 production: &production
   ldap_host: ldap.sys.kth.se
