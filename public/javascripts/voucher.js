@@ -165,9 +165,9 @@ function add_row() {
       num_rows += parseInt($(data).find("num_rows").text())
       $("#spinner").hide()
     },
-    error: function(data, textStatus, xhr) {
+    error: function(xhr, textStatus, errorThrown) {
       $("#spinner").hide()
-      if(textStatus == "400") {
+      if(xhr.status == 400) {
         alert("Ogiltligt konto angivet")
       } else {
         alert("Ett fel uppstod när raderna skulle hämtas. Försök igen. Rapportera gärna felet om det kvarstår.")

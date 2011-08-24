@@ -52,11 +52,11 @@ $(function() {
         $("#template_fields").html("")
         $("#voucher_add_row_template").val("")
       },
-      error: function(data, textStatus, xhr) {
-        if(textStatus == "400") {
-          alert("Ett fel uppstod: "+data)
+      error: function(xhr, textStatus, errorThrown) {
+        if(xhr.status == 400) {
+          alert("Ett fel uppstod: "+xhr.responseText)
         } else {
-          alert("Ett fel uppstod när raderna skulle hämtas. Försök igen. Rapportera gärna felet om det kvarstår.")
+          alert(textStatus+"Ett fel uppstod när raderna skulle hämtas. Försök igen. Rapportera gärna felet om det kvarstår.")
         }
       }
     })
