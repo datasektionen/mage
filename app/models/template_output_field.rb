@@ -17,8 +17,8 @@ class TemplateOutputField < ActiveRecord::Base
       end
     end
     if complete
+      Rails.logger.debug("#{script_name}: #{_formula}")
       sum = eval(_formula)
-      Rails.logger.debug("#{script_name}: #{_formula} => #{sum}")
       arr = account.has_arrangements? ? arr : nil
       VoucherRow.new(:account_number=>account_number, :arrangement_id => arr, :sum=>sum)
     else
