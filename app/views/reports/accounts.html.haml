@@ -1,0 +1,21 @@
+-# %h3 Serie
+-# = render "accounting/select"
+
+%h3 Period
+= simple_form_for accounts_reports_path do |f|
+  = f.input :from, :input_html => { :value => @from.to_date }, :required => false # ":as => :date" funkar inte :(
+  = f.input :to, :input_html => { :value => @to.to_date }, :required => false
+  .clear
+  = f.submit
+
+%h3 Summor
+%table.datatable
+  %thead
+    %th Nummer
+    %th Namn
+    %th Summa
+  - @accounts.each do |account, sum|
+    %tr
+      %td= account.number
+      %td= account.name
+      %td= currency sum
