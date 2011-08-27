@@ -8,4 +8,7 @@ class ReportsController < ApplicationController
     voucher_rows = VoucherRow.where(:canceled => false).joins(:voucher).joins(:account).where(['vouchers.accounting_date >= ? AND vouchers.accounting_date <= ?', @from, @to]).order('accounts.number')
     @accounts = voucher_rows.group_by(&:account).map{|k, v| {k => v.sum(&:sum)}}.inject({}){|h,i| h.merge(i)}
   end
+
+  def arrangements
+  end
 end

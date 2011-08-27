@@ -1,13 +1,6 @@
 -# %h3 Serie
 -# = render "accounting/select"
 
-%h3 Period
-= simple_form_for accounts_reports_path do |f|
-  = f.input :from, :input_html => { :value => @from.to_date }, :required => false # ":as => :date" funkar inte :(
-  = f.input :to, :input_html => { :value => @to.to_date }, :required => false
-  .clear
-  = f.submit
-
 %h3 Summor
 %table.datatable
   %thead
