@@ -12,7 +12,9 @@ class VouchersController < InheritedResources::Base
     @voucher.organ = current_serie.default_organ
     @voucher.serie = current_serie
     @voucher.activity_year = current_activity_year
-    @voucher.accounting_date = Voucher.where(:serie_id=>current_serie.id).last.accounting_date
+    last_voucher = Voucher.where(:serie_id=>current_serie.id).last
+    @voucher.accounting_date = Time.now 
+    @voucher.accounting_date = last_voucher.accounting_date unless last_voucher.nil?
 
     authorize! :write, @voucher
 
@@ -76,7 +78,9 @@ class VouchersController < InheritedResources::Base
       render :nothing=>true, :status=>400 and return if account.nil?
       @rows = [VoucherRow.new(:account=>account, :sum=>data[:sum].to_f, :arrangement_id=>data[:arrangement])]
     elsif data[:type] == "template"
-      #TODO: Templates
+      template = VoucherTemplate.find(data[:id])
+      render :nothing=>true, :status=>400 and return if template.nil?
+      @rows = template.parse({:sum=>data[:sum].to_f},data[:arrangement])
     else
       render :nothing=>true, :status=>500 and return
     end

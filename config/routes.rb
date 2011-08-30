@@ -9,7 +9,12 @@ Mage::Application.routes.draw do
     resources :journals
     resources :series
     resources :users
-    resources :reports
+    resources :reports, :only => :index do
+      collection do
+        post :accounts
+        post :arrangements
+      end
+    end
     resources :vouchers, :except => :destroy do 
       collection do
         get :rows, :defaults => {:format => :xml}
@@ -28,6 +33,13 @@ Mage::Application.routes.draw do
     resources :accounting, :only => [:index], :controller => "accounting" do
       collection do
         post :index
+      end
+    end
+
+    resources :templates do 
+      collection do
+        get :fields
+        post :parse
       end
     end
 

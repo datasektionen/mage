@@ -1,0 +1,21 @@
+-# %h3 Serie
+-# = render "accounting/select"
+
+- Organ.all.each do |organ|
+  %h2.tree-node= organ.name
+  .tree-content
+    - organ.arrangements.each do |arr|
+      %h3.tree-node= arr
+      .tree-content
+        %table.datatable
+          %thead
+            %th Nummer
+            %th Namn
+            %th Summa
+          - rows_for(arr).each do |account, sum|
+            %tr
+              %td= account.number
+              %td= account.name
+              %td= currency sum
+
+- javascript %w(reports.js)

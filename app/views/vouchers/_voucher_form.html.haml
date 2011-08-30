@@ -1,19 +1,34 @@
 - # Partial for creating voucher rows. Should be inside a form
 - javascript %w(jquery/jquery.form.js jquery/jquery.ui.custom.min.js)
-- javascript %w(accounts.js voucher.js)
+- javascript %w(accounts.js voucher.js templates.js)
 
 - #Hidden attributes
 = f.input :serie_id, :as=>:hidden
 = f.input :activity_year_id, :as=>:hidden
 
+
 %h4 Lägg till rad
 = f.fields_for :add_row do |r|
+
+  %fieldset#templates_fieldset
+    %legend
+      = t 'templates'
+      = link_to(image_tag('icons/add.png'),'#',:id=>"expand_templates")
+      = link_to(image_tag('icons/delete.png'),'#',:id=>"hide_templates",:style=>"display:none")
+    #templates{:style=>"display:none"}
+      %p.input
+        = r.label "Mall", :required=>false
+        = r.select :template, "<option/>"+options_from_collection_for_select(VoucherTemplate.multirow, :id, :name)
+      #template_fields.clear
+      
+
+
   %p.input
     = r.label "Konto", :required => false
     = r.text_field :account, :size=>5
   %p.input
     = r.label "Arrangemang", :required => false
-    = r.select :arrangement, options_from_collection_for_select(@voucher.organ.arrangements,:id, :list_print), {}, :disabled=>true
+    = r.select :arrangement, options_from_collection_for_select(@voucher.organ.arrangements,:id, :list_print), {}, :disabled=>true, :class=>"arr_select"
   %p.input.money
     = r.label "Summa (kr)", :required => false
     = r.text_field :sum, :size => 20
@@ -49,8 +64,11 @@
 :javascript
   var voucher_id = #{@voucher.id ? @voucher.id : -1}
   set_diff(#{@voucher.sum})
-  var accounts = #{Account.order("number").select([:number,:name,:account_type]).to_json }
+  var accounts = #{(Account.order("number").map { |a| {:number=>a.number,:name=>a.name,:account_type=>a.account_type,:has_arrangements=>a.has_arrangements?, :type=>'account'} }+
+                    VoucherTemplate.singlerow.map { |t| {:number=> "Mall #{t.id}", :name=>t.name, :type=>'template', :has_arrangements=>t.has_arrangements?, :id=>t.id} }).to_json }
   var voucher_row_url = "#{rows_vouchers_path}"
+  var template_fields_url = "#{fields_templates_path}"
+  var template_parse_url = "#{parse_templates_path}"
   var arrs = #{Organ.all.reduce(Hash.new) {|h,o| h[o.id] = o.arrangements.select([:id,:number,:name]) ; h }.to_json}
   var num_rows = #{@voucher.voucher_rows.size}
   var user_initials = "#{current_user.initials}"

@@ -8,6 +8,7 @@ class VoucherRow < ActiveRecord::Base
   validates_presence_of :signature, :if=>:canceled
   validates_presence_of :voucher, :sum, :account
   validates_presence_of :arrangement, :if => Proc.new { account.has_arrangements? }
+  validate :no_arrangement, :unless => Proc.new { account.has_arrangements? }
   
   attr_readonly :account_number, :sum, :arrangement_id, :voucher_id
 
@@ -34,5 +35,10 @@ class VoucherRow < ActiveRecord::Base
   # Define output in log, used by Voucher.to_log
   def to_log
     "#{canceled? ? "STRUKET " : ""}#{account_number} - Arr: #{arrangement} - Summa: #{sum} #{signed? ? " - Ändrat: #{I18n.l updated_at.to_date} #{signature.initials}" : ""}"
+  end
+
+protected
+  def no_arrangement
+    arrangement.nil? && arrangement_id.nil?
   end
 end

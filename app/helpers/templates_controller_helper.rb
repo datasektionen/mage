@@ -1,0 +1,2 @@
+module TemplatesControllerHelper
+end

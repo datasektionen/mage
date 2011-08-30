@@ -8,9 +8,9 @@ class Account < ActiveRecord::Base
   before_create :set_account_type
 
   def guess_account_type!
-    if number <= 1999
+    if number <= 1999 || (number > 3700 && number <= 3799 ) #Tillsvidare fulhack
       self.account_type = ASSET_ACCOUNT
-    elsif number <= 2999
+    elsif number <= 2999 
       self.account_type = DEBT_ACCOUNT
     elsif number <= 3999
       self.account_type = INCOME_ACCOUNT

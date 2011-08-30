@@ -23,11 +23,10 @@ gem 'prawn', :git=>'https://github.com/sandal/prawn.git', :submodules=>true
 gem 'rqrcode'
 gem 'prawn-qrcode', '~> 0.1.1', :git=>'https://github.com/torandi/prawn-qrcode.git'
 gem 'cancan'
-gem 'capistrano'
-gem 'unicorn'
 
 group :production do
   gem 'mysql2', '~> 0.2.6'
+  gem 'unicorn'
 end
 
 group :development, :test do
@@ -46,4 +45,10 @@ group :test do
   gem 'database_cleaner'
   gem 'machinist', '>= 2.0.0.beta2'
   gem 'autotest'
+end
+
+group :deploy do
+  gem 'capistrano'
+  gem 'capistrano-ext'
+  gem 'capistrano_colors'
 end
