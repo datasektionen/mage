@@ -19,7 +19,7 @@ class Ability
             unless serie.nil?
               if action == :read
                 user.series.include? serie
-              elsif action == :write
+              elsif action == :write || action == :update || action == :create || action == :destroy
                 a = user.accesses.find_by_serie_id(serie.id)
                 a ? a.write_access? : false
               else

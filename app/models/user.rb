@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
 
   has_friendly_id :login
 
+  accepts_nested_attributes_for :accesses, :allow_destroy => true
+
   # String representation of a user
   def to_s
     name
@@ -22,8 +24,10 @@ class User < ActiveRecord::Base
     "%s %s" % [first_name, last_name]
   end
 
-  def has_access_to?(serie)
-    self.admin? || accesses.any? {|a| a.serie == serie }
+  # Returns true if user has access to given series
+  # Set use_admin to false to ignore admin status
+  def has_access_to?(serie,use_admin=true)
+    use_admin && self.admin? || accesses.any? {|a| a.serie == serie }
   end
 
   def admin?

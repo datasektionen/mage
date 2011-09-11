@@ -18,7 +18,6 @@
           %th Serie
           %th= t 'rights'
       %tbody
-        -# @api_key.series_access(Serie.all).each do |acc|
         = f.simple_fields_for :api_accesses do |fa|
           %tr
             %td= fa.object.serie

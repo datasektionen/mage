@@ -170,6 +170,9 @@ p.input {
     display: block;
     font-size: 0.7em; }
 
+p.input.boolean input, p.input.boolean label {
+  display: inline; }
+
 label {
   display: block;
   font-size: 0.75em; }
@@ -474,11 +477,3 @@ h1 a, h1 a:hover, h1 a:visited {
 
 .error {
   color: red; }
-
-.tree-node {
-  cursor: pointer;
-}
-
-.tree-content {
-  margin-left: 1em;
-}
