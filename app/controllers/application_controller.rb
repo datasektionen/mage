@@ -1,6 +1,9 @@
 module Mage
   class Unauthorized < ::Exception
   end
+
+  class ApiError < ::Exception
+  end
 end
 
 class ApplicationController < ActionController::Base
@@ -14,6 +17,10 @@ class ApplicationController < ActionController::Base
   rescue_from Mage::Unauthorized do |exception|
     render :file => "#{Rails.root}/public/401.html", :layout => false, :status => 401
   end
+
+  rescue_from Mage::ApiError do |exception|
+ 	 render :text => "Api Error: #{exception.message}"
+  end	
   
   # Returns the serie set in session[:current_serie] or default_serie if it is not set
   def current_serie
@@ -29,6 +36,43 @@ class ApplicationController < ActionController::Base
   def current_activity_year
     return ActivityYear.find(session[:current_activity_year]) if session[:current_activity_year]
     return ActivityYear.order("year").last
+  end
+
+  def current_ability
+	 unless current_api_key
+		Ability.new current_user
+	 else
+		ApiAbility.new current_api_key
+	 end	
+  end
+
+  def current_user
+	 unless current_api_key
+		super
+	 else
+		u = User.find_by_ugid(params[:ugid]) if params[:ugid]
+		unless u
+			raise Mage::ApiError.new("Invalid user or ugid parameter missing")
+		else
+			u
+		end
+	 end
+  end
+
+  def current_api_key
+  	 return @api_key if @api_key
+	 @api_key = ApiKey.find_by_key(params[:api_key]) if params[:api_key]
+	 if @api_key
+		if current_user
+			return @api_key
+		else
+			return false
+		end
+	 elsif params[:api_key]
+	 	raise Mage::ApiError.new("Invalid api key")		
+	 else
+	 	false
+	 end
   end
 
   # Sets global session values (as specified above)

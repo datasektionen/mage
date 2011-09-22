@@ -25,8 +25,9 @@ class ApiKey < ActiveRecord::Base
   end
 
   # Type is :read, :write or :read_write
-  def has_access?(serie, type) 
+  def has_access?(serie=nil, type=nil) 
     return false if revoked?
+	 return true if serie.nil? && type.nil?
     a = find_access(serie)
     return false if a.nil?
 
