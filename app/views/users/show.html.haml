@@ -9,6 +9,8 @@
   %dd= auto_link(@user.email).html_safe
   %dt Initialer
   %dd= @user.initials
+  %dt Standardserie
+  %dd= @user.default_serie.nil? ? "Ingen" : @user.default_serie
 
 %hr
 
