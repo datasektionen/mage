@@ -9,7 +9,7 @@ class VouchersController < InheritedResources::Base
 
   def new
     @voucher = Voucher.new
-    @voucher.organ = current_serie.default_organ
+    @voucher.organ = current_serie.default_organ || Organ.first
     @voucher.serie = current_serie
     @voucher.activity_year = current_activity_year
     last_voucher = Voucher.where(:serie_id=>current_serie.id).last
