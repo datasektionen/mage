@@ -8,12 +8,32 @@ class ApiKey < ActiveRecord::Base
   validates_uniqueness_of :name, :key
 
   def self.generate_key(name, current_user)
-    api_key = ApiKey.new(:name => name, :created_by => current_user, :key => SecureRandom.hex(32))
+    api_key = ApiKey.new(:name => name, :created_by => current_user, :key => SecureRandom.hex(32), :private_key => SecureRandom.hex(8))
     if api_key.save
       api_key
     else
       nil
     end
+  end
+
+  def self.authorize(params) 
+    if params[:apikey]
+      tmp = params.clone
+      tmp.delete :checksum
+      api_key = self.find_by_key(params[:apikey])
+      if params[:checksum] == api_key.create_hash(tmp) 
+        return api_key
+      else
+        return nil
+      end
+    else
+      nil
+    end
+  end
+
+  def create_hash(params)
+    require 'digest/sha1'
+    Digest::SHA1.hexdigest(params.map {|obj| "#{obj[0]}=#{obj[1]}" }.join(",")+private_key)
   end
 
   def revoked?

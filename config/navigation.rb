@@ -59,6 +59,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
     primary.item :administration, 'Administrera', administration_index_path, :if => Proc.new { current_user.admin? } do |admin|
       admin.item :users, "Användare", users_path
+      admin.item :api_keys, "Apinycklar", api_keys_path
     end
 
     # you can also specify a css id or class to attach to this particular level

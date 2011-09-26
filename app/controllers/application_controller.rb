@@ -60,18 +60,18 @@ class ApplicationController < ActionController::Base
   end
 
   def current_api_key
-  	 return @api_key if @api_key
-	 @api_key = ApiKey.find_by_key(params[:api_key]) if params[:api_key]
-	 if @api_key
+  	 return @apikey if @apikey
+	 @apikey = ApiKey.authorize(params)
+	 if @apikey
 		if current_user
-			return @api_key
+			return @apikey
 		else
-			return false
+			return nil
 		end
-	 elsif params[:api_key]
+	 elsif params[:apikey]
 	 	raise Mage::ApiError.new("Invalid api key")		
 	 else
-	 	false
+	 	nil
 	 end
   end
 
