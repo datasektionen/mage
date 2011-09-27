@@ -29,7 +29,7 @@ class VoucherRow < ActiveRecord::Base
   end
 
   def kredit
-    sum < 0 ? sum : nil
+    sum < 0 ? sum.abs : nil
   end
 
   # Define output in log, used by Voucher.to_log
