@@ -29,9 +29,9 @@ class VouchersController < InheritedResources::Base
     params[:voucher].delete(:add_row)
     @voucher = Voucher.new(params[:voucher])
     authorize! :write, @voucher
-    @voucher.set_number!
     if not current_api_key
       @voucher.bookkept_by = current_user
+      @voucher.set_number!
     else
       @voucher.bookkept_by = nil
       @voucher.api_key = current_api_key

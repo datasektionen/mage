@@ -65,7 +65,7 @@ class Voucher < ActiveRecord::Base
   end
 
   def pretty_number
-    if bookkept?
+    unless serie.nil?
       "#{serie.letter}#{number}"
     else
       "M---"
