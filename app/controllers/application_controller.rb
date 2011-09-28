@@ -63,7 +63,6 @@ class ApplicationController < ActionController::Base
   def current_api_key
   	 return @apikey if @apikey
 	 @apikey = ApiKey.authorize(params)
-    logger.debug("API: #{@apikey.inspect}")
 	 if @apikey
       @apikey
 	 elsif params[:apikey]
