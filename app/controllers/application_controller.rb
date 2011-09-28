@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from Mage::ApiError do |exception|
- 	 render :json=> {"status"=>0, "msg"=>"Api Error: #{exception.message}"}, :status=>401
+ 	 render :json=> {"status"=>0, "msg"=>"Api Error: #{exception.message}"}, :status=>500
   end	
   
   # Returns the serie set in session[:current_serie] or default_serie if it is not set
@@ -50,7 +50,12 @@ class ApplicationController < ActionController::Base
 	 unless current_api_key
 		super
 	 else
-      nil
+      u = User.find_by_ugid(params[:ugid]) if params[:ugid]
+      unless u
+        raise Mage::ApiError.new("Invalid user or ugid parameter missing")
+      else
+        u
+      end
 	 end
   end
 
@@ -64,7 +69,11 @@ class ApplicationController < ActionController::Base
   	 return @apikey if @apikey
 	 @apikey = ApiKey.authorize(params)
 	 if @apikey
-      @apikey
+      if current_user
+        @apikey
+      else
+        nil
+      end
 	 elsif params[:apikey]
 	 	raise Mage::ApiError.new("Invalid api key")		
 	 else

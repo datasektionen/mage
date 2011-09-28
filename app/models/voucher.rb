@@ -19,7 +19,7 @@ class Voucher < ActiveRecord::Base
 
   validates_presence_of :number, :if=>:bookkept_by_id
   validates_presence_of :serie, :organ, :accounting_date, :activity_year, :material_from
-  validates_uniqueness_of :number, :scope => [:serie_id, :activity_year_id]
+  validates_uniqueness_of :number, :scope => [:serie_id, :activity_year_id], :if=>:bookkept_by_id
 
   accepts_nested_attributes_for :voucher_rows, :allow_destroy => false
 
@@ -37,7 +37,10 @@ class Voucher < ActiveRecord::Base
     where("serie_id = ?", s.id).
     order("created_at DESC")
   }
-
+  
+  def self.incomplete
+    return unscoped.where("bookkept_by_id is null")
+  end
 
 
   def self.search(search, current_activity_year, user)

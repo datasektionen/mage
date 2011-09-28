@@ -41,12 +41,22 @@ class VouchersController < InheritedResources::Base
   end
 
   def api_create
+    unless params[:voucher]
+      raise Mage::ApiError.new("Voucher data missing")
+    end
     params[:voucher][:serie] = Serie.find_by_letter(params[:voucher][:serie])
     if params[:voucher][:serie].nil?
-      render :status=>500, :json=> {'status'=> 0, "msg"=>"Invalid serie"} and return
+      raise Mage::ApiError.new("Invalid serie")
     end
+
+    params[:voucher][:activity_year] = ActivityYear.find_by_year(params[:voucher][:activity_year])
+    params[:voucher][:authorized_by] = User.find_by_ugid(params[:voucher][:authorized_by])
+    params[:voucher][:material_from] = User.find_by_ugid(params[:voucher][:material_from])
+
     # Parse arrangement number to id
     #params[:voucher][:arrangement
+
+
     @voucher = Voucher.new(params[:voucher])
     begin
       authorize! :write, @voucher
@@ -58,7 +68,7 @@ class VouchersController < InheritedResources::Base
     if @voucher.save
       render :json => { 'status'=> 1 }
     else
-      render :status=>500, :json=> {'status'=> 0, "msg"=>"Save failed: #{@voucher.errors.inspect}"}
+      raise Mage::ApiError.new("Save failed: #{@voucher.errors.inspect}")
     end
   end
 
