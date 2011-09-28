@@ -41,12 +41,13 @@ class VouchersController < InheritedResources::Base
   end
 
   def api_create
-    serie = Serie.find_by_letter(params[:serie])
-    if serie.nil?
+    params[:voucher][:serie] = Serie.find_by_letter(params[:voucher][:serie])
+    if params[:voucher][:serie].nil?
       render :status=>500, :json=> {'status'=> 0, "msg"=>"Invalid serie"} and return
     end
+    # Parse arrangement number to id
+    #params[:voucher][:arrangement
     @voucher = Voucher.new(params[:voucher])
-    @voucher.serie = serie
     begin
       authorize! :write, @voucher
     rescue CanCan::AccessDenied
