@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 class VouchersController < InheritedResources::Base 
   actions :all, :except => [:destroy]
-  after_filter LogFilter , :only=>[:create,:update]
+  after_filter LogFilter , :only=>[:create,:update, :api_create]
 
   def index
     @vouchers = Voucher.search(params[:search], current_activity_year, current_user)
@@ -34,6 +34,7 @@ class VouchersController < InheritedResources::Base
       @voucher.bookkept_by = current_user
     else
       @voucher.bookkept_by = nil
+      @voucher.api_key = current_api_key
     end
     @voucher.material_from = current_user
     create!(:notice => "Verifikat #{@voucher.pretty_number} skapades") { new_voucher_path }
@@ -52,6 +53,7 @@ class VouchersController < InheritedResources::Base
       render :status=>403, :json => {'status'=>0, "msg"=>"Access denied"} and return
     end
     @voucher.bookkept_by = nil # Make sure this is not set
+    @voucher.api_key = current_api_key
     if @voucher.save
       render :json => { 'status'=> 1 }
     else

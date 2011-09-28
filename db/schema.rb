@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110922190503) do
+ActiveRecord::Schema.define(:version => 20110928155511) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "number"
@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(:version => 20110922190503) do
     t.string   "title"
     t.integer  "authorized_by_id"
     t.integer  "material_from_id"
+    t.integer  "api_key_id"
   end
 
 end

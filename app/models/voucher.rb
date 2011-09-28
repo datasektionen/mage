@@ -28,7 +28,7 @@ class Voucher < ActiveRecord::Base
   validate :not_empty
   validates_associated :voucher_rows
 
-  attr_readonly :number, :serie_id, :organ_id, :accounting_date, :material_from_id, :activity_year_id, :corrects_id
+  attr_readonly :number, :serie_id, :organ_id, :accounting_date, :material_from_id, :activity_year_id, :corrects_id, :api_key_id
   attr_writeonce :authorized_by_id, :bookkept_by_id
 
   default_scope where('bookkept_by_id is not null') # By default only show bookkept vouchers
