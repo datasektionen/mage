@@ -50,24 +50,22 @@ class ApplicationController < ActionController::Base
 	 unless current_api_key
 		super
 	 else
-		u = User.find_by_ugid(params[:ugid]) if params[:ugid]
-		unless u
-			raise Mage::ApiError.new("Invalid user or ugid parameter missing")
-		else
-			u
-		end
+      nil
 	 end
+  end
+
+  def authenticate_user!
+    unless current_api_key
+      super
+    end
   end
 
   def current_api_key
   	 return @apikey if @apikey
 	 @apikey = ApiKey.authorize(params)
+    logger.debug("API: #{@apikey.inspect}")
 	 if @apikey
-		if current_user
-			return @apikey
-		else
-			return nil
-		end
+      @apikey
 	 elsif params[:apikey]
 	 	raise Mage::ApiError.new("Invalid api key")		
 	 else
@@ -93,7 +91,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def verify_user!
-    redirect_to root_path unless current_user.has_access?
+    redirect_to root_path unless current_api_key || current_user.has_access?
   end
 
   private

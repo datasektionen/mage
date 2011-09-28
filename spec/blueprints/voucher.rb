@@ -18,3 +18,8 @@ end
 Voucher.blueprint :without_rows do
   voucher_rows { [] }
 end
+
+Voucher.blueprint :not_bookkept do
+  number {nil}
+  bookkept_by {nil}
+end

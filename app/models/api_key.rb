@@ -20,8 +20,10 @@ class ApiKey < ActiveRecord::Base
     if params[:apikey]
       tmp = params.clone
       tmp.delete :checksum
+      tmp.delete :format
       api_key = self.find_by_key(params[:apikey])
-      if params[:checksum] == api_key.create_hash(tmp) 
+      Rails.logger.debug("Calculated checksum: #{ ApiCall::create_hash(tmp,api_key.private_key)  }")
+      if params[:checksum] == ApiCall::create_hash(tmp,api_key.private_key) 
         return api_key
       else
         return nil
@@ -29,11 +31,6 @@ class ApiKey < ActiveRecord::Base
     else
       nil
     end
-  end
-
-  def create_hash(params)
-    require 'digest/sha1'
-    Digest::SHA1.hexdigest(params.map {|obj| "#{obj[0]}=#{obj[1]}" }.join(",")+private_key)
   end
 
   def revoked?

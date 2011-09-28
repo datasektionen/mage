@@ -20,6 +20,7 @@ Mage::Application.routes.draw do
         get :rows, :defaults => {:format => :xml}
         post :print, :default => {:format => :pdf}
         get :print, :default => {:format => :pdf}
+        post :api_create, :defaults => {:format => :json}
       end
     end
 

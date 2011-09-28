@@ -21,7 +21,11 @@ class VoucherRow < ActiveRecord::Base
   end
 
   def destroy
-    raise "[VoucherRow] Tried to delete voucher_row!"
+    if voucher.bookkept?
+      raise "[VoucherRow] Tried to delete voucher_row from bookkept voucher!"
+    else
+      super
+    end
   end
 
   def debet

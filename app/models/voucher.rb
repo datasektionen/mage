@@ -15,14 +15,15 @@ class Voucher < ActiveRecord::Base
 
   belongs_to :api_key
 
-  before_validation :set_number!
+  before_validation :set_number!, :if=>:bookkept_by_id
 
-  validates_presence_of :number, :serie, :organ, :accounting_date, :activity_year, :material_from
+  validates_presence_of :number, :if=>:bookkept_by_id
+  validates_presence_of :serie, :organ, :accounting_date, :activity_year, :material_from
   validates_uniqueness_of :number, :scope => [:serie_id, :activity_year_id]
 
   accepts_nested_attributes_for :voucher_rows, :allow_destroy => false
 
-  validate :added_rows_has_signature, :if=>:id
+  validate :added_rows_has_signature, :if=>:bookkept?
   validate :sum_is_zero
   validate :not_empty
   validates_associated :voucher_rows
@@ -64,7 +65,11 @@ class Voucher < ActiveRecord::Base
   end
 
   def pretty_number
-    "#{serie.letter}#{number}"
+    if bookkept?
+      "#{serie.letter}#{number}"
+    else
+      "M---"
+    end
   end
 
   def set_number!
@@ -82,7 +87,12 @@ class Voucher < ActiveRecord::Base
   end
 
   def destroy
-    raise "[Voucher] Tried to delete voucher!"
+    if bookkept?
+      raise "[Voucher] Tried to delete bookkept voucher!"
+    else
+      voucher_rows.destroy
+      super
+    end
   end
     
   # sum(abs(row.sum))/2
@@ -136,6 +146,12 @@ Utlägg godkänt av: #{authorized_by_to_s}
       vr.sum *= -1
       vr
     end
+  end
+
+  # Returns true if the voucher is bookkept
+  # Notice: A voucher create from api is not bookkept until someone accepts it in mage
+  def bookkept?
+    return !(bookkept_by.nil? || id.nil?)
   end
 
 private

@@ -30,9 +30,32 @@ class VouchersController < InheritedResources::Base
     @voucher = Voucher.new(params[:voucher])
     authorize! :write, @voucher
     @voucher.set_number!
-    @voucher.bookkept_by = current_user
+    if not current_api_key
+      @voucher.bookkept_by = current_user
+    else
+      @voucher.bookkept_by = nil
+    end
     @voucher.material_from = current_user
     create!(:notice => "Verifikat #{@voucher.pretty_number} skapades") { new_voucher_path }
+  end
+
+  def api_create
+    params[:serie] = Serie.find_by_letter(params[:serie])
+    if params[:serie].nil?
+      render :status=>500, :json=> {'status'=> 0, "msg"=>"Invalid serie"} and return
+    end
+    @voucher = Voucher.new(params[:voucher])
+    begin
+      authorize! :write, @voucher
+    rescue CanCan::AccessDenied
+      render :status=>403, :json => {'status'=>0, "msg"=>"Access denied"} and return
+    end
+    @voucher.bookkept_by = nil # Make sure this is not set
+    if @voucher.save
+      render :json => { 'status'=> 1 }
+    else
+      render :status=>500, :json=> {'status'=> 0, "msg"=>"Save failed: #{@voucher.errors.inspect}"}
+    end
   end
 
   def update

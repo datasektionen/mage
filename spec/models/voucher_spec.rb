@@ -11,9 +11,10 @@ describe Voucher do
     voucher.should_not be_valid
   end
 
-  it "should not allow voucher row destruction" do
+  it "should not allow voucher row destruction on bookkept voucher" do
     voucher = Voucher.make
     voucher_rows = voucher.voucher_rows
+    voucher.save
 
     lambda {voucher.voucher_rows.first.destroy}.should raise_error()
 
@@ -78,7 +79,17 @@ describe Voucher do
     voucher.should_not be_valid
   end
 
-  it "should enforce arr on voucher_rows correctly" do
+  it "should allow not bookkept vouchers" do
+    voucher = Voucher.make(:not_bookkept); voucher.save
+    voucher.should be_valid
+  end
+
+  it "should allow deletion of not bookkept vouchers" do
+    voucher = Voucher.make(:not_bookkept); voucher.save
+    voucher.destroy
+  end
+
+  it "should enforce precence of arrangments on voucher_rows correctly" do
     voucher = Voucher.make
     voucher.voucher_rows[0].account.account_type = Account::ASSET_ACCOUNT
     voucher.voucher_rows[0].arrangement = nil
