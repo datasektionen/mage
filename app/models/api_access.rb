@@ -43,9 +43,9 @@ class ApiAccess < ActiveRecord::Base
   def has_access?(type)
     case type
       when :read
-        read_write =~ 'r'
+        read_write.include? "r"
       when :write
-        read_write =~ 'w'
+        read_write.include? "w"
       when :read_write, :write_read
         read_write == 'rw'
       end

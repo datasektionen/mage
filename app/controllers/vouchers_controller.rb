@@ -40,11 +40,12 @@ class VouchersController < InheritedResources::Base
   end
 
   def api_create
-    params[:serie] = Serie.find_by_letter(params[:serie])
-    if params[:serie].nil?
+    serie = Serie.find_by_letter(params[:serie])
+    if serie.nil?
       render :status=>500, :json=> {'status'=> 0, "msg"=>"Invalid serie"} and return
     end
     @voucher = Voucher.new(params[:voucher])
+    @voucher.serie = serie
     begin
       authorize! :write, @voucher
     rescue CanCan::AccessDenied

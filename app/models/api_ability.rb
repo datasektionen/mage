@@ -5,13 +5,16 @@ class ApiAbility
     can do |action, subject_call, subject|
       unless subject.kind_of? Enumerable
         if subject.respond_to? :serie
+          puts "Respons to :serie #{subject.serie}"
           serie = subject.serie
-        elsif subject_call == Serie
+        elsif subject.kind_of? Serie
+          puts "Is serie, set from subject: #{subject}"
           serie = subject
         else
+          puts "Nope. #{subject_call.inspect}"
           serie = nil
         end
-
+        
         unless serie.nil?
           if action == :read
             key.has_access? serie, :read

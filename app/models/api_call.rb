@@ -14,8 +14,6 @@ class ApiCall
   def self.create_hash(params, private_key)
     require 'digest/sha1'
     string = params.map {|obj| "#{obj[0]}=#{obj[1]}" }.join(",")+private_key
-    Rails.logger.debug("Hash string: #{string}")
-    puts "Hash string: #{string}"
     Digest::SHA1.hexdigest(string)
   end
 end

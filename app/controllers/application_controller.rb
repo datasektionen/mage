@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from Mage::ApiError do |exception|
- 	 render :text => "Api Error: #{exception.message}"
+ 	 render :json=> {"status"=>0, "msg"=>"Api Error: #{exception.message}"}, :status=>401
   end	
   
   # Returns the serie set in session[:current_serie] or default_serie if it is not set
