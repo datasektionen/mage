@@ -140,6 +140,14 @@ p.session-info {
   #sub_menu ul {
     margin: 0px 10px; }
 
+.float {
+  float: left;
+  margin-right: 10px; }
+
+#api_voucher {
+  margin-left: 20px;
+  margin-right: 0px; }
+
 #main_menu {
   margin: 20px;
   display: inline; }

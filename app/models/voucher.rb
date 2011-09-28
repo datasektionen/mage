@@ -38,6 +38,7 @@ class Voucher < ActiveRecord::Base
     order("created_at DESC")
   }
   
+  #Warning, this methods unscopes!
   def self.incomplete
     return unscoped.where("bookkept_by_id is null")
   end

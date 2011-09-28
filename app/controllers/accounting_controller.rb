@@ -5,6 +5,7 @@ class AccountingController < ApplicationController
     else
       @vouchers = nil
     end
+    @incomplete_vouchers = current_user.series.map { |s| Voucher.incomplete.where(:serie_id=>s.id) }.flatten
   end
 
   def sub_layout

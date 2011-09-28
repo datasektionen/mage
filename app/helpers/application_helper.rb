@@ -1,7 +1,14 @@
 module ApplicationHelper
+
   def javascript(*scripts)
-    content_for(:head) do
-      javascript_include_tag(*scripts)
+    @javascripts = Hash.new unless @javascripts
+    scripts.each do |s|
+      unless @javascripts.has_key? s
+        @javascripts[s]=true
+        content_for(:head) do
+          javascript_include_tag(s)
+        end
+      end
     end
   end
   

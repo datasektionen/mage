@@ -1,7 +1,13 @@
 = render :partial => "accounting/select"
 
-- if @vouchers
-  %h4 Senaste verifikaten
-  = render :partial=>"vouchers/voucher_list", :object => @vouchers
-- else
-  %strong Du har inte rättigheter att visa den valda serien
+#latest_vouchers.float
+  - if @vouchers
+    %h4 Senaste verifikaten
+    = render :partial=>"vouchers/voucher_list", :object => @vouchers
+  - else
+    %strong Du har inte rättigheter att visa den valda serien
+
+#api_voucher.float
+  %h4 Verifikat att godkänna
+  = render :partial=>"vouchers/voucher_list", :object => @incomplete_vouchers
+
