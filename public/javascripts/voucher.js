@@ -155,7 +155,7 @@ function add_row() {
     data: params,
     success: function(data, textStatus, xhr) {
       ///DEBUG CODE: TODO: Remove
-        sum_to_add = parseFloat($(data).find("sum").text())
+        sum_to_add = parseInt($(data).find("sum").text())
         if(sum_to_add == 0) {
           alert("Warning, sum to add was 0 (<sum>: "+$(data).find("sum").text()+")")
         }
@@ -194,8 +194,9 @@ function get_diff() {
   return total_sum/100.0
 }
 
+//diff must be an integer round(real sum*100.0)
 function update_sum(diff) {
-  total_sum += Math.floor(diff*100) //save as int internaly
+  total_sum += diff
   $("#diff").html((total_sum/100.0)+" kr")
 }
 

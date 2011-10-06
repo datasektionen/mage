@@ -24,6 +24,10 @@ class VoucherRow < ActiveRecord::Base
     raise "[VoucherRow] Tried to delete voucher_row!"
   end
 
+  def int_sum
+    (sum*100.0).round
+  end
+
   def debet
     sum >=0 ? sum : nil
   end

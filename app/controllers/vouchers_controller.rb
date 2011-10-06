@@ -84,7 +84,7 @@ class VouchersController < InheritedResources::Base
     else
       render :nothing=>true, :status=>500 and return
     end
-    @sum = @rows.reduce(0) { |memo, r| memo+=r.sum } 
+    @sum = @rows.reduce(0) { |memo, r| memo+=r.int_sum } 
   end
 
 protected 
