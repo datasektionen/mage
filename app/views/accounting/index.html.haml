@@ -3,11 +3,11 @@
 #latest_vouchers.float
   - if @vouchers
     %h4 Senaste verifikaten
-    = render :partial=>"vouchers/voucher_list", :object => @vouchers
+    = render :partial=>"vouchers/voucher_list", :object => @vouchers, :locals=>{:sort=>true}
   - else
     %strong Du har inte rättigheter att visa den valda serien
 
 #api_voucher.float
   %h4 Verifikat att godkänna
-  = render :partial=>"vouchers/voucher_list", :object => @incomplete_vouchers
+  = render :partial=>"vouchers/voucher_list", :object => @incomplete_vouchers, :locals=>{:sort=>true, :incomplete=>true}
 

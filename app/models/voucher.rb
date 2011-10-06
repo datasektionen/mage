@@ -69,7 +69,7 @@ class Voucher < ActiveRecord::Base
   end
 
   def pretty_number
-    unless serie.nil?
+    unless number.nil?
       "#{serie.letter}#{number}"
     else
       "M---"
