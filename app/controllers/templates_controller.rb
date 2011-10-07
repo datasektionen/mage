@@ -14,7 +14,7 @@ class TemplatesController < InheritedResources::Base
     rescue Exception => e
       render :inline=>e.message, :status=>400 and return
     end
-    @sum = @rows.reduce(0) { |s, r| s = s + r.sum } 
+    @sum = @rows.reduce(0) { |s, r| s = s + r.int_sum } 
     render 'vouchers/rows'
   end
 end
