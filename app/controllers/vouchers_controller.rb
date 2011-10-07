@@ -80,7 +80,7 @@ class VouchersController < InheritedResources::Base
     elsif data[:type] == "template"
       template = VoucherTemplate.find(data[:id])
       render :nothing=>true, :status=>400 and return if template.nil?
-      @rows = template.parse({:sum=>data[:sum].to_f},data[:arrangement])
+      @rows = template.parse({:sum=>data[:sum]},data[:arrangement])
     else
       render :nothing=>true, :status=>500 and return
     end
