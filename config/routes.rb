@@ -9,6 +9,10 @@ Mage::Application.routes.draw do
     resources :journals
     resources :series
     resources :users
+    resources :organs
+    resources :activity_years
+
+
     resources :reports, :only => :index do
       collection do
         post :accounts
