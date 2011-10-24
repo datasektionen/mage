@@ -214,7 +214,7 @@ function organ_changed() {
 
 function delete_row(link,sum) {
   row = $(link).parent().parent()
-  if(voucher_id != -1 && confirm("Stryka raden?")) {
+  if(bookkept && confirm("Stryka raden?")) {
     $(link).parent().html(
       "<input type='hidden' name='voucher[voucher_rows_attributes][][canceled]' value='1'/>" +
       "<input type='hidden' name='voucher[voucher_rows_attributes][][signature_id]' value='1'/> <!-- Changed server side -->"
@@ -222,7 +222,7 @@ function delete_row(link,sum) {
     row.css("text-decoration","line-through")
     update_sum(-sum)
     num_rows--;
-  } else if(voucher_id == -1) { // && confirm("Radera raden?")){
+  } else if(!bookkept) { // && confirm("Radera raden?")){
     row.remove()
     update_sum(-sum)
     num_rows--;

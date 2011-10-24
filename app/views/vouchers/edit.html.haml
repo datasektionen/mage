@@ -2,7 +2,14 @@
 %p#voucher_links= link_to "Till verifikatet", voucher_path(@voucher)
 
 #voucher
-  = render :partial => 'voucher_info', :object=>@voucher
+  .voucher_data
+    %p.voucher_date
+      %strong Datum:
+      %span.date= format_date(@voucher.accounting_date)
+    %p
+      %strong Nämnd:
+      %span= @voucher.organ.name
+    = render 'voucher_info', :voucher=>@voucher
 
 - Rails.logger.debug @voucher.errors.inspect
 
@@ -10,6 +17,9 @@
   = f.error :base
   #voucher_head_form
     = f.input :title, :size=>20, :required => false
+    - unless @voucher.bookkept?
+      = f.association :organ, :include_blank => false, :required => false
+      = f.input :accounting_date, :as => :date, :add_month_numbers=>true, :required => false
     .clear
 
   = render :partial => "voucher_form", :locals=>{:f=>f}

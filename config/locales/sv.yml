@@ -145,6 +145,7 @@
         odd: "måste vara udda"
         even: "måste vara jämnt"
         record_invalid: "Ett fel uppstod: %{errors}"
+        is_readonly: "får inte ändras"
         # Append your own errors here or at the model/attributes scope.
 
       # You can define own errors for models or model attributes.
@@ -285,4 +286,5 @@
   helpers:
     submit:
       create: "Skapa %{model}"
-      update: "Updatera %{model}"
+      update: "Uppdatera %{model}"
+      bookkeep: "Spara och bokför"

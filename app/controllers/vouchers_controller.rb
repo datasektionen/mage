@@ -83,13 +83,25 @@ class VouchersController < InheritedResources::Base
   end
 
   def update
+    authorize! :write, resource
     params[:voucher].delete(:add_row)
     params[:voucher][:voucher_rows_attributes].each do |vr|
-      vr[:signature_id] = current_user.id if vr[:signature_id] 
+      if @voucher.bookkept?
+        vr[:signature_id] = current_user.id if vr[:signature_id] 
+      else
+        vr[:signature_id] = nil #If it is not yet bookkept we shall have no signatures
+      end
     end
-    authorize! :write, resource
-    @voucher.bookkept_by = current_user if @voucher.bookkept_by_id.nil?
-    update!(:notice => "Verifikat #{@voucher.pretty_number} har uppdaterats") { voucher_path(@voucher) }
+    update! do |success, failure|
+      success.html {
+        if @voucher.bookkept_by_id.nil?
+          @voucher.bookkept_by_id = current_user.id 
+          @voucher.save
+        end
+        flash[:notice] = "Verifikat #{@voucher.pretty_number} har uppdaterats"
+        redirect_to voucher_path(@voucher)
+      }
+    end
   end
 
   def sub_layout
@@ -117,7 +129,7 @@ class VouchersController < InheritedResources::Base
 
   # Renders rows for new and edit
   def rows
-    @signature = (params[:voucher_id].to_i>0)
+    @voucher = Voucher.unscoped.find(:first, :conditions=>{:id=>params[:voucher_id].to_i}, :select=>[:id, :bookkept_by_id])
   
     data = params
     if data[:type] == "account"
@@ -132,6 +144,10 @@ class VouchersController < InheritedResources::Base
       render :nothing=>true, :status=>500 and return
     end
     @sum = @rows.reduce(0) { |memo, r| memo+=r.int_sum } 
+
+    if @voucher.bookkept? 
+      @rows.each {|r| r.signature = current_user; r.updated_at = Time.now }
+    end
   end
 
 protected 

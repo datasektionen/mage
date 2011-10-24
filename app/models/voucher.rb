@@ -28,8 +28,9 @@ class Voucher < ActiveRecord::Base
   validate :not_empty
   validates_associated :voucher_rows
 
-  attr_readonly :number, :serie_id, :organ_id, :accounting_date, :material_from_id, :activity_year_id, :corrects_id, :api_key_id
-  attr_writeonce :authorized_by_id, :bookkept_by_id
+  validate :readonly_if_stagnate 
+  attr_readonly  :serie_id, :material_from_id, :activity_year_id, :corrects_id, :api_key_id
+  attr_writeonce :authorized_by_id, :bookkept_by_id, :number
 
   default_scope where('bookkept_by_id is not null') # By default only show bookkept vouchers
 
@@ -119,7 +120,7 @@ class Voucher < ActiveRecord::Base
       r = "#{r} via #{api_key.name}" unless api_key.nil?
     else
       r = " - "
-      r = " Unknown via #{api_key.name}" unless api_key.nil?
+      r = "Unknown via #{api_key.name}" unless api_key.nil?
     end
     r
   end 
@@ -132,7 +133,7 @@ Datum: #{I18n.l accounting_date.to_date}
 Nämnd: #{organ}
 Underlag från: #{material_from}
 Bokfört av: #{bookkept_by}
-Utlägg godkänt av: #{authorized_by_to_s}
+Attesterat av: #{authorized_by_to_s}
     -----
     ") do |acc,vr|
       acc << "#{vr.to_log}
@@ -169,11 +170,11 @@ private
   # Validations
 
   def check_row_delete(rows)
-    raise "[Voucher] Tried to delete VoucherRows!" unless self.id.nil?
+    raise "[Voucher] Tried to delete VoucherRows!" if bookkept?
   end
 
   def check_signature(row) 
-    raise "[Voucher] Added row lacks signature" if not self.id.nil? and row.signature.nil? and not current_voucher_rows.include?(row)
+    raise "[Voucher] Added row lacks signature" if bookkept? and row.signature.nil? and not current_voucher_rows.include?(row)
   end
   
   def added_rows_has_signature 
@@ -188,5 +189,14 @@ private
 
   def not_empty
     errors[:base] << "Verifikatet är tomt" unless voucher_rows.size > 0
+  end
+    
+  def readonly_if_stagnate
+    #:organ_id, :accounting_date
+    #TODO: Also check if not stagnated
+    if bookkept?
+      errors[:organ_id] << I18n.t('activerecord.messages.is_readonly') if changed.include?("organ_id")
+      errors[:accounting_date] << I18n.t('activerecord.messages.is_readonly') if changed.include?("accounting_date")
+    end
   end
 end

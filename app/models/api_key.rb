@@ -57,4 +57,8 @@ class ApiKey < ActiveRecord::Base
     ApiAccess.for_series(series, self)
   end
 
+  def to_s
+    return name
+  end
+
 end

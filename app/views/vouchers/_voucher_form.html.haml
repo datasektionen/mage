@@ -46,6 +46,7 @@
         %th.arrangement Arrangemang
         %th.debet Debet
         %th.kredit Kredit
+        %th.signature
         %th.actions 
     %tbody
       = render :partial=>"form_row", :collection=>@voucher.voucher_rows
@@ -55,13 +56,18 @@
         %td Diff:
         %td#diff #{@voucher.sum} kr
         %td
+        %td
 
 %hr
-= f.submit
+-if @voucher.id.nil? || @voucher.bookkept?
+  = f.submit
+- else
+  = f.submit :value => t('helpers.submit.bookkeep')
       
 - ActiveRecord::Base.include_root_in_json = false
 / Below is data for javascript
 :javascript
+  var bookkept = #{@voucher.bookkept?}
   var voucher_id = #{@voucher.id ? @voucher.id : -1}
   set_diff(#{@voucher.sum})
   var accounts = #{(Account.order("number").map { |a| {:number=>a.number,:name=>a.name,:account_type=>a.account_type,:has_arrangements=>a.has_arrangements?, :type=>'account'} }+

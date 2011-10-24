@@ -3,5 +3,12 @@
   = link_to "Redigera", edit_voucher_path(@voucher)
   = link_to "Skapa rättningsverifikat", new_voucher_path(:correct=>@voucher.id) unless @voucher.corrected?
 #voucher
-  = render :partial=>'voucher_info', :object=>@voucher
+  .voucher_data
+    %p.voucher_date
+      %strong Datum:
+      %span.date= format_date(@voucher.accounting_date)
+    %p
+      %strong Nämnd:
+      %span= @voucher.organ.name
+    = render 'voucher_info', :voucher=>@voucher
   = render @voucher

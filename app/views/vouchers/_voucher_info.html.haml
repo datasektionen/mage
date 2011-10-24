@@ -1,8 +1,20 @@
-- voucher = voucher_info
-.voucher_data
-  %p.voucher_date
-    %strong Datum:
-    %span.date= format_date(voucher.accounting_date)
+-if voucher.corrected?
+  %p.voucher_corrected
+    %strong Rättat av
+    %span= link_to voucher.corrected_by.pretty_number, voucher_path(voucher.corrected_by)
+-if voucher.corrects?
+  %p.voucher_corrects
+    %strong Rättar
+    %span= link_to voucher.corrects.pretty_number, voucher_path(voucher.corrects)
+%p
+  %strong Underlag från:
+  %span= voucher.material_from
+%p
+  %strong Bokfört av:
+  %span= voucher.bookkept_by
+%p
+  %strong Attesterat av:
+  %span= voucher.authorized_by
+-if voucher.api_key
   %p
-    %strong Nämnd:
-    %span= voucher.organ.name
+    %strong Skapat via #{voucher.api_key}
