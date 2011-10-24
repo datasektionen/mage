@@ -10,6 +10,8 @@ Mage::Application.routes.draw do
     resources :series
     resources :users
     resources :organs
+    resources :arrangements, :only=>[:create, :new, :edit, :update]
+
     resources :activity_years
 
 

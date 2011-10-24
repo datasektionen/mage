@@ -195,6 +195,17 @@
         has_access: "Har access"
         add_right:
           write_access: "Skrivaccess"
+      organ:
+        name: "Namn"
+      serie:
+        name: "Namn"
+        letter: "Bokstav"
+        default_organ: "Standardnämnd"
+      activity_year:
+        year: "År"
+      arrangement:
+        name: "Namn"
+        active_years: "Aktiva år"
 
 
   date:
@@ -254,6 +265,9 @@
 
   resources: 
     users: "anvandare"
+    series: "serier"
+    organs: "namnder"
+    activity_years: "verksamhetsar"
     journal: "journal"
     vouchers: "verifikat"
     accounting: "bokfora"
@@ -265,9 +279,6 @@
     vouchers:
       path_names:
         new: "nytt"
-    #purchases:
-    #  path_names:
-    #    new: "nytt"
   helpers:
     submit:
       create: "Skapa %{model}"
