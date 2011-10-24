@@ -32,7 +32,12 @@ class VouchersController < InheritedResources::Base
     @voucher.set_number!
     @voucher.bookkept_by = current_user
     @voucher.material_from = current_user
-    create!(:notice => "Verifikat #{@voucher.pretty_number} skapades") { new_voucher_path }
+    create! do |success, failure|
+      success.html { 
+        flash[:notice] = "Verifikat <a href='#{voucher_path(@voucher)}'>#{@voucher.pretty_number}</a> skapades"
+        redirect_to new_voucher_path
+      }
+    end
   end
 
   def update

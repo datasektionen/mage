@@ -51,10 +51,10 @@
       %section.clearfix#content
         - if flash[:notice]
           %div.flash.notice
-            = flash[:notice]
+            != flash[:notice]
         - if flash[:error]
           %div.flash.error
-            = flash[:error]
+            != flash[:error]
 
         = yield(:content)
     %footer.main
