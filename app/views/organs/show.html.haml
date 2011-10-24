@@ -9,8 +9,8 @@
     %th
   - @organ.arrangements.each do |arr|
     %tr
-      %td= arr.name
+      %td= arr
       %td TODO
       %td= link_to t('edit'), edit_arrangement_path(arr)
 
-%p=link_to t('link_actions.add_new', :model=>t('activerecord.models.arrangement').downcase), new_arrangement_path
+%p=link_to t('link_actions.add_new', :model=>t('activerecord.models.arrangement').downcase), new_arrangement_path(:organ_id=>@organ.id)

@@ -1,0 +1,10 @@
+= simple_form_for @arrangement do |f|
+  =f.input :name
+  =f.input :number, :input_html=>{:disabled=>@arrangement.id}
+  =f.association :organ
+
+  .clear
+
+  .actions
+    = f.submit
+

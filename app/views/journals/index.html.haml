@@ -1,0 +1,12 @@
+%h2 Serier
+
+
+- form_tag series_path , :method=>:get, :remote=>true do
+  #search_box
+    %p
+      = label_tag ":"
+      = text_field_tag "search[title]"
+      = submit_tag "Sök", :name=>nil
+
+= render :partial=>"voucher_list", :object => @vouchers, :locals=>{:long=>true,:sort=>true}
+

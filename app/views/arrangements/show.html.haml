@@ -1,0 +1,12 @@
+%h3= @serie
+
+%dl
+  %dt Namn:
+  %dd= @serie.name
+  %dt Bokstav:
+  %dd= @serie.letter
+  %dt Defaultnämnd: 
+  %dd= link_to @serie.default_organ, @serie.default_organ
+
+
+%p= link_to "Redigera", edit_series_path(@serie)

@@ -1,0 +1,10 @@
+- unless @vouchers.empty?
+  :plain
+    $("#voucher_list #list_body").html(#{render(:partial=>"voucher_list_row", :collection=>@vouchers, :locals=>{:use_long_format=>true}).inspect})
+- else
+  :plain
+    $("#voucher_list #list_body").html("<div class='voucher'><strong>Inga verifkat hittades</strong></div>")
+
+-# And then activate dropdown of rows:
+:plain
+  active_voucher_list()
