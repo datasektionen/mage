@@ -1,11 +1,14 @@
 - use_long_format = defined? long
 - sortable = defined?(sort) && sort
+- incomplete = defined?(incomplete) && incomplete
+- unless incomplete
+  - path = print_vouchers_path(:format=>:pdf)
+- else
+  - path = complete_vouchers_path
 - javascript "voucher_list.js"
 - javascript "voucher_list_sort.js" if sortable
-= form_tag print_vouchers_path(:format=>:pdf), :target=>:_blank do
-  %p
-    = submit_tag "Skriv ut valda verifikat", :class=>"icon print"
-    = submit_tag "Markera alla", :class=>"select_all icon tick"
+= form_tag path, :target=>:_blank do
+  = render 'vouchers/voucher_list_buttons', :incomplete=>incomplete
   #voucher_list{:class=>use_long_format ? "long" : ""}
     #voucher_header{:class=>sortable ? "sortable" : ""}
       %span.select
@@ -18,7 +21,4 @@
       %span.enfoldment Omslutning
     #list_body= render :partial=>"vouchers/voucher_list_row", :collection=>voucher_list, :locals=>{:use_long_format=>use_long_format} 
 
-  %p
-    = submit_tag "Skriv ut valda verifikat", :class=>"icon print"
-    = submit_tag "Markera alla", :class=>"select_all icon tick"
-
+  =render "vouchers/voucher_list_buttons", :incomplete=>incomplete

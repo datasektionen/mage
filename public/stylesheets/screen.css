@@ -213,6 +213,9 @@ label {
 .tick {
   background: url("../images/icons/tick.png") no-repeat 2% 50%; }
 
+.add {
+  background: url("../images/icons/add.png") no-repeat 2% 50%; }
+
 table * {
   font-size: 0.95em; }
 
@@ -382,6 +385,10 @@ thead tr {
       border: none; }
     #templates_fieldset legend img {
       width: 12px; }
+
+.voucher_links {
+  float: right;
+  padding-right: 10px; }
 
 /* Typography presets
  * ------------------

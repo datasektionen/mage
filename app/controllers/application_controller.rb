@@ -51,6 +51,9 @@ class ApplicationController < ActionController::Base
 		super
 	 else
       u = User.find_by_ugid(params[:ugid]) if params[:ugid]
+      if u.nil? && params[:ugid]
+        u = User.create_from_ldap(:ugid=>params[:ugid])
+      end
       unless u
         raise Mage::ApiError.new("Invalid user or ugid parameter missing")
       else

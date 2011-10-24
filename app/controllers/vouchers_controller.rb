@@ -45,6 +45,11 @@ class VouchersController < InheritedResources::Base
     end
   end
 
+  def complete
+    @vouchers = Voucher.unscoped.find(:all,:conditions=>{:id=>params[:vouchers]})
+    authorize! :write, @vouchers
+  end
+
   def api_create
     unless params[:voucher]
       raise Mage::ApiError.new("Voucher data missing")
@@ -83,7 +88,7 @@ class VouchersController < InheritedResources::Base
       vr[:signature_id] = current_user.id if vr[:signature_id] 
     end
     authorize! :write, resource
-    logger.debug(params[:voucher].inspect)
+    @voucher.bookkept_by = current_user if @voucher.bookkept_by_id.nil?
     update!(:notice => "Verifikat #{@voucher.pretty_number} har uppdaterats") { voucher_path(@voucher) }
   end
 
@@ -131,7 +136,7 @@ class VouchersController < InheritedResources::Base
 
 protected 
   def resource
-    @voucher ||= end_of_association_chain.find(params[:id])
+    @voucher ||= Voucher.unscoped.find(params[:id])
     authorize! :read, @voucher
   end
 end

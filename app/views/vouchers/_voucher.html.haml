@@ -1,4 +1,9 @@
 .voucher_data
+  -if defined?(show_links) && show_links
+    %p.voucher_links
+      = link_to("Redigera", edit_voucher_path(voucher))
+      |
+      = link_to("Visa", voucher_path(voucher))
   -if voucher.corrected?
     %p.voucher_corrected
       %strong Rättat av

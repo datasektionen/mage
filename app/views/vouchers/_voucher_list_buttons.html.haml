@@ -1,0 +1,6 @@
+%p
+  - unless incomplete
+    = submit_tag "Skriv ut valda verifikat", :class=>"icon print"
+  - else
+    = submit_tag "Bokför markerade", :class=>"icon add"
+  = submit_tag "Markera alla", :class=>"select_all icon tick"

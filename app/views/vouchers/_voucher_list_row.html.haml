@@ -18,4 +18,4 @@
     %span.enfoldment.money{:numerical_value=>voucher.enfoldment}= currency(voucher.enfoldment)
   .full{:style=>"display:none"}
     %hr
-    = render :partial=>voucher, :locals=>{:foot=>link_to("Till verifikatet", voucher_path(voucher)),:foot_colspan=>1}
+    = render :partial=>voucher, :locals=>{:show_links=>true}
