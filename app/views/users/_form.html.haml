@@ -31,7 +31,7 @@
     = f.simple_fields_for :add_right do |ar|
       %p
         %strong= t('add_right')
-        = ar.input :series , :collection=>(Serie.all-@user.accesses.map {|a| a.serie })
+        = ar.input :series , :collection=>(Series.all-@user.accesses.map {|a| a.serie })
         = ar.input :write_access, :as=>:boolean
 
 

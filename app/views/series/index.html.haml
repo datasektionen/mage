@@ -1,5 +1,6 @@
 %h2 Serier
 
+
 %table.datatable
   %thead
     %th Serie
@@ -10,3 +11,4 @@
         %td= link_to serie, serie
         %td= link_to t('edit'), edit_series_path(serie)
   
+%p=link_to "Skapa ny serie", new_series_path

@@ -10,7 +10,7 @@ class ApiKeysController < InheritedResources::Base
   end
 
   def edit
-    @api_key.api_accesses = @api_key.series_access(Serie.all)
+    @api_key.api_accesses = @api_key.series_access(Series.all)
   end
 
   def sub_layout

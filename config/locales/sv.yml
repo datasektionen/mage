@@ -173,7 +173,7 @@
       api_key: "Apinyckel"
       journal: "Journal"
       organ: "Nämnd"
-      serie: "Serie"
+      series: "Serie"
       tag: "Tagg"
       user: "Användare"
       voucher: "Verifikat"
@@ -200,7 +200,7 @@
           write_access: "Skrivaccess"
       organ:
         name: "Namn"
-      serie:
+      series:
         name: "Namn"
         letter: "Bokstav"
         default_organ: "Standardnämnd"

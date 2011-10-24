@@ -10,7 +10,7 @@ class Ability
           unless subject.kind_of? Enumerable
             if subject.respond_to? :serie
               serie = subject.serie
-            elsif subject_call == Serie
+            elsif subject_call == Series
               serie = subject
             else
               serie = nil
