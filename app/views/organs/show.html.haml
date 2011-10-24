@@ -12,3 +12,5 @@
       %td= arr.name
       %td TODO
       %td= link_to t('edit'), edit_arrangement_path(arr)
+
+%p=link_to t('link_actions.add_new', :model=>t('activerecord.models.arrangement').downcase), new_arrangement_path
