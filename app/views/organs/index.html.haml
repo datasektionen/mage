@@ -1,5 +1,6 @@
 %h2 Nämnder
 
+
 %table.datatable
   %thead
     %th Nämnd
@@ -10,3 +11,4 @@
         %td= link_to organ, organ
         %td= link_to t('edit'), edit_organ_path(organ)
   
+%p= link_to "Skapa ny nämnd", new_organ_path
