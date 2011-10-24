@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  belongs_to :default_serie, :class_name => "Serie"
+  belongs_to :default_serie, :class_name => "Series"
   has_many :accesses, :class_name=>"UserAccess"
   has_many :series, :through => :accesses, :source => :serie
 

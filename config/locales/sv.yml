@@ -12,6 +12,9 @@
   add_right: "Lägg till rättighet"
   delete_access: "Radera rättighet"
 
+  link_actions:
+    add_new: "Lägg till %{model}"
+
   number:
     # Used in number_with_delimiter()
     # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
@@ -96,6 +99,9 @@
       minute: "Minut"
       second: "Sekund"
 
+  activity_year:
+    created: "Verksamhetsåret skapades"
+
   activemodel:
     errors:
       template:
@@ -129,7 +135,7 @@
         too_long: "är för lång (maximum är %{count} tecken)"
         too_short: "är för kort (minimum är %{count} tecken)"
         wrong_length: "har fel längd (ska vara %{count} tecken)"
-        taken: "har redan tagits"
+        taken: "måste vara unikt"
         not_a_number: "är inte ett nummer"
         greater_than: "måste vara större än %{count}"
         greater_than_or_equal_to: "måste vara större än eller lika med %{count}"
@@ -167,11 +173,12 @@
       api_key: "Apinyckel"
       journal: "Journal"
       organ: "Nämnd"
-      serie: "Serie"
+      series: "Serie"
       tag: "Tagg"
       user: "Användare"
       voucher: "Verifikat"
       voucher_row: "Verifikatsrad"
+
 
     # Translate model attribute names. Used in Model.human_attribute_name(attribute).
     #attributes:
@@ -191,6 +198,18 @@
         has_access: "Har access"
         add_right:
           write_access: "Skrivaccess"
+      organ:
+        name: "Namn"
+      series:
+        name: "Namn"
+        letter: "Bokstav"
+        default_organ: "Standardnämnd"
+      activity_year:
+        year: "År"
+      arrangement:
+        name: "Namn"
+        active_years: "Aktiva år"
+
 
   date:
     formats:
@@ -249,6 +268,9 @@
 
   resources: 
     users: "anvandare"
+    series: "serier"
+    organs: "namnder"
+    activity_years: "verksamhetsar"
     journal: "journal"
     vouchers: "verifikat"
     accounting: "bokfora"
@@ -260,9 +282,6 @@
     vouchers:
       path_names:
         new: "nytt"
-    #purchases:
-    #  path_names:
-    #    new: "nytt"
   helpers:
     submit:
       create: "Skapa %{model}"

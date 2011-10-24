@@ -37,7 +37,12 @@ class VouchersController < InheritedResources::Base
       @voucher.api_key = current_api_key
     end
     @voucher.material_from = current_user
-    create!(:notice => "Verifikat #{@voucher.pretty_number} skapades") { new_voucher_path }
+    create! do |success, failure|
+      success.html { 
+        flash[:notice] = "Verifikat <a href='#{voucher_path(@voucher)}'>#{@voucher.pretty_number}</a> skapades"
+        redirect_to new_voucher_path
+      }
+    end
   end
 
   def api_create
@@ -117,11 +122,11 @@ class VouchersController < InheritedResources::Base
     elsif data[:type] == "template"
       template = VoucherTemplate.find(data[:id])
       render :nothing=>true, :status=>400 and return if template.nil?
-      @rows = template.parse({:sum=>data[:sum].to_f},data[:arrangement])
+      @rows = template.parse({:sum=>data[:sum]},data[:arrangement])
     else
       render :nothing=>true, :status=>500 and return
     end
-    @sum = @rows.reduce(0) { |memo, r| memo+=r.sum } 
+    @sum = @rows.reduce(0) { |memo, r| memo+=r.int_sum } 
   end
 
 protected 

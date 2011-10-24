@@ -24,7 +24,7 @@ set :stages, %w(staging production)
 set :default_stage, "staging"
 
 set :application, "mage"
-set :repository, "git@github.com:datasektionen/mage.git"
+set :repository, "git://github.com/datasektionen/mage.git"
 set :scm, "git"
 
 set :deploy_to, "/var/rails/#{application}" # Will be updated for each stage with stage specific path.

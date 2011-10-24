@@ -1,0 +1,10 @@
+= simple_form_for @series do |f|
+  =f.input :name
+  =f.input :letter
+  =f.association :default_organ
+
+  .clear
+
+  .actions
+    = f.submit
+

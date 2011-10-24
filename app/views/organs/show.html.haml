@@ -1,0 +1,16 @@
+%h3= @organ
+
+%p= link_to "Redigera", edit_organ_path(@organ)
+
+%table
+  %tr
+    %th= t 'activerecord.models.arrangement'
+    %th= t 'activerecord.attributes.active_years'
+    %th
+  - @organ.arrangements.each do |arr|
+    %tr
+      %td= arr
+      %td TODO
+      %td= link_to t('edit'), edit_arrangement_path(arr)
+
+%p=link_to t('link_actions.add_new', :model=>t('activerecord.models.arrangement').downcase), new_arrangement_path(:organ_id=>@organ.id)

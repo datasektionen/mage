@@ -28,12 +28,16 @@ class VoucherRow < ActiveRecord::Base
     end
   end
 
+  def int_sum
+    (sum*100.0).round
+  end
+
   def debet
     sum >=0 ? sum : nil
   end
 
   def kredit
-    sum < 0 ? sum : nil
+    sum < 0 ? sum.abs : nil
   end
 
   # Define output in log, used by Voucher.to_log

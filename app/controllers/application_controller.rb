@@ -24,12 +24,12 @@ class ApplicationController < ActionController::Base
   
   # Returns the serie set in session[:current_serie] or default_serie if it is not set
   def current_serie
-    if session[:current_serie] and current_user.has_access_to?(s = Serie.find(session[:current_serie]))
+    if session[:current_serie] and current_user.has_access_to?(s = Series.find(session[:current_serie]))
       s
     elsif current_user.default_serie and current_user.has_access_to?(current_user.default_serie)
       current_user.default_serie
     else
-      Serie.accessible_by(current_user).first
+      Series.accessible_by(current_user).first
     end
   end
 

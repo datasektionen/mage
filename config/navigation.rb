@@ -47,7 +47,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :accounting, 'Bokför', accounting_index_path do |accounting|
       accounting.item :new_voucher, "Nytt verifikat", new_voucher_path
       accounting.item :bank_accounting, "Bankhändelser", bank_accounting_index_path
-      accounting.item :search_vouchers, "Sök verifikat", vouchers_path
+      accounting.item :search_vouchers, "Sök verifikat", vouchers_path, :highlights_on=>/\/(vouchers|verifikat)\/[0-9]+/
     end
 
 
@@ -58,8 +58,11 @@ SimpleNavigation::Configuration.run do |navigation|
     end
 
     primary.item :administration, 'Administrera', administration_index_path, :if => Proc.new { current_user.admin? } do |admin|
-      admin.item :users, "Användare", users_path
-      admin.item :api_keys, "Apinycklar", api_keys_path
+      admin.item :users, "Användare", users_path, :highlights_on=>/\/(users|anvandare)/
+      admin.item :organs, "Nämnder", organs_path, :highlights_on=>/\/(organs|namnder)/
+      admin.item :series, "Serier", series_index_path, :highlights_on=>/\/(series|serier)/
+      admin.item :activity_years, "Verksamhetsår", activity_years_path, :highlights_on=>/\/(activity_years|verksamhetsar)/
+      admin.item :api_keys, "Apinycklar", api_keys_path, :highlights_on=>/\/(api_keys|apinycklar)/
     end
 
     # you can also specify a css id or class to attach to this particular level

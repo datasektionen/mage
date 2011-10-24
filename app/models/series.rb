@@ -1,4 +1,4 @@
-class Serie < ActiveRecord::Base
+class Series < ActiveRecord::Base
   has_many :vouchers
   has_many :user_accesses
   belongs_to :default_organ, :class_name => "Organ"
@@ -12,7 +12,7 @@ class Serie < ActiveRecord::Base
   }
 
   def accessible_by?(user)
-    user.admin? || Serie.accessible_by(user).include?(self)
+    user.admin? || Series.accessible_by(user).include?(self)
   end
 
   def to_s

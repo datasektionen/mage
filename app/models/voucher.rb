@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 class Voucher < ActiveRecord::Base
-  belongs_to :serie
+  belongs_to :serie, :class_name=>"Series"
   belongs_to :organ
   belongs_to :activity_year
 
