@@ -12,7 +12,9 @@ class Series < ActiveRecord::Base
   }
 
   def accessible_by?(user)
-    user.admin? || Series.accessible_by(user).include?(self)
+    return true if user.admin?
+    accesses = Series.accessible_by(user)
+    !accesses.empty? && accesses.include?(self)
   end
 
   def to_s

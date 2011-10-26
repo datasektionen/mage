@@ -19,7 +19,7 @@ class Voucher < ActiveRecord::Base
 
   validates_presence_of :number, :if=>:bookkept_by_id
   validates_presence_of :serie, :organ, :accounting_date, :activity_year, :material_from
-  validates_uniqueness_of :number, :scope => [:serie_id, :activity_year_id], :if=>:bookkept_by_id
+  validates_uniqueness_of :number, :scope => [:series_id, :activity_year_id], :if=>:bookkept_by_id
 
   accepts_nested_attributes_for :voucher_rows, :allow_destroy => false
 
@@ -29,13 +29,13 @@ class Voucher < ActiveRecord::Base
   validates_associated :voucher_rows
 
   validate :readonly_if_stagnate 
-  attr_readonly  :serie_id, :material_from_id, :activity_year_id, :corrects_id, :api_key_id
+  attr_readonly  :series_id, :material_from_id, :activity_year_id, :corrects_id, :api_key_id
   attr_writeonce :authorized_by_id, :bookkept_by_id, :number
 
   default_scope where('bookkept_by_id is not null') # By default only show bookkept vouchers
 
   scope :recent, lambda {|s| 
-    where("serie_id = ?", s.id).
+    where("series_id = ?", s.id).
     order("created_at DESC")
   }
   
@@ -54,7 +54,7 @@ class Voucher < ActiveRecord::Base
 
     unless search.nil?
       q = q.where("activity_year_id = ? and title like ?", search[:activity_year], "%#{search[:title]}%")
-      q = q.where("serie_id = ?",search[:series]) unless search[:series].empty?
+      q = q.where("series_id = ?",search[:series]) unless search[:series].empty?
       q
     else
       q.where("activity_year_id = ?", current_activity_year.id)
@@ -80,7 +80,7 @@ class Voucher < ActiveRecord::Base
   def set_number!
     if number.nil?
       last_voucher = Voucher.
-                      where(:activity_year_id => self.activity_year_id, :serie_id => self.serie).
+                      where(:activity_year_id => self.activity_year_id, :series_id => self.serie).
                       order("number DESC").
                       first(:select=>:number)
       if last_voucher
