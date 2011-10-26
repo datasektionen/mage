@@ -8,12 +8,10 @@ class Ability
       else
         can do |action, subject_call, subject|
           unless subject.kind_of? Enumerable
-            if subject.respond_to? :serie
-              series = subject.serie
-            elsif subject.respond_to? :series
+            if subject.respond_to? :series
               puts "Respons to :series #{subject.series}"
               series = subject.series
-            elsif subject.kind_of? Serie
+            elsif subject.kind_of? Series
               series = subject
             else
               series = nil
@@ -23,7 +21,7 @@ class Ability
               if action == :read
                 user.series.include? series
               elsif action == :write || action == :update || action == :create || action == :destroy
-                a = user.accesses.find_by_serie_id(series.id)
+                a = user.accesses.find_by_series_id(series.id)
                 a ? a.write_access? : false
               else
                 # Only :write and :read should be used for normal user actions

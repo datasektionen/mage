@@ -107,17 +107,17 @@ namespace "import" do
           Journal.log(:update_import,a,current_user)
         when "VER"
           # Skapa verifikat
-          serie = Serie.find_by_letter(item[1])
-          if serie.nil?
+          series = Series.find_by_letter(item[1])
+          if series.nil?
             puts "Okänd serie #{item[1]}"
             exit
           end
           vernr = item[2].to_i
-          if Voucher.where(:serie_id=>serie.id,:number=>vernr).count == 1
+          if Voucher.where(:series_id=>series.id,:number=>vernr).count == 1
             puts "Verifikat #{item[1]}#{vernr} finns redan. Avbryter..."
             exit
           end
-          @voucher = Voucher.new(:serie=>serie,:number=>vernr, :accounting_date=>Date.parse(item[3]), :title=>item[4], :bookkept_by =>current_user, :material_from=>material_from, :organ_id => serie.default_organ_id)
+          @voucher = Voucher.new(:series=>series,:number=>vernr, :accounting_date=>Date.parse(item[3]), :title=>item[4], :bookkept_by =>current_user, :material_from=>material_from, :organ_id => series.default_organ_id)
           y = @voucher.accounting_date.year
           @voucher.activity_year = ActivityYear.find_by_year(y)
           if @voucher.activity_year.nil?

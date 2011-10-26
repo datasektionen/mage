@@ -8,7 +8,7 @@ class ApiAccess < ActiveRecord::Base
   # items in series, with api_key.
   def self.for_series(series, api_key)
     series.map do |s|
-      api_key.find_access(s) or ApiAccess.new(:api_key=>api_key, :serie=>s)
+      api_key.find_access(s) or ApiAccess.new(:api_key=>api_key, :series=>s)
     end
   end 
 

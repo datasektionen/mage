@@ -194,7 +194,7 @@
         login: "KTH-användarnamn"
         username: "KTH-ugid"
         email: "E-post"
-        default_serie: "Standard serie"
+        default_series: "Standard serie"
         admin: "Administratör"
         has_access: "Har access"
         add_right:

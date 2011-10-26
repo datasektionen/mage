@@ -1,7 +1,7 @@
 class AccountingController < ApplicationController
   def index
-    if can? :read, current_serie
-      @vouchers = Voucher.recent(current_serie).limit(20)
+    if can? :read, current_series
+      @vouchers = Voucher.recent(current_series).limit(20)
     else
       @vouchers = nil
     end

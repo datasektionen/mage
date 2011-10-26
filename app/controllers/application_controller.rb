@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   before_filter :verify_user!
   before_filter :set_globals
 
-  helper_method :current_activity_year, :current_serie
+  helper_method :current_activity_year, :current_series
 
   rescue_from Mage::Unauthorized do |exception|
     render :file => "#{Rails.root}/public/401.html", :layout => false, :status => 401
@@ -26,12 +26,12 @@ class ApplicationController < ActionController::Base
   #  render 'errors/access_denied', :status=>401 and return false
   #end
   
-  # Returns the serie set in session[:current_serie] or default_serie if it is not set
-  def current_serie
-    if session[:current_serie] and current_user.has_access_to?(s = Series.find(session[:current_serie]))
+  # Returns the series set in session[:current_series] or default_series if it is not set
+  def current_series
+    if session[:current_series] and current_user.has_access_to?(s = Series.find(session[:current_series]))
       s
-    elsif current_user.default_serie and current_user.has_access_to?(current_user.default_serie)
-      current_user.default_serie
+    elsif current_user.default_series and current_user.has_access_to?(current_user.default_series)
+      current_user.default_series
     else
       Series.accessible_by(current_user).first
     end
@@ -87,8 +87,8 @@ class ApplicationController < ActionController::Base
 
   # Sets global session values (as specified above)
   def set_globals
-    if params[:current_serie]
-      session[:current_serie] = params[:current_serie]
+    if params[:current_series]
+      session[:current_series] = params[:current_series]
     end
 
     if params[:current_activity_year]

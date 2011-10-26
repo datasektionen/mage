@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111026221852) do
+ActiveRecord::Schema.define(:version => 20111026231500) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "number"
@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(:version => 20111026221852) do
     t.string   "email",                                :null => false
     t.string   "persistence_token"
     t.boolean  "admin"
-    t.integer  "default_serie_id"
+    t.integer  "default_series_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "initials",                             :null => false

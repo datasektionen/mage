@@ -20,7 +20,7 @@
       %tbody
         = f.simple_fields_for :api_accesses do |fa|
           %tr
-            %td= fa.object.serie
+            %td= fa.object.series
             %td=fa.input :read_write, :hint => 'Endast r/w/rw', :label=>false
     
   .actions

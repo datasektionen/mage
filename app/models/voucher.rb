@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 class Voucher < ActiveRecord::Base
-  belongs_to :serie, :class_name=>"Series", :foreign_key=>"series_id"
+  belongs_to :series
   belongs_to :organ
   belongs_to :activity_year
 
@@ -18,7 +18,7 @@ class Voucher < ActiveRecord::Base
   before_validation :set_number!, :if=>:bookkept_by_id
 
   validates_presence_of :number, :if=>:bookkept_by_id
-  validates_presence_of :serie, :organ, :accounting_date, :activity_year, :material_from
+  validates_presence_of :series, :organ, :accounting_date, :activity_year, :material_from
   validates_uniqueness_of :number, :scope => [:series_id, :activity_year_id], :if=>:bookkept_by_id
 
   accepts_nested_attributes_for :voucher_rows, :allow_destroy => false
@@ -49,7 +49,7 @@ class Voucher < ActiveRecord::Base
     if user.admin?
       q = scoped
     else
-      q = joins(:serie=>:user_accesses).where("user_accesses.user_id" => user.id)
+      q = joins(:series=>:user_accesses).where("user_accesses.user_id" => user.id)
     end
 
     unless search.nil?
@@ -71,7 +71,7 @@ class Voucher < ActiveRecord::Base
 
   def pretty_number
     unless number.nil?
-      "#{serie.letter}#{number}"
+      "#{series.letter}#{number}"
     else
       "M---"
     end
@@ -80,7 +80,7 @@ class Voucher < ActiveRecord::Base
   def set_number!
     if number.nil?
       last_voucher = Voucher.
-                      where(:activity_year_id => self.activity_year_id, :series_id => self.serie).
+                      where(:activity_year_id => self.activity_year_id, :series_id => self.series).
                       order("number DESC").
                       first(:select=>:number)
       if last_voucher

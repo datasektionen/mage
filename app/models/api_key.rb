@@ -35,22 +35,22 @@ class ApiKey < ActiveRecord::Base
     revoked
   end
 
-  def find_access(serie)
-    api_accesses.where(:serie_id => serie.id).first
+  def find_access(series)
+    api_accesses.where(:series_id => series.id).first
   end
 
   # Type is :read, :write or :read_write
-  def has_access?(serie=nil, type=nil) 
+  def has_access?(series=nil, type=nil) 
     return false if revoked?
-	 return true if serie.nil? && type.nil?
-    a = find_access(serie)
+	 return true if series.nil? && type.nil?
+    a = find_access(series)
     return false if a.nil?
 
     a.has_access? type
   end
 
   # Returns a list of ApiAccess objects, one
-  # for each serie in series
+  # for each series in series
   def series_access(series)
     ApiAccess.for_series(series, self)
   end

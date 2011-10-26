@@ -2,7 +2,7 @@ Voucher.blueprint do
   title           { "Voucher#{sn}" }
   number          { sn }
   organ           { Organ.make }
-  serie           { Series.make :default_organ => object.organ }
+  series           { Series.make :default_organ => object.organ }
   accounting_date { DateTime.now }
   material_from   { User.make }
   bookkept_by     { User.make }

@@ -4,14 +4,11 @@ class ApiAbility
   def initialize(key)
     can do |action, subject_call, subject|
       unless subject.kind_of? Enumerable
-        if subject.respond_to? :serie
-          puts "Respons to :serie #{subject.serie}"
-          series = subject.serie
-        elsif subject.respond_to? :series
+        if subject.respond_to? :series
           puts "Respons to :series #{subject.series}"
           series = subject.series
-        elsif subject.kind_of? Serie
-          puts "Is serie, set from subject: #{subject}"
+        elsif subject.kind_of? Series
+          puts "Is series, set from subject: #{subject}"
           series = subject
         else
           puts "Nope. #{subject_call.inspect}"

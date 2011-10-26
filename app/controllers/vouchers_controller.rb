@@ -9,10 +9,10 @@ class VouchersController < InheritedResources::Base
 
   def new
     @voucher = Voucher.new
-    @voucher.organ = current_serie.default_organ || Organ.first
-    @voucher.serie = current_serie
+    @voucher.organ = current_series.default_organ || Organ.first
+    @voucher.series = current_series
     @voucher.activity_year = current_activity_year
-    last_voucher = Voucher.where(:serie_id=>current_serie.id).last
+    last_voucher = Voucher.where(:series_id=>current_series.id).last
     @voucher.accounting_date = Time.now 
     @voucher.accounting_date = last_voucher.accounting_date unless last_voucher.nil?
 
@@ -66,13 +66,13 @@ class VouchersController < InheritedResources::Base
     unless params[:voucher]
       raise Mage::ApiError.new("Voucher data missing")
     end
-    params[:voucher][:serie] = Series.find_by_letter(params[:voucher][:serie])
-    if params[:voucher][:serie].nil?
-      raise Mage::ApiError.new("Invalid serie")
+    params[:voucher][:series] = Series.find_by_letter(params[:voucher][:series])
+    if params[:voucher][:series].nil?
+      raise Mage::ApiError.new("Invalid series")
     end
 
     unless params[:voucher][:organ]
-      params[:voucher][:organ] = params[:voucher][:serie].default_organ
+      params[:voucher][:organ] = params[:voucher][:series].default_organ
     end
 
     params[:voucher][:activity_year] = ActivityYear.find_by_year(params[:voucher][:activity_year])

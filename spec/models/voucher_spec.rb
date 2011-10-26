@@ -57,7 +57,7 @@ describe Voucher do
     
     pre = voucher.attributes
     ++voucher.number
-    voucher.serie = Series.make
+    voucher.series = Series.make
     voucher.organ = Organ.make
     voucher.accounting_date = Time.now.years_since(1)
     voucher.bookkept_by = User.make
@@ -66,7 +66,7 @@ describe Voucher do
     voucher = Voucher.find(voucher.id)
 
     post = voucher.attributes
-    post[:serie_id].should == pre[:serie_id]
+    post[:series_id].should == pre[:series_id]
     post[:organ_id].should == pre[:organ_id]
     post[:accounting_date].should == pre[:accounting_date]
     post[:created_by_id].should == pre[:created_by_id]

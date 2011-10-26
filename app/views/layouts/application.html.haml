@@ -42,7 +42,7 @@
             = render_navigation(:level=>1)
           .clear
       #sub
-        = yield(:serie)
+        = yield(:series)
         %nav#sub_menu.horizontal
           - if user_signed_in? && current_user.has_access?
             = render_navigation(:level=>2)

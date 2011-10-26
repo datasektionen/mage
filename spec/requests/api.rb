@@ -4,7 +4,7 @@ describe Api do
   it "basic api_call should work" do
     body = JSON.parse {
        "voucher":{
-          "serie":"M",
+          "series":"M",
           "activity_year":"2011",
           "authorized_by":"u1hu1jg6",
           "material_from":"u1jfht4s",
