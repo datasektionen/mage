@@ -21,6 +21,10 @@ class ApplicationController < ActionController::Base
   rescue_from Mage::ApiError do |exception|
  	 render :json=> {"status"=>0, "msg"=>"Api Error: #{exception.message}"}, :status=>500
   end	
+
+  #rescue_from CanCan::AccessDenied do |exception|
+  #  render 'errors/access_denied', :status=>401 and return false
+  #end
   
   # Returns the serie set in session[:current_serie] or default_serie if it is not set
   def current_serie
@@ -50,10 +54,7 @@ class ApplicationController < ActionController::Base
 	 unless current_api_key
 		super
 	 else
-      u = User.find_by_ugid(params[:ugid]) if params[:ugid]
-      if u.nil? && params[:ugid]
-        u = User.create_from_ldap(:ugid=>params[:ugid])
-      end
+      u = User.find_or_create_by_ugid(params[:ugid]) if params[:ugid]
       unless u
         raise Mage::ApiError.new("Invalid user or ugid parameter missing")
       else

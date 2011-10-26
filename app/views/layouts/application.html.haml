@@ -13,8 +13,7 @@
     = stylesheet_link_tag 'screen'
     /[if lt IE 9]
       = javascript_include_tag 'http://html5shiv.googlecode.com/svn/trunk/html5.js'
-    = javascript_include_tag "jquery/jquery.min.js"
-    = javascript_include_tag 'jquery_ujs.js'
+    = javascript_include_tag(:defaults)
     :javascript
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', "#{Mage::Application.settings[:google_analytics]}"]);

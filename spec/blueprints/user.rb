@@ -4,7 +4,7 @@ User.blueprint do
   first_name    { "User" }
   last_name     { "#{sn}" }
   email         { "user-#{sn}@example.org" }
-  default_serie { Serie.make }
+  default_serie { Series.make }
   initials      { "U#{sn}" }
 end
 

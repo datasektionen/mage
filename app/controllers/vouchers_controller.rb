@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 class VouchersController < InheritedResources::Base 
-  actions :all, :except => [:destroy]
-  after_filter LogFilter , :only=>[:create,:update, :api_create]
+  actions :all
+  after_filter LogFilter , :only=>[:create,:update, :destroy]
 
   def index
     @vouchers = Voucher.search(params[:search], current_activity_year, current_user)
@@ -46,25 +46,44 @@ class VouchersController < InheritedResources::Base
   end
 
   def complete
-    @vouchers = Voucher.unscoped.find(:all,:conditions=>{:id=>params[:vouchers]})
-    authorize! :write, @vouchers
+    if current_api_key.nil?
+      @vouchers = Voucher.unscoped.find(:all,:conditions=>{:id=>params[:vouchers]})
+      authorize! :write, @vouchers
+      @vouchers.each do |v|
+        unless v.bookkept?
+          v.bookkept_by = current_user 
+          if v.save
+            Journal.log(:complete,v,current_user, nil)
+          end
+        end
+      end
+      flash[:notice] = t 'vouchers.bookkept_plural'
+    end
+    redirect_to accounting_index_path
   end
 
   def api_create
     unless params[:voucher]
       raise Mage::ApiError.new("Voucher data missing")
     end
-    params[:voucher][:serie] = Serie.find_by_letter(params[:voucher][:serie])
+    params[:voucher][:serie] = Series.find_by_letter(params[:voucher][:serie])
     if params[:voucher][:serie].nil?
       raise Mage::ApiError.new("Invalid serie")
     end
 
+    unless params[:voucher][:organ]
+      params[:voucher][:organ] = params[:voucher][:serie].default_organ
+    end
+
     params[:voucher][:activity_year] = ActivityYear.find_by_year(params[:voucher][:activity_year])
-    params[:voucher][:authorized_by] = User.find_by_ugid(params[:voucher][:authorized_by])
-    params[:voucher][:material_from] = User.find_by_ugid(params[:voucher][:material_from])
+    params[:voucher][:authorized_by] = User.find_or_create_by_ugid(params[:voucher][:authorized_by])
+    params[:voucher][:material_from] = User.find_or_create_by_ugid(params[:voucher][:material_from])
 
     # Parse arrangement number to id
-    #params[:voucher][:arrangement
+    #params[:voucher][:arrangement]
+    params[:voucher][:voucher_rows_attributes].each do |vr|
+      vr[:arrangement] = params[:voucher][:organ].arrangements.find_by_number(vr[:arrangement]) if vr[:arrangement]
+    end
 
 
     @voucher = Voucher.new(params[:voucher])
@@ -76,6 +95,7 @@ class VouchersController < InheritedResources::Base
     @voucher.bookkept_by = nil # Make sure this is not set
     @voucher.api_key = current_api_key
     if @voucher.save
+      Journal.log(:api_create,@voucher,current_user, current_api_key)
       render :json => { 'status'=> 1 }
     else
       raise Mage::ApiError.new("Save failed: #{@voucher.errors.inspect}")
@@ -145,9 +165,21 @@ class VouchersController < InheritedResources::Base
     end
     @sum = @rows.reduce(0) { |memo, r| memo+=r.int_sum } 
 
-    if @voucher.bookkept? 
+    if @voucher &&  @voucher.bookkept? 
       @rows.each {|r| r.signature = current_user; r.updated_at = Time.now }
     end
+  end
+
+  def destroy
+    @voucher = resource
+    authorize! :write, @voucher
+    unless @voucher.bookkept?
+      @voucher.destroy
+      flash[:notice] =  t 'vouchers.deleted'
+    else
+      flash[:error]=t 'vouchers.cant_delete_bookkept'
+    end
+    redirect_to accounting_index_path and return
   end
 
 protected 

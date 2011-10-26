@@ -1,4 +1,5 @@
 - voucher = voucher_list_row
+- show_delete = defined?(show_delete) && show_delete
 .voucher
   .short
     %span.select= check_box_tag "vouchers[]", voucher.id, false, :class=>"voucher_select"
@@ -18,4 +19,4 @@
     %span.enfoldment.money{:numerical_value=>voucher.enfoldment}= currency(voucher.enfoldment)
   .full{:style=>"display:none"}
     %hr
-    = render :partial=>voucher, :locals=>{:show_links=>true}
+    = render :partial=>voucher, :locals=>{:show_links=>true, :show_delete=>show_delete}

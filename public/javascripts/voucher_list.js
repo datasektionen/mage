@@ -8,7 +8,7 @@ function active_voucher_list() {
   $(".voucher").click(function() {
     $(this).children(".full").toggle('slow')
   })
-  $(".voucher input, .voucher a").click(function(event){
+  $(".voucher input").click(function(event){
     event.stopPropagation()
   })
   $(".select_all").click(function() {

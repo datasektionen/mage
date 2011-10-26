@@ -3,11 +3,13 @@
 - incomplete = defined?(incomplete) && incomplete
 - unless incomplete
   - path = print_vouchers_path(:format=>:pdf)
+  - target = :_blank
 - else
   - path = complete_vouchers_path
+  - target = nil
 - javascript "voucher_list.js"
 - javascript "voucher_list_sort.js" if sortable
-= form_tag path, :target=>:_blank do
+= form_tag path, :target=>target do
   = render 'vouchers/voucher_list_buttons', :incomplete=>incomplete
   #voucher_list{:class=>use_long_format ? "long" : ""}
     #voucher_header{:class=>sortable ? "sortable" : ""}
@@ -19,6 +21,6 @@
       - if use_long_format
         %span.correcting 
       %span.enfoldment Omslutning
-    #list_body= render :partial=>"vouchers/voucher_list_row", :collection=>voucher_list, :locals=>{:use_long_format=>use_long_format} 
+    #list_body= render :partial=>"vouchers/voucher_list_row", :collection=>voucher_list, :locals=>{:use_long_format=>use_long_format, :show_delete=>incomplete} 
 
   =render "vouchers/voucher_list_buttons", :incomplete=>incomplete

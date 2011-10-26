@@ -1,5 +1,5 @@
 UserAccess.blueprint do
   user          { User.make }
-  serie         { Serie.make }
+  serie         { Series.make }
   granted_by    { User.make }
 end

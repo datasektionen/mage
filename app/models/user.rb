@@ -104,4 +104,13 @@ class User < ActiveRecord::Base
       User.create_from_ldap(:ugid => access_token["uid"])
     end
   end
+
+  def self.find_or_create_by_ugid(ugid)
+    u = self.find_by_ugid(ugid)
+    if u.nil?
+      u = self.create_from_ldap({:ugid=>ugid})
+      u.save
+    end
+    u
+  end
 end

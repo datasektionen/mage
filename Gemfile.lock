@@ -276,7 +276,7 @@ DEPENDENCIES
   has_scope
   i18n_routing
   inherited_resources
-  jquery-rails (>= 1.0.12)
+  jquery-rails
   machinist (>= 2.0.0.beta2)
   mysql2 (~> 0.2.6)
   net-ldap

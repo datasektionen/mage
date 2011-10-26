@@ -21,7 +21,7 @@ Mage::Application.routes.draw do
         post :arrangements
       end
     end
-    resources :vouchers, :except => :destroy do 
+    resources :vouchers do 
       collection do
         get :rows, :defaults => {:format => :xml}
         post :print, :default => {:format => :pdf}

@@ -255,6 +255,8 @@
 
   action:
     create: "Skapade"
+    api_create: "Skapade via api"
+    complete: "Bokförde verifikat skapat via api"
     update: "Uppdaterade"
     destroy: "Raderade"
     import: "Importerade"
@@ -266,6 +268,11 @@
   show: "Visa"
   destroy: "Ta bort"
   are_you_sure: "Är du säker?"
+
+  vouchers:
+    cant_delete_bookkept: "Kan inte radera bokfört verifikat"
+    deleted: "Raderade verifikatet"
+    bookkept_plural: "Verifikaten bokförda"
 
   resources: 
     users: "anvandare"
