@@ -3,7 +3,7 @@ require 'spec_helper'
 describe User do
   it "should handle has_access_to?" do
     user = User.make; user.save
-    serie = Serie.make; serie.save
+    serie = Series.make; serie.save
 
     user.has_access_to?(serie).should be_false
 

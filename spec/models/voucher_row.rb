@@ -1,7 +1,7 @@
 
 require 'spec_helper'
 
-describe Voucher do
+describe VoucherRow do
   it "readonly attributes" do
     vr = VoucherRow.make
     vr.save

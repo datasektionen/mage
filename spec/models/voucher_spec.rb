@@ -57,7 +57,7 @@ describe Voucher do
     
     pre = voucher.attributes
     ++voucher.number
-    voucher.serie = Serie.make
+    voucher.serie = Series.make
     voucher.organ = Organ.make
     voucher.accounting_date = Time.now.years_since(1)
     voucher.bookkept_by = User.make

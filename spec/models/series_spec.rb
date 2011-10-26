@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Serie do
+describe Series do
   it "should handle accessible_by?" do
     user = User.make; user.save
-    serie = Serie.make; serie.save
+    serie = Series.make; serie.save
 
     serie.accessible_by?(user).should be_false
 
