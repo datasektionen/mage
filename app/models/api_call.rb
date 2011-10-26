@@ -1,7 +1,9 @@
 class ApiCall
-  def self.call(host, controller, action, key, private_key, user_ugid, params, port=nil)
+  def self.call(url, key, private_key, user_ugid, params)
     require 'net/http'
     require 'uri'
+
+    uri = URI.parse url
     params["apikey"]=key
     params["action"]=action
     params["controller"]=controller
@@ -9,15 +11,12 @@ class ApiCall
     checksum = create_hash(params,private_key)
     params["checksum"] = checksum
   
-    # A ugly hack because HTTP.post_form only support unnested hashes
-
-    #flatt_params = Hash.new
-    #params.to_query.split("&").each { |p|
-    #  split = p.split("=")
-    #  flatt_params[split[0]]=CGI.unescape(split[1]) #Unescape to prevent double encoding
-    #}
-
-    res = Net::HTTP.new(host,port).post("/#{controller}/#{action}",params.to_query)
+    request = Net::HTTP::Post.new(url)
+    request.add_field "Content-Type", "application/xml"
+    request.body = params.to_xml
+  
+    http = Net::HTTP.new(uri.host,uri.port)
+    res = http.request request
   end
 
   def self.create_hash(params, private_key)
