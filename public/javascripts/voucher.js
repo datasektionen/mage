@@ -48,6 +48,7 @@ $(function() {
       alert("Kan inte spara tomt verifikat")
       return false
     }
+    $("#voucher_submit").attr("disabled",true)
     return true
   })
 
@@ -98,6 +99,7 @@ $(function() {
       }
     } 
   })
+
 })
 
 
@@ -164,6 +166,7 @@ function add_row() {
       $("#voucher_rows tbody").append($(data).find("html_content").text())
       num_rows += parseInt($(data).find("num_rows").text())
       $("#spinner").hide()
+      update_account(undefined) //Unset account
     },
     error: function(xhr, textStatus, errorThrown) {
       $("#spinner").hide()
