@@ -1,4 +1,5 @@
 .bundle
+public/stylesheets
 db/*.sqlite3
 log/*.log
 config/database.yml
