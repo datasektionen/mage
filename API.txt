@@ -18,7 +18,7 @@ parameters:
   :organ_id => Id of organ (optional, default to default organ for series)
   :title => Title of voucher
   :accounting_date => The accounting date
-  :voucher_rows => [
+  :voucher_rows_attributes => [
     {
       :sum => +/- sum (+= Debet, - = Kredit)
       :arrangement => The arrangement number
