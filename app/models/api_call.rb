@@ -1,27 +1,28 @@
 class ApiCall
-  def self.call(host, controller, action, key, private_key, user_ugid, params)
+  def self.call(url, key, private_key, user_ugid, params)
     require 'net/http'
     require 'uri'
-    url = "#{host}/#{controller}/#{action}"
-    uri = URI.parse url
     params["apikey"]=key
     #params["action"]=action
     #params["controller"]=controller
     params["ugid"] = user_ugid
-    #checksum = create_hash(params,private_key)
-    #params["checksum"] = checksum
+    body = params.to_json
+    checksum = create_hash(body,private_key)
   
-    request = Net::HTTP::Post.new(url)
+    url_ = "#{url}?checksum=#{checksum}"
+    uri = URI.parse url_
+
+    request = Net::HTTP::Post.new(url_)
     request.add_field "Content-Type", "application/json"
-    request.body = params.to_json
+    request.body = body
   
     http = Net::HTTP.new(uri.host,uri.port)
     res = http.request request
   end
 
-  def self.create_hash(params, private_key)
+  def self.create_hash(body, private_key)
     require 'digest/sha1'
-    string = params.to_params+private_key
+    string = "#{body}#{private_key}"
     puts string
     Digest::SHA1.hexdigest(string)
   end

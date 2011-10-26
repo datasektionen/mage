@@ -16,18 +16,16 @@ class ApiKey < ActiveRecord::Base
     end
   end
 
-  def self.authorize(params) 
+  def self.authorize(params,body) 
     if params[:apikey]
-      #tmp = params.clone
-      #tmp.delete :checksum
-      #tmp.delete :format
       api_key = self.find_by_key(params[:apikey])
-      #Rails.logger.debug("Calculated checksum: #{ ApiCall::create_hash(tmp,api_key.private_key)  }")
-      #if params[:checksum] == ApiCall::create_hash(tmp,api_key.private_key) 
-      return api_key
-      #else
-      #  return nil
-      #end
+      checksum = ApiCall::create_hash(body.read,api_key.private_key)
+      Rails.logger.debug("Calculated checksum: #{  checksum }")
+      if params[:checksum] == checksum
+        return api_key
+      else
+        return nil
+      end
     else
       nil
     end

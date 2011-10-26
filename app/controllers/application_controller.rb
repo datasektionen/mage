@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
 
   def current_api_key
   	 return @apikey if @apikey
-	 @apikey = ApiKey.authorize(params)
+	 @apikey = ApiKey.authorize(params, request.body)
 	 if @apikey
       if current_user
         @apikey
