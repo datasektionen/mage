@@ -1,0 +1,35 @@
+Mage support apicalls.
+
+The calls should always have the following parameter data:
+apikey = the apikey
+ugid = the ugid of the user performing the action
+
+Api specific calls:
+
+vouchers/api_create:
+A action made to simplify api call creating of vouchers
+
+parameters:
+:voucher => {
+  :serie => the serie letter (M, K, C etc.)
+  :activity_year => The activity year (2011 etc)
+  :authorized_by => ugid of user who authorized
+  :material_from => ugid of user who gave material
+  :organ_id => Id of organ (optional, default to default organ for series)
+  :title => Title of voucher
+  :accounting_date => The accounting date
+  :voucher_rows => [
+    {
+      :sum => +/- sum (+= Debet, - = Kredit)
+      :arrangement => The arrangement number
+      :account_number => The accountnumber
+    },
+    ...
+  ]
+}
+
+This should be placed in the request body. 
+
+A checksum calculated by taking the request body and appending the private key should be sent an extra parameter (not in the request body) (get or post)
+
+If one is using rails the api_call.rb modell can be used
