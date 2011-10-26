@@ -11,7 +11,7 @@ describe User do
     user.has_access_to?(serie).should be_true
 
     user.admin = false
-    user_access = UserAccess.make(:user => user, :serie => serie); user_access.save
+    user_access = UserAccess.make(:user => user, :series => serie); user_access.save
     user.reload.has_access_to?(serie).should be_true
 
     user_access.destroy

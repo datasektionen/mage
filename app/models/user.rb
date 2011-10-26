@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   belongs_to :default_serie, :class_name => "Series"
   has_many :accesses, :class_name=>"UserAccess"
-  has_many :series, :through => :accesses, :source => :serie, :class_name=>"Series"
+  has_many :series, :through => :accesses
 
   devise :omniauthable
 
@@ -26,8 +26,8 @@ class User < ActiveRecord::Base
 
   # Returns true if user has access to given series
   # Set use_admin to false to ignore admin status
-  def has_access_to?(serie,use_admin=true)
-    use_admin && self.admin? || accesses.any? {|a| a.serie == serie }
+  def has_access_to?(series,use_admin=true)
+    use_admin && self.admin? || accesses.any? {|a| a.series == series }
   end
 
   def admin?
