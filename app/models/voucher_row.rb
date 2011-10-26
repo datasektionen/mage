@@ -47,6 +47,6 @@ class VoucherRow < ActiveRecord::Base
 
 protected
   def no_arrangement
-    arrangement.nil? && arrangement_id.nil?
+    errors[:arrangement]<< "Får inte ha arrangemang" unless arrangement.nil? && arrangement_id.nil?
   end
 end

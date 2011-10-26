@@ -88,20 +88,4 @@ describe Voucher do
     voucher = Voucher.make(:not_bookkept); voucher.save
     voucher.destroy
   end
-
-  it "should enforce precence of arrangments on voucher_rows correctly" do
-    voucher = Voucher.make
-    voucher.voucher_rows[0].account.account_type = Account::ASSET_ACCOUNT
-    voucher.voucher_rows[0].arrangement = nil
-    voucher.should be_valid
-    voucher.voucher_rows[0].account.has_arrangements?.should == false 
-    voucher.voucher_rows[0].arrangement = Arrangement.make
-    voucher.should_not be_valid
-
-    voucher.voucher_rows[0].account.account_type = Account::COST_ACCOUNT
-    voucher.voucher_rows[0].account.has_arrangements?.should == true
-    voucher.should be_valid
-    voucher.voucher_rows[0].arrangement = nil
-    voucher.should_not be_valid
-  end
 end
