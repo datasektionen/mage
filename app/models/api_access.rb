@@ -1,6 +1,6 @@
 class ApiAccess < ActiveRecord::Base
   belongs_to :api_key
-  belongs_to :serie, :class_name=>"Series"
+  belongs_to :series
 
   validates_format_of :read_write, :with => /r?w?/
 

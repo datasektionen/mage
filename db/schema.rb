@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110928155511) do
+ActiveRecord::Schema.define(:version => 20111026221852) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "number"
@@ -31,14 +31,14 @@ ActiveRecord::Schema.define(:version => 20110928155511) do
 
   create_table "api_accesses", :force => true do |t|
     t.integer  "api_key_id",                 :null => false
-    t.integer  "serie_id",                   :null => false
+    t.integer  "series_id",                  :null => false
     t.string   "read_write", :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "api_accesses", ["api_key_id"], :name => "index_api_accesses_on_api_key_id"
-  add_index "api_accesses", ["serie_id"], :name => "index_api_accesses_on_serie_id"
+  add_index "api_accesses", ["series_id"], :name => "index_api_accesses_on_serie_id"
 
   create_table "api_keys", :force => true do |t|
     t.string   "key",                              :null => false
@@ -118,14 +118,14 @@ ActiveRecord::Schema.define(:version => 20110928155511) do
 
   create_table "user_accesses", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "serie_id"
+    t.integer  "series_id"
     t.integer  "granted_by_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "write_access",  :default => false
   end
 
-  add_index "user_accesses", ["serie_id"], :name => "index_user_accesses_on_serie_id"
+  add_index "user_accesses", ["series_id"], :name => "index_user_accesses_on_serie_id"
   add_index "user_accesses", ["user_id"], :name => "index_user_accesses_on_user_id"
 
   create_table "users", :force => true do |t|
@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(:version => 20110928155511) do
 
   create_table "vouchers", :force => true do |t|
     t.integer  "number"
-    t.integer  "serie_id"
+    t.integer  "series_id"
     t.integer  "organ_id"
     t.datetime "accounting_date"
     t.integer  "bookkept_by_id"

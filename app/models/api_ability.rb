@@ -6,20 +6,23 @@ class ApiAbility
       unless subject.kind_of? Enumerable
         if subject.respond_to? :serie
           puts "Respons to :serie #{subject.serie}"
-          serie = subject.serie
+          series = subject.serie
+        elsif subject.respond_to? :series
+          puts "Respons to :series #{subject.series}"
+          series = subject.series
         elsif subject.kind_of? Serie
           puts "Is serie, set from subject: #{subject}"
-          serie = subject
+          series = subject
         else
           puts "Nope. #{subject_call.inspect}"
-          serie = nil
+          series = nil
         end
         
-        unless serie.nil?
+        unless series.nil?
           if action == :read
-            key.has_access? serie, :read
+            key.has_access? series, :read
           elsif action == :write || action == :update || action == :create || action == :destroy
-            key.has_access? serie, :write
+            key.has_access? series, :write
           else
             false
           end
