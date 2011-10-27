@@ -19,6 +19,25 @@ describe Voucher do
     lambda {voucher.voucher_rows.first.destroy}.should raise_error()
 
     voucher.voucher_rows.should == voucher_rows
+
+   params = {}
+
+    params[:voucher_rows_attributes] = [
+      {
+        :id=>voucher.voucher_rows[0].id,
+        :_destroy=>true
+      },
+      {
+        :id=>voucher.voucher_rows[1].id,
+        :_destroy=>true
+      }
+    ]
+    lambda { voucher.update_attributes params}.should raise_error()
+
+
+    lambda { voucher.save }.should raise_error()
+
+    voucher.voucher_rows.should == voucher_rows
   end
 
   it "should enforce signatures on added rows" do
@@ -49,6 +68,23 @@ describe Voucher do
 
     voucher.voucher_rows[0].signature = nil
     voucher.should_not be_valid
+  end
+
+  it "should not enforce signatures on added rows on not bookkept (in update)" do
+    voucher = Voucher.make(:not_bookkept)
+    voucher.save
+    voucher_rows = voucher.voucher_rows
+
+    voucher.bookkept_by = User.make
+
+    sum = rand(100)
+    added_rows = [
+      VoucherRow.make(:voucher => voucher, :sum => sum),
+      VoucherRow.make(:voucher => voucher, :sum => -sum)
+    ]
+    voucher.voucher_rows << added_rows
+    voucher.should be_valid
+
   end
 
   it "should not allow change of most attributes" do
@@ -87,5 +123,81 @@ describe Voucher do
   it "should allow deletion of not bookkept vouchers" do
     voucher = Voucher.make(:not_bookkept); voucher.save
     voucher.destroy
+  end
+
+  it "should allow row adding without signature in not bookkept vouchers" do
+    voucher = Voucher.make(:not_bookkept); 
+    voucher.save
+    sum = rand(100)
+    voucher.bookkept_by = User.make
+    added_rows = [
+      VoucherRow.make(:voucher => voucher, :sum => sum),
+      VoucherRow.make(:voucher => voucher, :sum => -sum)
+    ]
+    voucher.voucher_rows << added_rows
+    voucher.should be_valid
+  end
+
+  it "should allow row deletion in not bookkept vouchers" do
+    voucher = Voucher.make(:not_bookkept); 
+    sum = rand(100)
+    added_rows = [
+      VoucherRow.make(:voucher => voucher, :sum => sum),
+      VoucherRow.make(:voucher => voucher, :sum => -sum)
+    ]
+    voucher.voucher_rows << added_rows
+    voucher.save
+    voucher.voucher_rows.drop(2)
+    voucher.should be_valid
+    voucher.save
+    voucher.voucher_rows << added_rows
+    voucher.save
+
+    num_rows = voucher.voucher_rows.count
+
+    params = {}
+
+    params[:bookkept_by_id] = User.make.id #One should be able to set bookkept in this request
+    params[:voucher_rows_attributes] = [
+       {
+         :id=>voucher.voucher_rows[0].id,
+         :_destroy=>true
+       },
+       {
+         :id=>voucher.voucher_rows[1].id,
+         :_destroy=>true
+       }
+     ]
+
+    voucher.update_attributes params
+
+    voucher.save
+  end
+
+  it "should allow row deletion and addition in not bookkept vouchers" do
+    voucher = Voucher.make(:not_bookkept); 
+    voucher.save
+
+    num_rows = voucher.voucher_rows.count
+
+    params = {}
+
+    params[:bookkept_by_id] = User.make.id #One should be able to set bookkept in this request
+    params[:voucher_rows_attributes] = [
+       {
+         :id=>voucher.voucher_rows[0].id,
+         :_destroy=>true
+       },
+       {
+          :account=>Account.make(:account_type=>1),
+          :sum=>voucher.voucher_rows[0].sum
+       }
+     ]
+    voucher.update_attributes params
+    voucher.should be_valid
+    voucher.save
+
+    voucher.voucher_rows.count.should == num_rows
+
   end
 end

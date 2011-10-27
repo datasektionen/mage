@@ -112,6 +112,7 @@ class VouchersController < InheritedResources::Base
         vr[:signature_id] = nil #If it is not yet bookkept we shall have no signatures
       end
     end
+    params[:bookkept_by] = current_user unless @voucher.bookkept?
     update! do |success, failure|
       success.html {
         if @voucher.bookkept_by_id.nil?

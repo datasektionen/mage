@@ -8,6 +8,7 @@ class VoucherRow < ActiveRecord::Base
   validates_presence_of :signature, :if=>:canceled
   validates_presence_of :voucher, :sum, :account
   validates_presence_of :arrangement, :if => Proc.new { account.has_arrangements? }
+  validates_presence_of :account
   validate :no_arrangement, :unless => Proc.new { account.has_arrangements? }
   
   attr_readonly :account_number, :sum, :arrangement_id, :voucher_id

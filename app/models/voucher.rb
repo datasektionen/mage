@@ -21,9 +21,9 @@ class Voucher < ActiveRecord::Base
   validates_presence_of :series, :organ, :accounting_date, :activity_year, :material_from
   validates_uniqueness_of :number, :scope => [:series_id, :activity_year_id], :if=>:bookkept_by_id
 
-  accepts_nested_attributes_for :voucher_rows, :allow_destroy => false
+  accepts_nested_attributes_for :voucher_rows, :allow_destroy => true
 
-  validate :added_rows_has_signature, :if=>:bookkept?
+  validate :added_rows_has_signature, :if=>:bookkept_validation?
   validate :sum_is_zero
   validate :not_empty
   validates_associated :voucher_rows
@@ -106,7 +106,7 @@ class Voucher < ActiveRecord::Base
   end
 
   def sum
-    voucher_rows.reduce(0) {|sum,vr| sum + (vr.canceled? ? 0 : vr.sum)}
+    voucher_rows.reduce(0) {|sum,vr| sum + (vr.canceled? || vr.marked_for_destruction? ? 0 : vr.sum)}
   end
 
   def to_s
@@ -159,7 +159,14 @@ Attesterat av: #{authorized_by_to_s}
     return !(bookkept_by.nil? || id.nil?)
   end
 
+
+  #Used in validations, checks value of _was and not new value
+  def bookkept_validation?
+    return !(bookkept_by_id_was.nil? || id.nil?)
+  end
+
 private
+
   # Returns the voucher_rows set in the database for this voucher
   # or the ones i voucher_rows if id.nil?
   def current_voucher_rows
@@ -170,11 +177,11 @@ private
   # Validations
 
   def check_row_delete(rows)
-    raise "[Voucher] Tried to delete VoucherRows!" if bookkept?
+    raise "[Voucher] Tried to delete VoucherRows!" if bookkept_validation?
   end
 
   def check_signature(row) 
-    raise "[Voucher] Added row lacks signature" if bookkept? and row.signature.nil? and not current_voucher_rows.include?(row)
+    raise "[Voucher] Added row lacks signature" if bookkept_validation? and row.signature.nil? and not current_voucher_rows.include?(row)
   end
   
   def added_rows_has_signature 
