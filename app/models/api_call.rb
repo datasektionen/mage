@@ -8,7 +8,7 @@ class ApiCall
     params["ugid"] = user_ugid
     body = params.to_json
     checksum = create_hash(body,private_key)
-  
+ 
     url_ = "#{url}?checksum=#{checksum}"
     uri = URI.parse url_
 
@@ -23,8 +23,9 @@ class ApiCall
   def self.create_hash(body, private_key)
     require 'digest/sha1'
     string = "#{body}#{private_key}"
-    puts string
-    Digest::SHA1.hexdigest(string)
+    cs = Digest::SHA1.hexdigest(string)
+    puts "Checksum: #{cs}"
+    cs
   end
 
 end

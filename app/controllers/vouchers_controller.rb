@@ -90,13 +90,12 @@ class VouchersController < InheritedResources::Base
     begin
       authorize! :write, @voucher
     rescue CanCan::AccessDenied
-      render :status=>403, :json => {'status'=>0, "msg"=>"Access denied"} and return
+      render :status=>403, :json => {"errors"=>"Access denied"} and return
     end
     @voucher.bookkept_by = nil # Make sure this is not set
     @voucher.api_key = current_api_key
     if @voucher.save
       Journal.log(:api_create,@voucher,current_user, current_api_key)
-      render :json => { 'status'=> 1 }
     else
       raise Mage::ApiError.new("Save failed: #{@voucher.errors.inspect}")
     end

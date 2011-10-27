@@ -12,6 +12,8 @@ class ApplicationController < ActionController::Base
   before_filter :verify_user!
   before_filter :set_globals
 
+  respond_to :json, :html
+
   helper_method :current_activity_year, :current_series
 
   rescue_from Mage::Unauthorized do |exception|
@@ -19,7 +21,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from Mage::ApiError do |exception|
- 	 render :json=> {"status"=>0, "msg"=>"Api Error: #{exception.message}"}, :status=>500
+ 	 render :json=> {"errors"=>"Api Error: #{exception.message}"}, :status=>500
   end	
 
   #rescue_from CanCan::AccessDenied do |exception|
@@ -55,10 +57,12 @@ class ApplicationController < ActionController::Base
 		super
 	 else
       u = User.find_or_create_by_ugid(params[:ugid]) if params[:ugid]
-      unless u
-        raise Mage::ApiError.new("Invalid user or ugid parameter missing")
-      else
+      if params[:ugid] and !u
+        raise Mage::ApiError.new("Could not find user with ugid #{params[:ugid]}")
+      elsif u
         u
+      else
+        nil
       end
 	 end
   end
