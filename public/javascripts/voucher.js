@@ -224,11 +224,18 @@ function delete_row(link,sum) {
     )
     row.css("text-decoration","line-through")
     update_sum(-sum)
-    num_rows--;
-  } else if(!bookkept) { // && confirm("Radera raden?")){
+    num_rows--
+  } else if(!bookkept && voucher_id==-1) { // && confirm("Radera raden?")){
     row.remove()
     update_sum(-sum)
-    num_rows--;
+    num_rows--
+  } else if(!bookkept && voucher_id != -1) {
+    row.hide()
+    update_sum(-sum)
+    num_rows--
+    $(link).parent().html(
+      "<input type='hidden' name='voucher[voucher_rows_attributes][][_destroy]' value='1'/>"
+    )
   }
   return false
 }
