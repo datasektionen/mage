@@ -15,7 +15,7 @@ parameters:
   :activity_year => The activity year (2011 etc)
   :authorized_by => ugid of user who authorized
   :material_from => ugid of user who gave material
-  :organ_id => Id of organ (optional, default to default organ for series)
+  :organ => Organ number (optional, default to default organ for series)
   :title => Title of voucher
   :accounting_date => The accounting date
   :voucher_rows_attributes => [
