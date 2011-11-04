@@ -77,11 +77,7 @@ class ApplicationController < ActionController::Base
   	 return @apikey if @apikey
 	 @apikey = ApiKey.authorize(params, request.body)
 	 if @apikey
-      if current_user
-        @apikey
-      else
-        nil
-      end
+      @apikey
 	 elsif params[:apikey]
 	 	raise Mage::ApiError.new("Invalid api key")		
 	 else
