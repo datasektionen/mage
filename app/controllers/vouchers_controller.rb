@@ -68,11 +68,16 @@ class VouchersController < InheritedResources::Base
     end
     params[:voucher][:series] = Series.find_by_letter(params[:voucher][:series])
     if params[:voucher][:series].nil?
-      raise Mage::ApiError.new("Invalid series")
+      raise Mage::ApiError.new("Invalid series letter")
     end
 
     unless params[:voucher][:organ]
       params[:voucher][:organ] = params[:voucher][:series].default_organ
+    else
+      params[:voucher][:organ] = Organ.find_by_number(params[:voucher][:organ])
+      if params[:voucher][:organ].nil?
+        raise Mage::ApiError.new("Invalid organ number")
+      end
     end
 
     params[:voucher][:activity_year] = ActivityYear.find_by_year(params[:voucher][:activity_year])

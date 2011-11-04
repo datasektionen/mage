@@ -23,4 +23,8 @@ class ArrangementsController < InheritedResources::Base
       }
     end
   end
+
+  def index
+    @arrangements = Arrangement.all
+  end
 end
