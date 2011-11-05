@@ -110,6 +110,7 @@ class User < ActiveRecord::Base
     if u.nil?
       u = self.create_from_ldap({:ugid=>ugid})
       u.save
+      u = self.find_by_ugid(ugid)
     end
     u
   end
