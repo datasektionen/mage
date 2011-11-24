@@ -200,4 +200,10 @@ describe Voucher do
     voucher.voucher_rows.count.should == num_rows
 
   end
+
+  it "should not be possible to set a date outside the activity year" do
+    voucher = Voucher.make
+    voucher.accounting_date = voucher.accounting_date - 1.year
+    voucher.should_not be_valid
+  end
 end
