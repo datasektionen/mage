@@ -11,7 +11,7 @@ A action made to simplify api call creating of vouchers
 
 parameters:
 :voucher => {
-  :serie => the serie letter (M, K, C etc.)
+  :series => the serie letter (M, K, C etc.)
   :activity_year => The activity year (2011 etc)
   :authorized_by => ugid of user who authorized
   :material_from => ugid of user who gave material

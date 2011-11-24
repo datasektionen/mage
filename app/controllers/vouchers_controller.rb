@@ -88,6 +88,7 @@ class VouchersController < InheritedResources::Base
     #params[:voucher][:arrangement]
     params[:voucher][:voucher_rows_attributes].each do |vr|
       vr[:arrangement] = params[:voucher][:organ].arrangements.find_by_number(vr[:arrangement]) if vr[:arrangement]
+      vr[:arrangement] = nil unless Account.find_by_number(vr[:account_number]).has_arrangements?
     end
 
 
