@@ -28,6 +28,8 @@ class Voucher < ActiveRecord::Base
   validate :not_empty
   validates_associated :voucher_rows
 
+  validate :accounting_date_in_activity_year
+
   validate :readonly_if_stagnate 
   attr_readonly  :series_id, :material_from_id, :activity_year_id, :corrects_id, :api_key_id
   attr_writeonce :authorized_by_id, :bookkept_by_id, :number
@@ -205,5 +207,9 @@ private
       errors[:organ_id] << I18n.t('activerecord.messages.is_readonly') if changed.include?("organ_id")
       errors[:accounting_date] << I18n.t('activerecord.messages.is_readonly') if changed.include?("accounting_date")
     end
+  end
+
+  def accounting_date_in_activity_year
+    errors[:accounting_date] << I18n.t('activerecord.messages.must_be_in_activity_year') if !activity_year.in_year?(accounting_date)
   end
 end
