@@ -1,3 +1,3 @@
 ActivityYear.blueprint do
-  year { sn % 10000 }
+  year { DateTime.now.year }
 end
