@@ -24,7 +24,7 @@ describe VoucherRow do
   it "should enforce precence of arrangments on needed voucher_rows" do
     voucher = Voucher.make
     (3..4).each do |i|
-      voucher.voucher_rows[0].account.account_type = i
+      voucher.voucher_rows[0].account.account_group.account_type = i
       voucher.voucher_rows[0].account.has_arrangements?.should == true
       voucher.voucher_rows[0].arrangement = Arrangement.make
       voucher.should be_valid 
@@ -36,7 +36,7 @@ describe VoucherRow do
   it "should enforce absence of arrangements on needed voucher_rows" do
     voucher = Voucher.make
     (1..2).each do |i|
-      voucher.voucher_rows[0].account.account_type = i
+      voucher.voucher_rows[0].account.account_group.account_type = i
       voucher.voucher_rows[0].account.has_arrangements?.should == false
       voucher.voucher_rows[0].arrangement = nil
       voucher.should be_valid 

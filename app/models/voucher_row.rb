@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 class VoucherRow < ActiveRecord::Base
   belongs_to :voucher, :inverse_of => :voucher_rows
-  belongs_to :account, :foreign_key => :account_number, :primary_key => :number
+  #belongs_to :account, :foreign_key => :account_number, :primary_key => :number, :conditions=>{:activity_year_id => lambda { voucher.activity_year_id}}
   belongs_to :arrangement
   belongs_to :signature , :class_name => "User"
 
@@ -12,6 +12,16 @@ class VoucherRow < ActiveRecord::Base
   validate :no_arrangement, :unless => Proc.new { account.has_arrangements? }
   
   attr_readonly :account_number, :sum, :arrangement_id, :voucher_id
+
+  def account
+    return @account if @account
+    Account.joins(:account_group).first(:conditions=>{:number=>account_number, "account_groups.activity_year_id"=>voucher.activity_year_id})
+  end
+
+  def account=(val)
+    @account = val
+    self.account_number = val.number
+  end
 
   def canceled?
     return canceled
