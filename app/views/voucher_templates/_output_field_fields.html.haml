@@ -1,0 +1,34 @@
+- javascript %w(jquery/jquery.ui.custom.min.js accounts.js)
+
+%tr.input
+  %td= f.input :account, :label=>false, :input_html =>{:class=>"account_autocomplete"}
+  %td= f.input :formula, :label=>false
+  %td= f.input :script_name, :label=>false
+  %td= link_to_remove_field "Radera", f
+
+- ActiveRecord::Base.include_root_in_json = false
+:javascript
+  var accounts = #{Account.order("number").map { |a| {:number=>a.number,:name=>a.name,:account_type=>a.account_type,:has_arrangements=>a.has_arrangements?, :type=>'account'} }.to_json}
+  $(".account_autocomplete").autocomplete({
+    source: ac_account,
+    focus: function(event,ui) {
+      $(this).val(ui.item.number);
+      update_account(ui.item);
+      return false;
+    },
+    select: function(event,ui) {
+      $(this).val(ui.item.number);
+      update_account(ui.item);
+      return false;
+    }
+  })
+  .data("autocomplete")._renderItem = function(ul,item) {
+    a=item
+    return $("<li></li>")
+      .data("item.autocomplete",a)
+      .append("<a>"+
+               "<span class='autocomplete account'>"+a.number+" - "+a.name+"</span>"+
+              "</a>")
+        .appendTo(ul);
+
+  }

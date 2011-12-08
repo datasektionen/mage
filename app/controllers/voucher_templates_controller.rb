@@ -1,16 +1,15 @@
-class TemplatesController < InheritedResources::Base
-
+class VoucherTemplatesController < InheritedResources::Base
   def fields
-    @template = VoucherTemplate.find(params[:template])
+    @voucher_template = VoucherTemplate.find(params[:template])
     @organ = Organ.find(params[:organ])
     render :layout => nil
   end 
 
   def parse
     arr = params[:arrangement].to_i
-    @template = VoucherTemplate.find(params[:template])
+    @voucher_template = VoucherTemplate.find(params[:template])
     begin
-      @rows = @template.parse(params[:fields],arr)
+      @rows = @voucher_template.parse(params[:fields],arr)
     rescue Exception => e
       render :inline=>e.message, :status=>400 and return
     end
