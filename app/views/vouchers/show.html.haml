@@ -5,10 +5,11 @@
 #voucher
   .voucher_data
     %p.voucher_date
-      %strong Datum:
+      %strong Transaktionsdatum:
       %span.date= format_date(@voucher.accounting_date)
     %p
       %strong Nämnd:
       %span= @voucher.organ.name
+    %p 
     = render 'voucher_info', :voucher=>@voucher
   = render @voucher
