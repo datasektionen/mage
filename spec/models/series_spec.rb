@@ -17,4 +17,14 @@ describe Series do
     user_access.destroy
     series.accessible_by?(user.reload).should be_false
   end
+
+  it "should not require name and letter" do
+    series = Series.make
+    series.name = nil
+    series.should_not be_valid
+    series.letter = nil
+    series.should_not be_valid
+    series.name = "derp"
+    series.should_not be_valid
+  end
 end

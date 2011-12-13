@@ -13,12 +13,10 @@
     source: ac_account,
     focus: function(event,ui) {
       $(this).val(ui.item.number);
-      update_account(ui.item);
       return false;
     },
     select: function(event,ui) {
       $(this).val(ui.item.number);
-      update_account(ui.item);
       return false;
     }
   })
