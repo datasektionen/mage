@@ -211,6 +211,13 @@
         name: "Namn"
         active_years: "Aktiva år"
 
+  views:
+    pagination:
+      first: "Första"
+      previous: "Föregående"
+      next: "Nästa"
+      last: "Sista"
+      truncate: "..."
 
   date:
     formats:
