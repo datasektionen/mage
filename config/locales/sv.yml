@@ -221,6 +221,13 @@
       output_fields: "Formeln är helt enkelt en matematisk formel för resultatet, {input_field_script_name} ersätts med värdet för fältet med skriptnamnet angivet inom {}. Skriptnamn är optional för outputfälten." 
        
 
+  views:
+    pagination:
+      first: "Första"
+      previous: "Föregående"
+      next: "Nästa"
+      last: "Sista"
+      truncate: "..."
 
   date:
     formats:

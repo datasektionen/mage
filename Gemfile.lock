@@ -128,6 +128,8 @@ GEM
       thor (~> 0.14)
     json (1.6.1)
     json_pure (1.6.1)
+    kaminari (0.12.4)
+      rails (>= 3.0.0)
     kgio (2.6.0)
     libnotify (0.5.9)
       ffi (~> 1.0.0)
@@ -286,6 +288,7 @@ DEPENDENCIES
   i18n_routing
   inherited_resources
   jquery-rails
+  kaminari
   libnotify
   machinist (>= 2.0.0.beta2)
   mysql2 (~> 0.2.6)
