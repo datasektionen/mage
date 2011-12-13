@@ -148,7 +148,7 @@ function add_row() {
   }
   $("#spinner").show()
 
-  params = {"type" : current_account.type, "account" : current_account.number, "sum" : sum, "voucher_id": voucher_id,"id":current_account.id}
+  params = {"type" : current_account.type, "account" : current_account.number, "sum" : sum, "voucher_id": voucher_id,"id":current_account.id, "activity_year":activity_year_id} //"id" is used for templates
   if(has_arrangements(current_account)) {
     params.arrangement = $("#voucher_add_row_arrangement").val()
   }

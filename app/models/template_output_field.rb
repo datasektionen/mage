@@ -1,9 +1,8 @@
 #-*- encoding: utf-8 -*-
 class TemplateOutputField < ActiveRecord::Base
   belongs_to :template, :inverse_of => :output_fields, :class_name=>"VoucherTemplate", :foreign_key => :voucher_template_id
-  belongs_to :account, :foreign_key => :account_number, :primary_key => :number
 
-  def parse(values,arr) 
+  def parse(values,arr,activity_year) 
     complete = true
     _formula = formula.gsub(/\{(.+?)\}/) do |m|
       if values.key?($1)
@@ -17,12 +16,15 @@ class TemplateOutputField < ActiveRecord::Base
       end
     end
     if complete
-      Rails.logger.debug("#{script_name}: #{_formula}")
       sum = eval(_formula).round(2)
-      arr = account.has_arrangements? ? arr : nil
-      VoucherRow.new(:account_number=>account_number, :arrangement_id => arr, :sum=>sum)
+      arr = account(activity_year).has_arrangements? ? arr : nil
+      VoucherRow.new(:account=>account(activity_year), :arrangement_id => arr, :sum=>sum)
     else
       nil
     end
+  end
+
+  def account(activity_year)
+    return Account.find_by_number_and_activity_year(account_number, activity_year)
   end
 end

@@ -19,7 +19,7 @@ $(function() {
     } else {
       $.ajax( {
         url: template_fields_url,
-        data: {"template" : $("#voucher_add_row_template").val(), "organ":organ_val() },
+        data: {"template" : $("#voucher_add_row_template").val(), "organ":organ_val(), "activity_year":activity_year_id },
         success: function(data, textStatus, xhr) {
           $("#template_fields").html(data)
         }
@@ -37,6 +37,7 @@ $(function() {
     params =  {
       "template": $("#voucher_add_row_template").val(), 
       "arrangement" : $("#voucher_add_row_template_arrangement").val(),
+      "activity_year" : activity_year_id,
       "fields" : fields
     }
 

@@ -13,9 +13,10 @@ class VoucherRow < ActiveRecord::Base
   
   attr_readonly :account_number, :sum, :arrangement_id, :voucher_id
 
-  def account
+  def account 
     return @account if @account
-    Account.joins(:account_group).first(:conditions=>{:number=>account_number, "account_groups.activity_year_id"=>voucher.activity_year_id})
+    @account = Account.find_by_number_and_activity_year(account_number,voucher.activity_year.id)
+    return @account
   end
 
   def account=(val)

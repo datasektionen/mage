@@ -10,7 +10,9 @@ function find_account(term) {
       return results
   }
   $.each(accounts,function(index,account) {
-    if ((account.number.toString().indexOf(term) == 0) || (account.name.toLowerCase().indexOf(term.toLowerCase()) >= 0)) {
+    if ((account.number.toString().toLowerCase().indexOf(term.toLowerCase()) == 0) ||
+        (account.name.toLowerCase().indexOf(term.toLowerCase()) >= 0)) {
+
       results.push(account)
     }
   })

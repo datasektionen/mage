@@ -19,4 +19,12 @@ class Account < ActiveRecord::Base
   def activity_year
     return account_group.activity_year
   end
+
+  def account_type
+    return account_group.account_type
+  end
+
+  def self.find_by_number_and_activity_year(number, activity_year)
+    Account.joins(:account_group).first(:conditions=>{:number=>number, "account_groups.activity_year_id"=>activity_year})
+  end
 end

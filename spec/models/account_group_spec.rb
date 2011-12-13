@@ -15,7 +15,7 @@ describe AccountGroup do
     account_group.account_type = nil
     account_group.should_not be_valid
     account_group.account_type = 1
-    account_group.activity_year_id = nil
+    account_group.activity_year = nil
     account_group.should_not be_valid
   end
 end
