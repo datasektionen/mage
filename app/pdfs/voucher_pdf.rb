@@ -43,13 +43,22 @@ class VoucherPDF < Prawn::Document
       move_down(2)
       text voucher.pretty_number, :size=>16, :align=>:right, :style=>:bold
     end
+
     stroken_box grid([3,0],[4,1]) do
+      text "Bokföringsdatum:", :size=>10, :style=>:bold
+      move_down(2)
+      text I18n.l(voucher.created_at.to_date), :size=>16, :align=>:right
+    end
+
+    # Rättningar
+    stroken_box grid([5,0],[6,1]) do
       if voucher.corrects?
         text "Rättar verifikat:", :size=>14,:style=>:bold_italic
         text voucher.corrects.pretty_number, :size=>16, :align=>:right,:style=>:bold
       end
     end
-    stroken_box grid([5,0],[6,1]) do
+
+    stroken_box grid([7,0],[8,1]) do
       if voucher.corrected?
         text "Rättas av verifikat:", :size=>14,:style=>:bold_italic
         text voucher.corrected_by.pretty_number, :size=>16, :align=>:right,:style=>:bold
@@ -60,7 +69,7 @@ class VoucherPDF < Prawn::Document
       text_box voucher.material_from.name,:at=>[0,cursor], :size=>16, :align=>:right, :overflow=>:shrink_to_fit
     end
 
-    stroken_box grid([7,0],[33,1]) do
+    stroken_box grid([9,0],[33,1]) do
       text "Kvitto:", :size=>14, :style=>:bold
     end
 
