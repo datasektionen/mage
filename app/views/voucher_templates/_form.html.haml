@@ -1,0 +1,33 @@
+= simple_form_for @voucher_template do |f|
+  .fields
+    = f.input :name
+    = f.input :description
+    -#= f.input :template_type, :label=>t('attributes.voucher_template.account_template'), :as=>:checkbox, :hint=>t('hints.voucher_template.account_template')
+
+  .clear
+  %p
+    %strong= t('attributes.voucher_template.input_fields')
+    %table
+      %tr
+        %th= t('attributes.voucher_template.name') 
+        %th= t('attributes.voucher_template.description') 
+        %th= t('attributes.voucher_template.script_name') 
+        %th
+      = f.simple_fields_for :input_fields do |fi|
+        = render 'input_field_fields', :f=>fi
+    =link_to_add_fields "Lägg till fält", f, :input_fields
+  .clear
+  %p
+    %strong= t('attributes.voucher_template.output_fields')
+    %p= t('hints.voucher_template.output_fields')
+    %table
+      %tr
+        %th= t('attributes.voucher_template.account') 
+        %th= t('attributes.voucher_template.formula') 
+        %th= t('attributes.voucher_template.script_name')
+        %th
+      = f.simple_fields_for :output_fields do |fo|
+        = render 'output_field_fields', :f=>fo
+    =link_to_add_fields "Lägg till fält", f, :output_fields
+  .actions
+    = f.submit 'Save'

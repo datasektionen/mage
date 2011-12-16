@@ -210,7 +210,24 @@
       arrangement:
         name: "Namn"
         active_years: "Aktiva år"
+      voucher_template:
+        account_template: "Kontomall"
+        input_fields: "Inputfält"
+        output_fields: "Outputfält"
 
+  hints:
+    voucher_template:
+      account_template: "Kontomall är en mall som placeras i 'konto'-fältet, annars hamnar den i listan över mallar"
+      output_fields: "Formeln är helt enkelt en matematisk formel för resultatet, {input_field_script_name} ersätts med värdet för fältet med skriptnamnet angivet inom {}. Skriptnamn är optional för outputfälten." 
+       
+
+  views:
+    pagination:
+      first: "Första"
+      previous: "Föregående"
+      next: "Nästa"
+      last: "Sista"
+      truncate: "..."
 
   date:
     formats:

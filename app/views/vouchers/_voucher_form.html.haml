@@ -75,8 +75,8 @@
                     VoucherTemplate.singlerow.map { |t| {:number=> "Mall #{t.id}", :name=>t.name, :type=>'template', :has_arrangements=>t.has_arrangements?(current_activity_year.id), :id=>t.id} }).to_json }
 
   var voucher_row_url = "#{rows_vouchers_path}"
-  var template_fields_url = "#{fields_templates_path}"
-  var template_parse_url = "#{parse_templates_path}"
+  var template_fields_url = "#{fields_voucher_templates_path}"
+  var template_parse_url = "#{parse_voucher_templates_path}"
   var arrs = #{Organ.all.reduce(Hash.new) {|h,o| h[o.id] = o.arrangements.select([:id,:number,:name]) ; h }.to_json}
   var num_rows = #{@voucher.voucher_rows.size}
   var user_initials = "#{current_user.initials}"

@@ -1,13 +1,13 @@
-%p.description= @template.description
+%p.description= @voucher_template.description
 = fields_for :voucher do |fv|
   = fv.fields_for :add_row do |f|
-    - if @template.has_arrangements?(@activity_year)
+    - if @voucher_template.has_arrangements?(@activity_year)
       %p.input
         = f.label "Arrangemang", :required=>false
         = f.select :template_arrangement, options_from_collection_for_select(@organ.arrangements,:id, :list_print),{}, :class=>"arr_select"
       .clear
 
-    - @template.input_fields.each do |field|
+    - @voucher_template.input_fields.each do |field|
       %p.input
         = f.label field.name
         = f.text_field field.script_name, :class => :template_input, :script_name => field.script_name
