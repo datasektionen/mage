@@ -25,10 +25,10 @@ class Account < ActiveRecord::Base
   end
 
   def self.find_by_activity_year(activity_year)
-    joins(:account_group).where(:activity_year_id=>activity_year)
+    joins(:account_group).where("account_groups.activity_year_id"=>activity_year)
   end 
 
   def self.find_by_number_and_activity_year(number, activity_year)
-    joins(:account_group).first(:conditions=>{:number=>number, :activity_year_id=>activity_year})
+    joins(:account_group).first(:conditions=>{:number=>number, "account_groups.activity_year_id"=>activity_year})
   end
 end
