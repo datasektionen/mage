@@ -18,7 +18,7 @@ Mage::Application.routes.draw do
         collection do
           get :search, :defaults => {:format => :json}
           get :edit
-          post :edit, :action=>:update
+          put :edit, :action=>:update
         end
       end
       

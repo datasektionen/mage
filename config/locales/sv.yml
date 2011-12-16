@@ -300,6 +300,9 @@
     empty_accounts: "Tom kontoplan"
     copy_accounts: "Kopiera kontoplan"
 
+  accounts:
+    changes_saved: "Ändringarna sparades"
+
   account_type:
     type1: "Tillgångskonton"
     type2: "Skuldkonton"

@@ -4,7 +4,7 @@
 %p.info
   Endast oanvända konton och kontogrupper kan raderas
 
-= simple_form_for @activity_year do |f|
+= simple_form_for @activity_year, :url=>edit_activity_year_accounts_path(@activity_year), :method=>:put do |f|
   #account_groups
     = f.simple_fields_for :account_groups do |fa|
       = render 'account_group_fields', :f=>fa
