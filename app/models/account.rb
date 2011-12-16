@@ -1,6 +1,11 @@
 class Account < ActiveRecord::Base
   belongs_to :account_group
 
+  validate :dont_change_number_if_used
+
+  validates :number, :presence=>true
+  validates :name, :presence=>true, :uniqueness=>true
+
   #account_types
   ASSET_ACCOUNT = 1
   DEBT_ACCOUNT = 2
@@ -38,7 +43,7 @@ class Account < ActiveRecord::Base
 
   def usage
     return [] if new_record?
-    return Voucher.find_by_account_and_activity_year(number, account_group.activity_year)
+    return Voucher.find_by_account_and_activity_year(number_was, account_group.activity_year)
   end
 
 private 
@@ -50,6 +55,13 @@ public
       destroy_
     else
       false
+    end
+  end
+
+protected
+  def dont_change_number_if_used
+    if !allow_destroy?
+      errors[:number] << I18n.t('activerecord.messages.is_readonly') if changed.include?("number")
     end
   end
 end

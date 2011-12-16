@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe Account do
   
-  it "should have arrangement if account group has_arrangement" do
-
-  end
-
   it "find_by_activity_year shall work" do
     a = Account.make
     a.save
@@ -39,5 +35,27 @@ describe Account do
     a.allow_destroy?.should be_false
     a.destroy.should be_false
     Account.find_by_id(a.id).should_not be_nil
+  end
+
+  it "should require number and name" do
+    a = Account.make
+    a.name = nil
+    a.should_not be_valid
+    a = Account.make
+    a.number = nil
+    a.should_not be_valid
+  end 
+
+  it "should not be allowed to change number in used account" do
+    a = Account.make
+    a.save
+    v = Voucher.make
+    v.voucher_rows.first.account_number = a.number
+    v.activity_year_id = a.account_group.activity_year_id
+    v.save
+    a.allow_destroy?.should_not be_true
+  
+    a.number+=1
+    a.should_not be_valid
   end
 end

@@ -4,6 +4,7 @@ class ActivityYear < ActiveRecord::Base
 
   has_many :account_groups
   accepts_nested_attributes_for :account_groups, :allow_destroy=>true
+  validates_associated :account_groups
 
   def to_s
     year

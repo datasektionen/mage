@@ -6,6 +6,7 @@ class AccountGroup < ActiveRecord::Base
   validates :title, :presence=>true
   validates :account_type, :presence=>true
   validates :activity_year, :presence=>true
+  validates_associated :accounts
 
   def has_arrangements?
     return account_type > 2
