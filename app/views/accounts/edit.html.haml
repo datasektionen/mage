@@ -1,0 +1,10 @@
+%h3 Redigerar kontoplan för #{@activity_year.to_s}
+= simple_form_for @activity_year do |f|
+  #account_groups
+    = f.simple_fields_for :account_groups do |fa|
+      = render 'account_group_fields', :f=>fa
+  =link_to_add_fields "Lägg till kontogrupp", f, :account_groups, "#account_groups"
+
+  .actions
+    = f.submit "Spara ändringar"
+

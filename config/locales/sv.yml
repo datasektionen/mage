@@ -169,6 +169,7 @@
       # will translate User model name to "Dude"
     models:
       account: "Konto"
+      account_group: "Kontogrupp"
       activity_year: "Verksamhetsår"
       arrangement: "Arrangemang"
       api_key: "Apinyckel"
@@ -207,6 +208,9 @@
         default_organ: "Standardnämnd"
       activity_year:
         year: "År"
+      account_group:
+        title: "Titel"
+        account_type: "Kontotyper"
       arrangement:
         name: "Namn"
         active_years: "Aktiva år"
