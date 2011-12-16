@@ -16,6 +16,7 @@ class AccountGroup < ActiveRecord::Base
   end
 
   def allow_destroy?
+    return true if new_record?
     ! accounts.any? {|account| !account.allow_destroy? } # accounts.all? {|account| account.allow_destroy? }, but this is faster
   end
 

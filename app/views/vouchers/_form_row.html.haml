@@ -20,4 +20,4 @@
       %span= link_to form_row.signature.initials, user_path(form_row.signature)
       = hidden_field_tag "voucher[voucher_rows_attributes][][signature_id]", current_user.id 
   %td.actions
-    =link_to  image_tag("icons/cross.png",:alt=>'x') ,"#", {:onclick=>"delete_row(this,#{form_row.int_sum}); return false", :title=>form_row.id.nil? ? "Radera rad" : "Stryk rad",:class=>"delete_row_link"}
+    =link_to  image_tag("icons/cross.png",:alt=>'delete') ,"#", {:onclick=>"delete_row(this,#{form_row.int_sum}); return false", :title=>form_row.id.nil? ? "Radera rad" : "Stryk rad",:class=>"delete_row_link"}

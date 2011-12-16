@@ -37,6 +37,7 @@ class Account < ActiveRecord::Base
   end
 
   def usage
+    return [] if new_record?
     return Voucher.find_by_account_and_activity_year(number, account_group.activity_year)
   end
 

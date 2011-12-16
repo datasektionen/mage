@@ -5,7 +5,7 @@ function remove_fields(link, parents) {
   $.each(parents, function(index, item) {
     obj = obj.parent(item)
   })
-  obj.parent(".input").hide()
+  obj.hide()
 }
 
 function add_fields(link, association, content, container_match) {
