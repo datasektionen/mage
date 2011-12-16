@@ -46,6 +46,9 @@ class Voucher < ActiveRecord::Base
     return unscoped.where("bookkept_by_id is null")
   end
 
+  def self.find_by_account_and_activity_year(account_number, activity_year_id) 
+    joins(:voucher_rows).where("voucher_rows.account_number"=>account_number, :activity_year_id=>activity_year_id)
+  end
 
   def self.search(search, current_activity_year, user)
     if user.admin?

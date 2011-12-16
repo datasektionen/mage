@@ -31,4 +31,24 @@ class Account < ActiveRecord::Base
   def self.find_by_number_and_activity_year(number, activity_year)
     joins(:account_group).first(:conditions=>{:number=>number, "account_groups.activity_year_id"=>activity_year})
   end
+
+  def allow_destroy?
+    return usage.empty?
+  end
+
+  def usage
+    return Voucher.find_by_account_and_activity_year(number, account_group.activity_year)
+  end
+
+private 
+  alias destroy_ destroy
+
+public
+  def destroy
+    if allow_destroy?
+      destroy_
+    else
+      false
+    end
+  end
 end
