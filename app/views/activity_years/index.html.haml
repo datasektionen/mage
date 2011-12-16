@@ -5,6 +5,8 @@
 
   =simple_form_for @activity_year do |f|
     = f.input :year
+    = f.simple_fields_for :extra do |fe|
+      = fe.input :copy_accounts, :collection=>ActivityYear.all, :prompt=>t('activity_years.empty_accounts'), :label=>t('activity_years.copy_accounts')
 
     .clear
 
@@ -13,11 +15,15 @@
 
 %hr
 
+%h4 Befintliga verksamhetsår
+
+%p Klicka på ett år för att hantera kontoplanen
+
 %table.datatable
   %thead
     %th Verksamhetsår
   %tbody
     - @activity_years.each do |activity_year|
       %tr
-        %td= activity_year
+        %td= link_to activity_year.to_s, activity_year_accounts_path(activity_year)
   

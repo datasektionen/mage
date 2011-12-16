@@ -7,9 +7,9 @@ class Account < ActiveRecord::Base
   INCOME_ACCOUNT = 3
   COST_ACCOUNT = 4
 
-  def self.search(s)
+  def self.search(activity_year,s)
     s = "%#{s}%"
-    where("number LIKE ? or name LIKE ?", s, s)
+    joins(:account_group).where("account_groups.activity_year = ? accounts.number LIKE ? or accounts.name LIKE ?",activity_year, s, s)
   end
 
   def has_arrangements?
@@ -24,7 +24,11 @@ class Account < ActiveRecord::Base
     return account_group.account_type
   end
 
+  def self.find_by_activity_year(activity_year)
+    joins(:account_group).where(:activity_year_id=>activity_year)
+  end 
+
   def self.find_by_number_and_activity_year(number, activity_year)
-    Account.joins(:account_group).first(:conditions=>{:number=>number, "account_groups.activity_year_id"=>activity_year})
+    joins(:account_group).first(:conditions=>{:number=>number, :activity_year_id=>activity_year})
   end
 end

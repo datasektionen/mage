@@ -229,6 +229,7 @@
       last: "Sista"
       truncate: "..."
 
+
   date:
     formats:
       # Use the strftime parameters for formats.
@@ -291,6 +292,15 @@
     deleted: "Raderade verifikatet"
     bookkept_plural: "Verifikaten bokförda"
 
+  activity_years:
+    empty_accounts: "Tom kontoplan"
+    copy_accounts: "Kopiera kontoplan"
+
+  account_type:
+    type1: "Tillgångskonton"
+    type2: "Skuldkonton"
+    type3: "Intäktskonton"
+    type4: "Utgiftskonton"
   resources: 
     users: "anvandare"
     series: "serier"
@@ -299,6 +309,7 @@
     journal: "journal"
     vouchers: "verifikat"
     accounting: "bokfora"
+    account: "konto"
   path_names:
     new: "ny"
     edit: "redigera"
@@ -307,6 +318,9 @@
     vouchers:
       path_names:
         new: "nytt"
+    activity_years:
+      path_names:
+        accounts: "kontoplan"
   helpers:
     submit:
       create: "Skapa %{model}"

@@ -9,4 +9,8 @@ class AccountGroup < ActiveRecord::Base
   def has_arrangements?
     return account_type > 2
   end
+
+  def account_type_string
+    I18n.t "account_type.type#{account_type}"
+  end
 end

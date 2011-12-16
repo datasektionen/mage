@@ -1,0 +1,15 @@
+%h3 Kontoplan
+
+- if can? :update, Account.new
+  %p
+    = link_to "Redigera kontoplan", edit_activity_year_accounts_path
+
+%ul
+  - @account_groups.each do |ag|
+    %li
+      %strong #{ag.title} (#{ag.account_type_string})
+      %ul
+        - ag.accounts.each do |account|
+          %li #{account.number} - #{account.name}
+        
+
