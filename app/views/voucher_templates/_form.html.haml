@@ -15,7 +15,7 @@
         %th
       = f.simple_fields_for :input_fields do |fi|
         = render 'input_field_fields', :f=>fi
-    =link_to_add_fields "Lägg till fält", f, :input_fields
+    =link_to_add_fields "Lägg till fält", f, :input_fields, "table"
   .clear
   %p
     %strong= t('attributes.voucher_template.output_fields')
@@ -28,6 +28,6 @@
         %th
       = f.simple_fields_for :output_fields do |fo|
         = render 'output_field_fields', :f=>fo
-    =link_to_add_fields "Lägg till fält", f, :output_fields
+    =link_to_add_fields "Lägg till fält", f, :output_fields, "table"
   .actions
     = f.submit 'Save'
