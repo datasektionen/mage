@@ -19,4 +19,25 @@ describe Account do
     (a == Account.find_by_number_and_activity_year(a.number, a.account_group.activity_year)).should be_true
     (a == Account.find_by_number_and_activity_year(a.number, a.account_group.activity_year_id)).should be_true
   end
+
+  it "should be possible to delete an unused account" do
+    a = Account.make
+    a.save
+    a.allow_destroy?.should be_true
+    a.destroy.should_not be_false
+    Account.find_by_id(a.id).should be_nil
+  end
+
+  it "should not be allowed to destroy an used account" do
+    a = Account.make
+    a.save
+    v = Voucher.make
+    v.voucher_rows.first.account_number = a.number
+    v.activity_year_id = a.account_group.activity_year_id
+    
+    v.save
+    a.allow_destroy?.should be_false
+    a.destroy.should be_false
+    Account.find_by_id(a.id).should_not be_nil
+  end
 end
