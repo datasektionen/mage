@@ -18,13 +18,9 @@ class AccountGroup < ActiveRecord::Base
     return accounts.empty? #Dont allow destroy if it has any accounts
   end
 
-private
-  alias destroy_ destroy
-
-public
   def destroy
     if allow_destroy?
-      destroy_
+      super
     else
       false
     end

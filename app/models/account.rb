@@ -38,13 +38,9 @@ class Account < ActiveRecord::Base
     return Voucher.find_by_account_and_activity_year(number_was, activity_year_id)
   end
 
-private 
-  alias destroy_ destroy
-
-public
   def destroy
     if allow_destroy?
-      destroy_
+      super
     else
       false
     end
