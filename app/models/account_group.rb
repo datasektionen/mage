@@ -16,4 +16,8 @@ class AccountGroup < ActiveRecord::Base
   def account_type_string
     I18n.t "account_type.type#{account_type}"
   end
+
+  def to_s
+    "#{number} - #{title} (#{account_type_string})"
+  end
 end

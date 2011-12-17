@@ -2,7 +2,7 @@ class ActivityYear < ActiveRecord::Base
   validates_presence_of :year
   validates_uniqueness_of :year
 
-  has_many :accounts
+  has_many :accounts, :order=>:number
   accepts_nested_attributes_for :accounts, :allow_destroy=>true
   validates_associated :accounts
 

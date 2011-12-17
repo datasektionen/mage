@@ -2,14 +2,22 @@
 %p
   Inga ändringar sparas innan du trycker "spara"
 %p.info
-  Endast oanvända konton och kontogrupper kan raderas
+  Endast oanvända konton kan raderas
 
 = simple_form_for @activity_year, :url=>edit_activity_year_accounts_path(@activity_year), :method=>:put do |f|
-  #account_groups
-    = f.simple_fields_for :account_groups do |fa|
-      = render 'account_group_fields', :f=>fa
-  =link_to_add_fields "Lägg till kontogrupp", f, :account_groups, "#account_groups"
-
+  - @activity_year.accounts.group_by(&:account_group).each do |account_group, accounts|
+    .account_group
+      %span.title= account_group.to_s
+      %table.accounts
+        %tr
+          %th Nummer
+          %th Beskrivning
+          %th Kontogrupp
+          %th Ingående balans (SEK)
+          %th
+        = f.simple_fields_for :accounts, accounts.sort_by{|a|a.number} do |fa|
+          = render 'account_fields', :f => fa
+      =link_to_add_fields "Lägg till konto", f, :accounts , ".accounts"
   .actions
     = f.submit "Spara ändringar"
 
