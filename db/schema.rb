@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111124234411) do
+ActiveRecord::Schema.define(:version => 20111217161807) do
 
   create_table "account_groups", :force => true do |t|
     t.string   "title"
     t.integer  "account_type"
-    t.integer  "activity_year_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "number",       :null => false
   end
 
   create_table "accounts", :force => true do |t|
@@ -26,8 +26,11 @@ ActiveRecord::Schema.define(:version => 20111124234411) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "account_group_id",                :null => false
+    t.integer  "account_group_id",                   :null => false
     t.integer  "ingoing_balance",  :default => 0
+    t.integer  "activity_year_id",                   :null => false
+    t.boolean  "debet_is_normal",  :default => true
+    t.boolean  "kredit_is_normal", :default => true
   end
 
   add_index "accounts", ["number"], :name => "index_accounts_on_number", :unique => true

@@ -10,6 +10,12 @@
       %strong #{ag.title} (#{ag.account_type_string})
       %ul
         - ag.accounts.each do |account|
-          %li #{account.number} - #{account.name}
+          %li 
+            =account.number
+            -
+            =account.name
+            - if account.ingoing_balance != 0
+              Ingående balans:
+              = currency(account.ingoing_balance)
         
 

@@ -5,8 +5,8 @@
 
   =simple_form_for @activity_year do |f|
     = f.input :year
-    = f.simple_fields_for :extra do |fe|
-      = fe.input :copy_accounts, :collection=>ActivityYear.all, :prompt=>t('activity_years.empty_accounts'), :label=>t('activity_years.copy_accounts')
+    = f.simple_fields_for :accounts do |fe|
+      = fe.input :clone , :collection=>ActivityYear.all, :prompt=>t('activity_years.empty_accounts'), :label=>t('activity_years.copy_accounts')
 
     .clear
 

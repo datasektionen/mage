@@ -15,7 +15,7 @@ class VoucherRow < ActiveRecord::Base
 
   def account 
     return @account if @account
-    @account = Account.find_by_number_and_activity_year(account_number,voucher.activity_year.id)
+    @account = Account.find_by_number_and_activity_year_id(account_number,voucher.activity_year.id)
     return @account
   end
 

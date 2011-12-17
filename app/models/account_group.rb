@@ -1,12 +1,9 @@
 class AccountGroup < ActiveRecord::Base
-  belongs_to :activity_year
-  has_many :accounts, :dependent=>:destroy
-  accepts_nested_attributes_for :accounts, :allow_destroy=>true
+  has_many :accounts
 
   validates :title, :presence=>true
   validates :account_type, :presence=>true
-  validates :activity_year, :presence=>true
-  validates_associated :accounts
+  validates :number, :presence=>true
 
   def has_arrangements?
     return account_type > 2
@@ -18,7 +15,7 @@ class AccountGroup < ActiveRecord::Base
 
   def allow_destroy?
     return true if new_record?
-    ! accounts.any? {|account| !account.allow_destroy? } # accounts.all? {|account| account.allow_destroy? }, but this is faster
+    return accounts.empty? #Dont allow destroy if it has any accounts
   end
 
 private

@@ -1,10 +1,13 @@
 class Account < ActiveRecord::Base
   belongs_to :account_group
+  belongs_to :activity_year
 
   validate :dont_change_number_if_used
 
-  validates :number, :presence=>true
-  validates :name, :presence=>true, :uniqueness=>true
+  validates :name, :presence=>true
+  validates :number, :presence=>true, :uniqueness=>{:scope=>:activity_year_id}
+  validates :account_group, :presence=>true
+  validates :activity_year, :presence=>true
 
   #account_types
   ASSET_ACCOUNT = 1
@@ -12,29 +15,18 @@ class Account < ActiveRecord::Base
   INCOME_ACCOUNT = 3
   COST_ACCOUNT = 4
 
-  def self.search(activity_year,s)
+
+  def self.search(activity_year_id,s)
     s = "%#{s}%"
-    joins(:account_group).where("account_groups.activity_year = ? accounts.number LIKE ? or accounts.name LIKE ?",activity_year, s, s)
+    where("activity_year_id = ? accounts.number LIKE ? or accounts.name LIKE ?",activity_year_id, s, s)
   end
 
   def has_arrangements?
     return account_group.has_arrangements?
   end
 
-  def activity_year
-    return account_group.activity_year
-  end
-
   def account_type
     return account_group.account_type
-  end
-
-  def self.find_by_activity_year(activity_year)
-    joins(:account_group).where("account_groups.activity_year_id"=>activity_year)
-  end 
-
-  def self.find_by_number_and_activity_year(number, activity_year)
-    joins(:account_group).first(:conditions=>{:number=>number, "account_groups.activity_year_id"=>activity_year})
   end
 
   def allow_destroy?
@@ -43,7 +35,7 @@ class Account < ActiveRecord::Base
 
   def usage
     return [] if new_record?
-    return Voucher.find_by_account_and_activity_year(number_was, account_group.activity_year)
+    return Voucher.find_by_account_and_activity_year(number_was, activity_year_id)
   end
 
 private 

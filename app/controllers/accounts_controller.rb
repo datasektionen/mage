@@ -24,7 +24,7 @@ class AccountsController < ApplicationController
     if @activity_year.update_attributes(params[:activity_year])
       flash[:notice] = t('accounts.changes_saved')
     else
-      flash[:notice] = "error"
+      flash[:error] = @activity_year.errors.inspect
     end
     render :action=>:edit
   end
