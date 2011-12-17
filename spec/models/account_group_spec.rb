@@ -21,8 +21,7 @@ describe AccountGroup do
 
   it "should be possible to delete an unused account group" do
     ag = AccountGroup.make
-    ag.allow_destroy?.should be_true
-    ag.destroy.should_not be_false
+    (ag.destroy == ag).should be_true
     AccountGroup.find_by_id(ag.id).should be_nil
   end
 
@@ -33,7 +32,7 @@ describe AccountGroup do
     ag.save
 
     ag.allow_destroy?.should be_false
-    ag.destroy.should be_false
+    lambda { ag.destroy}.should raise_error
     AccountGroup.find_by_id(ag.id).should_not be_nil
     Account.find_by_id(a.id).should_not be_nil
   end
