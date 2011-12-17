@@ -5,11 +5,11 @@
     = link_to "Redigera kontoplan", edit_activity_year_accounts_path
 
 %ul
-  - @account_groups.each do |ag|
+  - @accounts.group_by(&:account_group).each do |account_group, accounts|
     %li
-      %strong #{ag.title} (#{ag.account_type_string})
+      %strong #{account_group.title} (#{account_group.account_type_string})
       %ul
-        - ag.accounts.each do |account|
+        - accounts.each do |account|
           %li 
             =account.number
             -

@@ -4,7 +4,8 @@ class AccountsController < ApplicationController
   end
 
   def index
-    @account_groups = AccountGroup.where(:activity_year_id=>params[:activity_year_id])
+    @activity_year = ActivityYear.find(params[:activity_year_id])
+    @accounts = @activity_year.accounts
   end
 
   def show
