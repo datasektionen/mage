@@ -88,7 +88,7 @@ class VouchersController < InheritedResources::Base
     #params[:voucher][:arrangement]
     params[:voucher][:voucher_rows_attributes].each do |vr|
       vr[:arrangement] = params[:voucher][:organ].arrangements.find_by_number(vr[:arrangement]) if vr[:arrangement]
-      vr[:arrangement] = nil unless Account.find_by_number_and_activity_year(vr[:account_number],vr[:activity_year]).has_arrangements?
+      vr[:arrangement] = nil unless Account.find_by_number_and_activity_year_id(vr[:account_number],vr[:activity_year]).has_arrangements?
     end
 
 
@@ -160,7 +160,7 @@ class VouchersController < InheritedResources::Base
     @activity_year = params[:activity_year]
 
     if params[:type] == "account"
-      account = Account.find_by_number_and_activity_year(params[:account],params[:activity_year])
+      account = Account.find_by_number_and_activity_year_id(params[:account],params[:activity_year])
       render :nothing=>true, :status=>400 and return if account.nil?
       @rows = [VoucherRow.new(:account=>account, :sum=>params[:sum].to_f, :arrangement_id=>params[:arrangement])]
     elsif params[:type] == "template"

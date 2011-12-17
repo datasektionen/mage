@@ -25,6 +25,6 @@ class TemplateOutputField < ActiveRecord::Base
   end
 
   def account(activity_year)
-    return Account.find_by_number_and_activity_year(account_number, activity_year)
+    return Account.find_by_number_and_activity_year_id(account_number, activity_year)
   end
 end
