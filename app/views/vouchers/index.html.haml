@@ -1,7 +1,7 @@
 %h2 Verifikat
 
 
-- form_tag vouchers_path, :method=>:get do
+= form_tag vouchers_path, :method=>:get do
   #search_box
     %p
       = label_tag "Sök i serie:"
@@ -15,3 +15,6 @@
 = render :partial=>"voucher_list", :object => @vouchers, :locals=>{:long=>true,:sort=>true}
 
 = paginate @vouchers
+= form_tag vouchers_path, :method=>:get do
+  = label_tag :per, "Verifikat per sida"
+  = select_tag :per, options_for_select([10,25,50,100,["Alla", -1]], params[:per] || 25), :onchange => "this.form.submit();"
