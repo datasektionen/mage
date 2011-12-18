@@ -48,7 +48,7 @@ SimpleNavigation::Configuration.run do |navigation|
       accounting.item :new_voucher, "Nytt verifikat", new_voucher_path
       accounting.item :bank_accounting, "Bankhändelser", bank_accounting_index_path
       accounting.item :search_vouchers, "Sök verifikat", vouchers_path, :highlights_on=>/\/(vouchers|verifikat)\/[0-9]+/
-      accounting.item :templates, "Hantera mallar", voucher_templates_path
+      accounting.item :manage_templates, "Hantera mallar", voucher_templates_path
     end
 
 
