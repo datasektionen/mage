@@ -4,7 +4,10 @@ class VouchersController < InheritedResources::Base
   after_filter LogFilter , :only=>[:create,:update, :destroy]
 
   def index
-    @vouchers = Voucher.search(params[:search], current_activity_year, current_user).page(params[:page])
+    # Display all vouchers if params[:per] < 0
+    per = params[:per].to_i < 0 ? Voucher.count : params[:per]
+
+    @vouchers = Voucher.search(params[:search], current_activity_year, current_user).page(params[:page]).per(per)
   end
 
   def new
