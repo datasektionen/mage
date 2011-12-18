@@ -45,7 +45,7 @@ Mage::Application.routes.draw do
       end
     end
 
-    resources :templates do 
+    resources :voucher_templates do 
       collection do
         get :fields
         post :parse
