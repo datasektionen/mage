@@ -2,6 +2,8 @@
   =f.input :name
   =f.input :number, :input_html=>{:disabled=>@arrangement.id}
   =f.association :organ
+  =f.input :valid_from, :hint=>t('hints.arrangements.leave_empty_to_not_limit')
+  =f.input :valid_to, :hint=>t('hints.arrangements.leave_empty_to_not_limit')
 
   .clear
 

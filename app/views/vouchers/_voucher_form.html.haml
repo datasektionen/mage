@@ -77,7 +77,7 @@
   var voucher_row_url = "#{rows_vouchers_path}"
   var template_fields_url = "#{fields_voucher_templates_path}"
   var template_parse_url = "#{parse_voucher_templates_path}"
-  var arrs = #{Organ.all.reduce(Hash.new) {|h,o| h[o.id] = o.arrangements.select([:id,:number,:name]) ; h }.to_json}
+  var arrs = #{Organ.all.reduce(Hash.new) {|h,o| h[o.id] = o.arrangements.in_year(current_activity_year.year).select([:id,:number,:name]) ; h }.to_json}
   var num_rows = #{@voucher.voucher_rows.size}
   var user_initials = "#{current_user.initials}"
   var activity_year_id = #{current_activity_year.id}

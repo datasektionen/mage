@@ -3,7 +3,7 @@
 class Organ < ActiveRecord::Base
   after_create :create_other_arr
 
-  validates_uniqueness_of :number
+  validates :number, :presence=>true, :uniqueness=>true
 
   has_many :arrangements
 
