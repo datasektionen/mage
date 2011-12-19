@@ -28,4 +28,8 @@ class ReportsController < ApplicationController
   def complete
     @rows = @rows.group_by(&:arrangement).sort_by {|arr,row| arr.nil? ? -1 : arr.number }
   end
+
+  def summary
+    @rows = @rows.group_by(&:arrangement).sort_by {|arr,rows| arr.nil? ? -1 : arr.number }
+  end
 end

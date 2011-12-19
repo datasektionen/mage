@@ -28,7 +28,7 @@
               \-
             =arrangement
           - else
-            %h4 Tillgångs och skuldkonton
+            Tillgångs och skuldkonton
         %ul  
           - rows.group_by(&:account).sort_by{|account,r| account.number }.each do |account,account_rows| 
             - change_debet = 0
