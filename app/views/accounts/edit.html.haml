@@ -15,7 +15,7 @@
           %th Kontogrupp
           %th Ingående balans (SEK)
           %th
-        = f.simple_fields_for :accounts, accounts.sort_by{|a|a.number} do |fa|
+        = f.simple_fields_for :accounts, accounts.sort_by{|a| a.number.nil? ? 10000 :  a.number } do |fa|
           = render 'account_fields', :f => fa
       =link_to_add_fields "Lägg till konto", f, :accounts , ".accounts"
   .actions

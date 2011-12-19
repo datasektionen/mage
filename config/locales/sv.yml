@@ -170,6 +170,7 @@
     models:
       account: "Konto"
       account_group: "Kontogrupp"
+      account_plan: "Kontoplan"
       activity_year: "Verksamhetsår"
       arrangement: "Arrangemang"
       api_key: "Apinyckel"

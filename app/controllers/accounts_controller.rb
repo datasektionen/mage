@@ -26,7 +26,7 @@ class AccountsController < ApplicationController
       flash[:notice] = t('accounts.changes_saved')
       Journal.log(:update_accounts,@activity_year, current_user) 
     else
-      flash[:error] = @activity_year.errors.inspect
+      flash[:error] = t('activemodel.errors.template.header.one', :model=>t('activerecord.models.account_plan'))
     end
     render :action=>:edit
   end

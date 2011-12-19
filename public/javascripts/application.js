@@ -6,6 +6,8 @@ function remove_fields(link, parents) {
     obj = obj.parent(item)
   })
   obj.hide()
+  //Remove required from fields to prevent javascript validation:
+  obj.find("input").attr("required", false)
 }
 
 function add_fields(link, association, content, container_match) {
