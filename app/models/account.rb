@@ -46,6 +46,10 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def to_s
+    "#{number} #{name}"
+  end
+
 protected
   def dont_change_number_if_used
     if !allow_destroy?

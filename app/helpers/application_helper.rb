@@ -54,6 +54,11 @@ module ApplicationHelper
     number_to_currency(amount)
     # ("%0.2f" % amount.to_f).gsub('.',',')
   end
+
+  # Without unit
+  def currency_clean(amount)
+    number_to_currency(amount, :format=>"%n")
+  end
   
   def short_time(date_or_time)
     I18n.l date_or_time, :format => :short
@@ -61,6 +66,14 @@ module ApplicationHelper
 
   def format_date(date_or_time) 
     I18n.l date_or_time.to_date
+  end
+
+  def debet_or_zero(sum)
+    (sum > 0 ? sum : 0 )
+  end
+
+  def kredit_or_zero(sum)
+    (sum < 0 ? -sum : 0 )
   end
 
   def link_to_remove_field(name, f, parents=[])

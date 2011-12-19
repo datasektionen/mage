@@ -6,6 +6,7 @@ class ActivityYear < ActiveRecord::Base
   accepts_nested_attributes_for :accounts, :allow_destroy=>true
   validates_associated :accounts
 
+
   def to_s
     year
   end

@@ -258,6 +258,7 @@
       default: "%a, %e %b %Y %H:%M:%S %z"
       short: "%e %b %H:%M"
       long: "%e %B %Y %H:%M"
+      short_time: "%H:%M"
     am: ""
     pm: ""
 

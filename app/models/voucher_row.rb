@@ -44,12 +44,12 @@ class VoucherRow < ActiveRecord::Base
     (sum*100.0).round
   end
 
-  def debet
-    sum >=0 ? sum : nil
+  def debet(retval_on_empty=nil)
+    sum >=0 ? sum : retval_on_empty
   end
 
-  def kredit
-    sum < 0 ? sum.abs : nil
+  def kredit(retval_on_empty=nil)
+    sum < 0 ? sum.abs : retval_on_empty
   end
 
   # Define output in log, used by Voucher.to_log

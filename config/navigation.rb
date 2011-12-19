@@ -53,9 +53,6 @@ SimpleNavigation::Configuration.run do |navigation|
 
 
     primary.item :reports, 'Rapporter', reports_path do |reports|
-      reports.item :all_reports, "Alla rapporter", reports_path
-      reports.item :account_report, "Kontorapport", accounts_reports_path, :method => :post
-      reports.item :arrangement_report, "Arrangemangsrapport", arrangements_reports_path, :method => :post
     end
 
     primary.item :administration, 'Administrera', administration_index_path, :if => Proc.new { current_user.admin? } do |admin|

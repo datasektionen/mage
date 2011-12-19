@@ -27,8 +27,7 @@ Mage::Application.routes.draw do
 
     resources :reports, :only => :index do
       collection do
-        post :accounts
-        post :arrangements
+        post :show
       end
     end
     resources :vouchers do 
