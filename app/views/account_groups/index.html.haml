@@ -1,0 +1,18 @@
+%h2 Kontogruppen
+
+
+%table.datatable
+  %thead
+    %th Kontogrupper
+    %th 
+  %tbody
+    - @account_groups.each do |account_group|
+      %tr
+        %td= link_to account_group
+        %td
+          =link_to t('edit'), edit_account_group_path(account_group)
+          - if account_group.allow_destroy?
+            |
+            =link_to t('destroy'), account_group_path(account_group), :method=>:delete, :confirm=>"Är du säker på att du vill radera kontogruppen?"
+  
+%p= link_to "Skapa ny kontogrupp", new_account_group_path

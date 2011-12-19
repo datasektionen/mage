@@ -12,6 +12,7 @@ Mage::Application.routes.draw do
     resources :organs
     resources :arrangements, :only=>[:create, :new, :edit, :update,:index]
 
+    resources :account_groups
 
     resources :activity_years do
       resources :accounts, :except=>[:create, :new,:edit,:update] do

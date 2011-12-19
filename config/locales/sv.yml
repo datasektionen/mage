@@ -318,6 +318,7 @@
     vouchers: "verifikat"
     accounting: "bokfora"
     account: "konto"
+    accoun_group: "kontogrupp"
   path_names:
     new: "ny"
     edit: "redigera"

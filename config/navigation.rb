@@ -57,9 +57,10 @@ SimpleNavigation::Configuration.run do |navigation|
 
     primary.item :administration, 'Administrera', administration_index_path, :if => Proc.new { current_user.admin? } do |admin|
       admin.item :users, "Användare", users_path, :highlights_on=>/\/(users|anvandare)/
-      admin.item :organs, "Nämnder", organs_path, :highlights_on=>/\/(organs|namnder)/
+      admin.item :organs, "Nämnder och arrangemang", organs_path, :highlights_on=>/\/(organs|namnder)/
       admin.item :series, "Serier", series_index_path, :highlights_on=>/\/(series|serier)/
-      admin.item :activity_years, "Verksamhetsår och kontoplaner", activity_years_path, :highlights_on=>/\/(activity_years|verksamhetsar)(\/.*)?/
+      admin.item :activity_years, "Verksamhetsår och kontoplaner", activity_years_path, :highlights_on=>/\/(activity_year|verksamhetsar)(\/.*)?/
+      admin.item :account_groups, "Kontogrupper", account_groups_path, :highlights_on=>/\/(account_group|kontogrupp)(\/.*)?/
       admin.item :api_keys, "Apinycklar", api_keys_path, :highlights_on=>/\/(api_keys|apinycklar)/
     end
 
