@@ -5,7 +5,7 @@
   Endast oanvända konton kan raderas
 
 = simple_form_for @activity_year, :url=>edit_activity_year_accounts_path(@activity_year), :method=>:put do |f|
-  - @activity_year.accounts.group_by(&:account_group).each do |account_group, accounts|
+  - @activity_year.accounts.group_by(&:account_group).sort_by {|ag, a| ag.number }.each do |account_group, accounts|
     .account_group
       %span.title= account_group.to_s
       %table.accounts
