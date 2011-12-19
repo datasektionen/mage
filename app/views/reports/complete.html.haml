@@ -18,6 +18,8 @@
     - total_kredit = 0
     - total_debet = 0
     - @rows.each do |arrangement, rows|
+      - arr_kredit = 0
+      - arr_debet = 0
       %li.arrangement
         %h4
           - unless arrangement.nil?
@@ -29,7 +31,8 @@
             %h4 Tillgångs och skuldkonton
         %ul  
           - rows.group_by(&:account).sort_by{|account,r| account.number }.each do |account,account_rows| 
-            - change = 0
+            - change_debet = 0
+            - change_kredit = 0
             %li.account
               %strong Konto: #{account}
               %table
@@ -50,9 +53,8 @@
                   %td= currency_clean(kredit_or_zero account.ingoing_balance)
                   %td= currency_clean account.ingoing_balance
                 - account_rows.sort_by { |r| r.voucher.accounting_date }.each do |r|
-                  - change += r.sum
-                  - total_debet += r.debet(0)
-                  - total_kredit += r.kredit(0)
+                  - change_debet += r.debet(0)
+                  - change_kredit += r.kredit(0)
                   %tr
                     %td= r.voucher.pretty_number
                     %td= format_date r.voucher.accounting_date
@@ -60,18 +62,31 @@
                     %td= r.voucher.organ
                     %td= currency_clean r.debet(0)
                     %td= currency_clean r.kredit(0)
-                    %td= currency_clean( account.ingoing_balance + change )
+                    %td= currency_clean( account.ingoing_balance + change_debet - change_kredit )
+                - arr_kredit += change_kredit
+                - arr_debet += change_debet
                 %tr
                   %td
                   %td= format_date @activity_year.ends
                   %td Utgående saldo
                   %td
-                  %td= currency_clean(debet_or_zero (account.ingoing_balance+change))
-                  %td= currency_clean(kredit_or_zero (account.ingoing_balance+change))
-                  %td= currency_clean (account.ingoing_balance+change)
+                  %td= currency_clean(debet_or_zero(account.ingoing_balance)+change_debet)
+                  %td= currency_clean(kredit_or_zero(account.ingoing_balance)+change_kredit)
+                  %td= currency_clean (account.ingoing_balance+change_debet-change_kredit)
                 %tr
                   %td{:colspan=>6} Förändring #{account} #{format_date @activity_year.starts} - #{format_date @activity_year.ends}:
-                  %td= currency_clean change
+                  %td= currency_clean (change_debet-change_kredit)
+      .summary
+        %strong Summering #{arrangement.nil? ? "Tillgångar och skulder" : arrangement}:
+        %p
+          Debet: #{currency arr_debet}
+          %br
+          Kredit: #{currency arr_kredit}
+          %br
+          Resultat: #{currency (arrangement.nil? ? (arr_debet-arr_kredit) : (arr_kredit - arr_debet) )} 
+
+      - total_kredit += arr_kredit
+      - total_debet += arr_debet
   %hr
   .summary
     %strong Total förändring:
