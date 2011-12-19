@@ -23,17 +23,15 @@ class ActivityYear < ActiveRecord::Base
     return date >= starts && date <= ends
   end
 
-  # Clones all account groups and accounts into target (an activityyear)
+  # Clones all accounts nd accounts into target (an activityyear)
   # Ingoing balance is set to 0 in the new accounts
-  def clone_accounts(target)
-    target.account_groups << account_groups.collect do |account_group|
-      new_account_group = account_group.clone
-      new_account_group.accounts << account_group.accounts.collect do |account|
-        new_account = account.clone
-        new_account.ingoing_balance = 0
-        new_account
-      end
-      new_account_group
+  # activity_year_id is set to nil
+  def clone_accounts
+    accounts.collect do |account|
+      new_account = account.clone
+      new_account.ingoing_balance = 0
+      new_account.activity_year = nil
+      new_account
     end
   end
 end

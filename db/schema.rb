@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111219154039) do
+ActiveRecord::Schema.define(:version => 20111219224440) do
 
   create_table "account_groups", :force => true do |t|
     t.string   "title"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(:version => 20111219154039) do
     t.boolean  "kredit_is_normal", :default => true
   end
 
-  add_index "accounts", ["number"], :name => "index_accounts_on_number", :unique => true
+  add_index "accounts", ["number", "activity_year_id"], :name => "index_accounts_on_number", :unique => true
 
   create_table "activity_years", :force => true do |t|
     t.integer  "year"

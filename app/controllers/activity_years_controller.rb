@@ -8,11 +8,11 @@ class ActivityYearsController < ApplicationController
   def create
     @activity_year = ActivityYear.new(:year=>params[:activity_year][:year])
     if @activity_year.save
-      clone_accounts = params[:activity_year][:accounts][:clone]
+      clone_accounts = params[:activity_year][:account][:clone]
       
       @clone_year = ActivityYear.find(clone_accounts)
       if @clone_year
-        @clone_year.clone_accounts(@activity_year)
+        @activity_year.accounts = @clone_year.clone_accounts
       end
 
       if @activity_year.save

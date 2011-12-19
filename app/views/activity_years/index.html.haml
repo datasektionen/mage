@@ -3,9 +3,9 @@
 %p
   %h4 Nytt verksamhetsår
 
-  =simple_form_for @activity_year do |f|
+  = simple_form_for @activity_year do |f|
     = f.input :year
-    = f.simple_fields_for :accounts do |fe|
+    = f.simple_fields_for :account do |fe|
       = fe.input :clone , :collection=>ActivityYear.all, :prompt=>t('activity_years.empty_accounts'), :label=>t('activity_years.copy_accounts')
 
     .clear
