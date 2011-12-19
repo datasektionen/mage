@@ -11,6 +11,10 @@ class ActivityYear < ActiveRecord::Base
     year
   end
 
+  def to_log
+    year
+  end
+
   def starts
     DateTime.new(year, 1, 1)
   end

@@ -24,6 +24,7 @@ class AccountsController < ApplicationController
     authorize! :update, @activity_year
     if @activity_year.update_attributes(params[:activity_year])
       flash[:notice] = t('accounts.changes_saved')
+      Journal.log(:update_accounts,@activity_year, current_user) 
     else
       flash[:error] = @activity_year.errors.inspect
     end

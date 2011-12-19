@@ -287,6 +287,8 @@
     destroy: "Raderade"
     import: "Importerade"
     update_import: "Uppdaterade via import" 
+    activity_year:
+      update_accounts: "Uppdaterade kontoplan för "
 # models
   
 

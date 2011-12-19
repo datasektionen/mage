@@ -133,7 +133,7 @@ class Voucher < ActiveRecord::Base
   # Define output in log
   def to_log
     # Pretty - ain't it? :D
-    voucher_rows.reduce("#{pretty_number} - #{title}
+    "\n" << voucher_rows.reduce("#{pretty_number} - #{title}
 Datum: #{I18n.l accounting_date.to_date}
 Nämnd: #{organ}
 Underlag från: #{material_from}
