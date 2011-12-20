@@ -1,5 +1,4 @@
 Organ.blueprint do
   name         { "Organ#{sn}" }
-  number       { sn }
-  arrangements { [] }
+  number       { sn.to_i + 1000 }
 end

@@ -1,0 +1,23 @@
+%h3 Redigerar kontoplan för #{@activity_year.to_s}
+%p
+  Inga ändringar sparas innan du trycker "spara"
+%p.info
+  Endast oanvända konton kan raderas
+
+= simple_form_for @activity_year, :url=>edit_activity_year_accounts_path(@activity_year), :method=>:put do |f|
+  - @activity_year.accounts.group_by(&:account_group).sort_by {|ag, a| ag.number }.each do |account_group, accounts|
+    .account_group
+      %span.title= account_group.to_s
+      %table.accounts
+        %tr
+          %th Nummer
+          %th Beskrivning
+          %th Kontogrupp
+          %th Ingående balans (SEK)
+          %th
+        = f.simple_fields_for :accounts, accounts.sort_by{|a| a.number.nil? ? 10000 :  a.number } do |fa|
+          = render 'account_fields', :f => fa
+      =link_to_add_fields "Lägg till konto", f, :accounts , ".accounts"
+  .actions
+    = f.submit "Spara ändringar"
+

@@ -30,5 +30,9 @@ RSpec.configure do |config|
   #  DatabaseCleaner.strategy = :transaction
   #end
 
-  config.before(:each) { Machinist.reset_before_test }
+  config.before(:each) {
+    Machinist.reset_before_test
+    ay = ActivityYear.make
+    ay.save
+  }
 end

@@ -92,7 +92,7 @@ class VouchersController < InheritedResources::Base
     #params[:voucher][:arrangement]
     params[:voucher][:voucher_rows_attributes].each do |vr|
       vr[:arrangement] = params[:voucher][:organ].arrangements.find_by_number(vr[:arrangement]) if vr[:arrangement]
-      vr[:arrangement] = nil unless Account.find_by_number(vr[:account_number]).has_arrangements?
+      vr[:arrangement] = nil unless Account.find_by_number_and_activity_year_id(vr[:account_number],vr[:activity_year]).has_arrangements?
     end
 
 
@@ -160,22 +160,23 @@ class VouchersController < InheritedResources::Base
   # Renders rows for new and edit
   def rows
     @voucher = Voucher.unscoped.find(:first, :conditions=>{:id=>params[:voucher_id].to_i}, :select=>[:id, :bookkept_by_id])
-  
-    data = params
-    if data[:type] == "account"
-      account = Account.find_by_number(data[:account])
+ 
+    @activity_year = params[:activity_year]
+
+    if params[:type] == "account"
+      account = Account.find_by_number_and_activity_year_id(params[:account],params[:activity_year])
       render :nothing=>true, :status=>400 and return if account.nil?
-      @rows = [VoucherRow.new(:account=>account, :sum=>data[:sum].to_f, :arrangement_id=>data[:arrangement])]
-    elsif data[:type] == "template"
-      template = VoucherTemplate.find(data[:id])
+      @rows = [VoucherRow.new(:account=>account, :sum=>params[:sum].to_f, :arrangement_id=>params[:arrangement])]
+    elsif params[:type] == "template"
+      template = VoucherTemplate.find(params[:id])
       render :nothing=>true, :status=>400 and return if template.nil?
-      @rows = template.parse({:sum=>data[:sum]},data[:arrangement])
+      @rows = template.parse({:sum=>params[:sum]},params[:arrangement])
     else
       render :nothing=>true, :status=>500 and return
     end
     @sum = @rows.reduce(0) { |memo, r| memo+=r.int_sum } 
 
-    if @voucher &&  @voucher.bookkept? 
+    if @voucher && @voucher.bookkept? 
       @rows.each {|r| r.signature = current_user; r.updated_at = Time.now }
     end
   end

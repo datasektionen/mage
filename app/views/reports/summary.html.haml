@@ -1,0 +1,66 @@
+#report
+  %p.timestamp
+    %span.date= format_date(Time.now)
+    %br
+    %span.date= I18n.l Time.now, :format=>:short_time
+
+  %h3 Redovisning - Summering
+  %p.conditions
+    %p
+      = @organ unless @organ.nil?
+      = @series[0] if @series.count == 1
+    %p.date
+      Datum:
+      = format_date @activity_year.starts
+      \-
+      = format_date @activity_year.ends
+  - total_kredit = 0
+  - total_debet = 0
+  %table
+    %tr
+      %th Arrangemang
+      %th Konto
+      %th Ingående
+      %th Debet
+      %th Kredit
+      %th Utgående
+    - @rows.each do |arrangement, rows|
+      - arr_kredit = 0
+      - arr_debet = 0
+      %tr
+        %td{:colspan=>6}
+          - unless arrangement.nil?
+            - if @organ.nil?
+              =arrangement.organ
+              \-
+            =arrangement
+          - else
+            Tillgångs och skuldkonton
+      - rows.group_by(&:account).sort_by{|account,r| account.number }.each do |account,account_rows| 
+        %tr
+          %td
+          %td= account
+          %td= currency_clean account.ingoing_balance
+          - kredit = 0
+          - debet = 0
+          - account_rows.each do |row|
+            - kredit += row.kredit(0)
+            - debet += row.debet(0)
+          %td= currency_clean debet
+          %td= currency_clean kredit
+          %td= currency_clean (account.ingoing_balance + debet - kredit)
+        - arr_kredit += kredit
+        - arr_debet += debet
+      %tr
+        %td
+        %td{:colspan=>2} Summering
+        %td= currency_clean arr_debet
+        %td= currency_clean arr_kredit
+        %td= currency_clean (arr_debet-arr_kredit)
+      - total_kredit += arr_kredit
+      - total_debet += arr_debet
+    %tr
+      %td{:colspan=>3} Totalt
+      %td= currency_clean total_debet
+      %td= currency_clean total_kredit
+      %td= currency_clean (total_debet-total_kredit)

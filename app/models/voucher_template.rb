@@ -9,7 +9,7 @@ class VoucherTemplate < ActiveRecord::Base
   scope :multirow, where("template_type=#{TYPE_MULTIROW}")
   scope :singlerow, where("template_type=#{TYPE_SINGLEROW}")
 
-  def parse(fields, arr)
+  def parse(fields, arr,activity_year)
     values = Hash.new
     fields.each { |k,f| values[k.to_s] = lambda { |f| $SAFE=4;  return eval(f).to_f.round(2) }.call(f.gsub(",",".")) }
     result = Hash.new
@@ -17,7 +17,7 @@ class VoucherTemplate < ActiveRecord::Base
     last_size = to_parse.size
     until to_parse.empty?
       to_parse.each do |f|
-        r = f.parse(values,arr)
+        r = f.parse(values,arr, activity_year)
         unless r.nil?
           to_parse.delete(f)
           result[f.id] = r unless r.sum == 0 
@@ -33,7 +33,7 @@ class VoucherTemplate < ActiveRecord::Base
     result.sort.map { |i| i[1] }
   end
 
-  def has_arrangements?
-    output_fields.any? { |f| f.account.has_arrangements? }
+  def has_arrangements?(activity_year)
+    output_fields.any? { |f| f.account(activity_year).has_arrangements? }
   end
 end

@@ -1,0 +1,10 @@
+= simple_form_for @account_group do |f|
+  =f.input :title
+  =f.input :number
+  =f.input :account_type, :collection=>{t('account_type.type1')=>1,t('account_type.type2')=>2,t('account_type.type3')=>3,t('account_type.type4')=>4}, :include_blank=>false
+
+  .clear
+
+  .actions
+    = f.submit
+

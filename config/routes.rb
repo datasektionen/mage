@@ -12,13 +12,23 @@ Mage::Application.routes.draw do
     resources :organs
     resources :arrangements, :only=>[:create, :new, :edit, :update,:index]
 
-    resources :activity_years
+    resources :account_groups
+
+    resources :activity_years do
+      resources :accounts, :except=>[:create, :new,:edit,:update] do
+        collection do
+          get :search, :defaults => {:format => :json}
+          get :edit
+          put :edit, :action=>:update
+        end
+      end
+      
+    end
 
 
     resources :reports, :only => :index do
       collection do
-        post :accounts
-        post :arrangements
+        post :show
       end
     end
     resources :vouchers do 
@@ -32,11 +42,6 @@ Mage::Application.routes.draw do
       end
     end
 
-    resources :accounts do
-      collection do
-        get :search, :defaults => {:format => :json}
-      end
-    end
     
     resources :administration, :only => [:index], :controller => "administration"
     resources :accounting, :only => [:index], :controller => "accounting" do

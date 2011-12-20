@@ -46,6 +46,9 @@ class Voucher < ActiveRecord::Base
     return unscoped.where("bookkept_by_id is null")
   end
 
+  def self.find_by_account_and_activity_year(account_number, activity_year_id) 
+    joins(:voucher_rows).where("voucher_rows.account_number"=>account_number, :activity_year_id=>activity_year_id)
+  end
 
   def self.search(search, current_activity_year, user)
     if user.admin?
@@ -130,7 +133,7 @@ class Voucher < ActiveRecord::Base
   # Define output in log
   def to_log
     # Pretty - ain't it? :D
-    voucher_rows.reduce("#{pretty_number} - #{title}
+    "\n" << voucher_rows.reduce("#{pretty_number} - #{title}
 Datum: #{I18n.l accounting_date.to_date}
 Nämnd: #{organ}
 Underlag från: #{material_from}
@@ -204,12 +207,12 @@ private
     #:organ_id, :accounting_date
     #TODO: Also check if not stagnated
     if bookkept?
-      errors[:organ_id] << I18n.t('activerecord.messages.is_readonly') if changed.include?("organ_id")
-      errors[:accounting_date] << I18n.t('activerecord.messages.is_readonly') if changed.include?("accounting_date")
+      errors[:organ_id] << I18n.t('activerecord.errors.messages.is_readonly') if changed.include?("organ_id")
+      errors[:accounting_date] << I18n.t('activerecord.errors.messages.is_readonly') if changed.include?("accounting_date")
     end
   end
 
   def accounting_date_in_activity_year
-    errors[:accounting_date] << I18n.t('activerecord.messages.must_be_in_activity_year') if !activity_year.in_year?(accounting_date)
+    errors[:accounting_date] << I18n.t('activerecord.errors.messages.must_be_in_activity_year') if !activity_year.in_year?(accounting_date)
   end
 end

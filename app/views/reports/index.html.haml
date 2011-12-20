@@ -1,3 +1,18 @@
-%h1 Rapporter
+%h2 Rapporter
 
-= link_to "Kontorapport", accounts_reports_path, :method => :post
+- form_tag reports_path do
+   %p.input
+      = label_tag "report[activity_year]","Verksamhetsår"
+      = select_tag("report[activity_year]", options_from_collection_for_select(ActivityYear.order("year DESC"), :id, :year,current_activity_year.id))
+   %p.input
+      = label_tag "report[series]", "Serie"
+      = collection_select(:report,:series,Series.accessible_by(current_user), :id, :to_s, {:prompt=>"Alla"})
+   %p.input
+      = label_tag "report[organ]", "Nämnd"
+      = collection_select(:report, :organ, Organ.all, :id, :to_s, {:prompt=>"Alla"})
+   %p.input
+      = label_tag "report[template]", "Rapport"
+      = select_tag("report[template]", options_for_select(@report_templates))
+   .clear
+   %p.actions
+      = submit_tag "Skapa rapport"

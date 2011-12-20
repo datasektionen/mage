@@ -28,7 +28,7 @@
     = r.text_field :account, :size=>5
   %p.input
     = r.label "Arrangemang", :required => false
-    = r.select :arrangement, options_from_collection_for_select(@voucher.organ.arrangements,:id, :list_print), {}, :disabled=>true, :class=>"arr_select"
+    = r.select :arrangement, options_from_collection_for_select(@voucher.organ.arrangements.in_year(current_activity_year.year),:id, :list_print), {}, :disabled=>true, :class=>"arr_select"
   %p.input.money
     = r.label "Summa (kr)", :required => false
     = r.text_field :sum, :size => 20
@@ -70,11 +70,14 @@
   var bookkept = #{@voucher.bookkept?}
   var voucher_id = #{@voucher.id ? @voucher.id : -1}
   set_diff(#{@voucher.sum})
+
   var accounts = #{(Account.order("number").map { |a| {:number=>a.number,:name=>a.name,:account_type=>a.account_type,:has_arrangements=>a.has_arrangements?, :type=>'account'} }+
-                    VoucherTemplate.singlerow.map { |t| {:number=> "Mall #{t.id}", :name=>t.name, :type=>'template', :has_arrangements=>t.has_arrangements?, :id=>t.id} }).to_json }
+                    VoucherTemplate.singlerow.map { |t| {:number=> "Mall #{t.id}", :name=>t.name, :type=>'template', :has_arrangements=>t.has_arrangements?(current_activity_year.id), :id=>t.id} }).to_json }
+
   var voucher_row_url = "#{rows_vouchers_path}"
   var template_fields_url = "#{fields_voucher_templates_path}"
   var template_parse_url = "#{parse_voucher_templates_path}"
-  var arrs = #{Organ.all.reduce(Hash.new) {|h,o| h[o.id] = o.arrangements.select([:id,:number,:name]) ; h }.to_json}
+  var arrs = #{Organ.all.reduce(Hash.new) {|h,o| h[o.id] = o.arrangements.in_year(current_activity_year.year).select([:id,:number,:name]) ; h }.to_json}
   var num_rows = #{@voucher.voucher_rows.size}
   var user_initials = "#{current_user.initials}"
+  var activity_year_id = #{current_activity_year.id}

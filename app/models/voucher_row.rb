@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 class VoucherRow < ActiveRecord::Base
   belongs_to :voucher, :inverse_of => :voucher_rows
-  belongs_to :account, :foreign_key => :account_number, :primary_key => :number
+  #belongs_to :account, :foreign_key => :account_number, :primary_key => :number, :conditions=>{:activity_year_id => lambda { voucher.activity_year_id}}
   belongs_to :arrangement
   belongs_to :signature , :class_name => "User"
 
@@ -12,6 +12,17 @@ class VoucherRow < ActiveRecord::Base
   validate :no_arrangement, :unless => Proc.new { account.has_arrangements? }
   
   attr_readonly :account_number, :sum, :arrangement_id, :voucher_id
+
+  def account 
+    return @account if @account
+    @account = Account.find_by_number_and_activity_year_id(account_number,voucher.activity_year.id)
+    return @account
+  end
+
+  def account=(val)
+    @account = val
+    self.account_number = val.number
+  end
 
   def canceled?
     return canceled
@@ -33,12 +44,12 @@ class VoucherRow < ActiveRecord::Base
     (sum*100.0).round
   end
 
-  def debet
-    sum >=0 ? sum : nil
+  def debet(retval_on_empty=nil)
+    sum >=0 ? sum : retval_on_empty
   end
 
-  def kredit
-    sum < 0 ? sum.abs : nil
+  def kredit(retval_on_empty=nil)
+    sum < 0 ? sum.abs : retval_on_empty
   end
 
   # Define output in log, used by Voucher.to_log

@@ -6,7 +6,7 @@ Voucher.blueprint do
   accounting_date { DateTime.now }
   material_from   { User.make }
   bookkept_by     { User.make }
-  activity_year   { ActivityYear.make }
+  activity_year   { ActivityYear.first }
 
   sum = sn.to_i % 1000
   voucher_rows {[

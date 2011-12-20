@@ -57,6 +57,7 @@ describe Voucher do
 
   it "should enforce signatures on canceled rows" do
     voucher = Voucher.make
+    voucher.voucher_rows[0].account.save
     voucher.save
 
     r = VoucherRow.new(voucher.voucher_rows[0].attributes)
@@ -189,7 +190,7 @@ describe Voucher do
          :_destroy=>true
        },
        {
-          :account=>Account.make(:account_type=>1),
+          :account=>Account.make(:account_group=>AccountGroup.make(:account_type=>1)),
           :sum=>voucher.voucher_rows[0].sum
        }
      ]

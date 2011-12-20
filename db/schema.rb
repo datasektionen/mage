@@ -11,17 +11,29 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111104210437) do
+ActiveRecord::Schema.define(:version => 20111219224440) do
+
+  create_table "account_groups", :force => true do |t|
+    t.string   "title"
+    t.integer  "account_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "number",       :null => false
+  end
 
   create_table "accounts", :force => true do |t|
     t.integer  "number"
     t.string   "name"
-    t.integer  "account_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "account_group_id",                   :null => false
+    t.integer  "ingoing_balance",  :default => 0
+    t.integer  "activity_year_id",                   :null => false
+    t.boolean  "debet_is_normal",  :default => true
+    t.boolean  "kredit_is_normal", :default => true
   end
 
-  add_index "accounts", ["number"], :name => "index_accounts_on_number", :unique => true
+  add_index "accounts", ["number", "activity_year_id"], :name => "index_accounts_on_number", :unique => true
 
   create_table "activity_years", :force => true do |t|
     t.integer  "year"
@@ -58,6 +70,8 @@ ActiveRecord::Schema.define(:version => 20111104210437) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "number",     :null => false
+    t.integer  "valid_from"
+    t.integer  "valid_to"
   end
 
   create_table "journal", :force => true do |t|

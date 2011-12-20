@@ -146,6 +146,8 @@
         even: "måste vara jämnt"
         record_invalid: "Ett fel uppstod: %{errors}"
         is_readonly: "får inte ändras"
+        must_be_in_activity_year: "Måste vara inom verksamhetsåret"
+        arr_0_may_not_expire: "Arrangemang övrigt(0) får inte ha utgångs/start-datum"
         # Append your own errors here or at the model/attributes scope.
 
       # You can define own errors for models or model attributes.
@@ -169,6 +171,8 @@
       # will translate User model name to "Dude"
     models:
       account: "Konto"
+      account_group: "Kontogrupp"
+      account_plan: "Kontoplan"
       activity_year: "Verksamhetsår"
       arrangement: "Arrangemang"
       api_key: "Apinyckel"
@@ -207,9 +211,14 @@
         default_organ: "Standardnämnd"
       activity_year:
         year: "År"
+      account_group:
+        title: "Titel"
+        account_type: "Kontotyper"
       arrangement:
         name: "Namn"
         active_years: "Aktiva år"
+        valid_from: "Aktivt från och med (årtal)"
+        valid_to: "Aktivt till och med (årtal)"
       voucher_template:
         account_template: "Kontomall"
         input_fields: "Inputfält"
@@ -219,7 +228,8 @@
     voucher_template:
       account_template: "Kontomall är en mall som placeras i 'konto'-fältet, annars hamnar den i listan över mallar"
       output_fields: "Formeln är helt enkelt en matematisk formel för resultatet, {input_field_script_name} ersätts med värdet för fältet med skriptnamnet angivet inom {}. Skriptnamn är optional för outputfälten." 
-       
+    arrangements:
+      leave_empty_to_not_limit: "Lämna tomt för att inte begränsa"
 
   views:
     pagination:
@@ -228,6 +238,7 @@
       next: "Nästa"
       last: "Sista"
       truncate: "..."
+
 
   date:
     formats:
@@ -253,6 +264,7 @@
       default: "%a, %e %b %Y %H:%M:%S %z"
       short: "%e %b %H:%M"
       long: "%e %B %Y %H:%M"
+      short_time: "%H:%M"
     am: ""
     pm: ""
 
@@ -278,6 +290,8 @@
     destroy: "Raderade"
     import: "Importerade"
     update_import: "Uppdaterade via import" 
+    activity_year:
+      update_accounts: "Uppdaterade kontoplan för "
 # models
   
 
@@ -291,6 +305,18 @@
     deleted: "Raderade verifikatet"
     bookkept_plural: "Verifikaten bokförda"
 
+  activity_years:
+    empty_accounts: "Tom kontoplan"
+    copy_accounts: "Kopiera kontoplan"
+
+  accounts:
+    changes_saved: "Ändringarna sparades"
+
+  account_type:
+    type1: "Tillgångskonton"
+    type2: "Skuldkonton"
+    type3: "Intäktskonton"
+    type4: "Utgiftskonton"
   resources: 
     users: "anvandare"
     series: "serier"
@@ -299,6 +325,8 @@
     journal: "journal"
     vouchers: "verifikat"
     accounting: "bokfora"
+    account: "konto"
+    accoun_group: "kontogrupp"
   path_names:
     new: "ny"
     edit: "redigera"
@@ -307,6 +335,9 @@
     vouchers:
       path_names:
         new: "nytt"
+    activity_years:
+      path_names:
+        accounts: "kontoplan"
   helpers:
     submit:
       create: "Skapa %{model}"

@@ -1,10 +1,10 @@
 - javascript %w(jquery/jquery.ui.custom.min.js accounts.js)
 
 %tr.input
-  %td= f.input :account, :label=>false, :input_html =>{:class=>"account_autocomplete"}
+  %td= f.input :account_number, :label=>false, :input_html =>{:class=>"account_autocomplete"}
   %td= f.input :formula, :label=>false
   %td= f.input :script_name, :label=>false
-  %td= link_to_remove_field "Radera", f
+  %td= link_to_remove_field "Radera", f, ["td", ".input"]
 
 - ActiveRecord::Base.include_root_in_json = false
 :javascript
