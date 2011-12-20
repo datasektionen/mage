@@ -23,6 +23,7 @@ class VouchersController < InheritedResources::Base
 
     if params[:correct]
       @voucher.corrects = Voucher.find(params[:correct])
+      @voucher.organ = @voucher.corrects.organ
       @voucher.voucher_rows = @voucher.corrects.inverted_rows
       @voucher.title = "Rättar #{@voucher.corrects}"
     end
