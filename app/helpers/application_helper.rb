@@ -14,7 +14,7 @@ module ApplicationHelper
   
   def stylesheet(*css)
     content_for(:head) do
-      stylesheet_link_tag(*css)
+      stylesheet_link_tag(*css, :media=>"all")
     end
   end
   
