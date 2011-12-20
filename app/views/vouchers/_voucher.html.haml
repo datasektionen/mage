@@ -20,17 +20,17 @@
       %th.changed Ändrad
   %tbody
     - voucher.voucher_rows.each do |vr|
-      -cancel_class = vr.canceled? ? "canceled" : ""
-      %tr.voucher_row
-        %td.account_number{:class=>cancel_class}
+      -cancel_class = 
+      %tr.voucher_row{:class=>vr.canceled? ? "canceled" : ""}
+        %td.account_number.row_data
           %span= vr.account.number
-        %td.account_name{:class=>cancel_class}
+        %td.account_name.row_data
           %span= vr.account.name
-        %td.arrangement{:class=>cancel_class}
+        %td.arrangement.row_data
           %span= vr.arrangement
-        %td.debet{:class=>cancel_class}
+        %td.debet.row_data
           %span= currency(vr.debet)
-        %td.kredit{:class=>cancel_class}
+        %td.kredit.row_data
           %span= currency(vr.kredit)
         %td
           - unless vr.signature.nil?

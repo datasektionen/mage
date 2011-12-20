@@ -1,17 +1,17 @@
-%tr.voucher_row_form
-  %td.account_number
+%tr.voucher_row_form{:class=>(form_row.canceled? ? "canceled" : "")}
+  %td.account_number.row_data
     %span= form_row.account_number
     = hidden_field_tag "voucher[voucher_rows_attributes][][id]", form_row.id
     = hidden_field_tag "voucher[voucher_rows_attributes][][account_number]", form_row.account_number
-  %td.account_name
+  %td.account_name.row_data
     %span= form_row.account.name
-  %td.arrangement
+  %td.arrangement.row_data
     %span= form_row.arrangement
     = hidden_field_tag "voucher[voucher_rows_attributes][][arrangement_id]", form_row.arrangement_id
-  %td.debet
+  %td.debet.row_data
     %span= currency(form_row.debet)
     = hidden_field_tag "voucher[voucher_rows_attributes][][sum]", form_row.sum
-  %td.kredit
+  %td.kredit.row_data
     %span= currency(form_row.kredit) 
   %td.signature
     - unless form_row.signature.nil?
@@ -20,4 +20,7 @@
       %span= link_to form_row.signature.initials, user_path(form_row.signature)
       = hidden_field_tag "voucher[voucher_rows_attributes][][signature_id]", current_user.id 
   %td.actions
-    =link_to  image_tag("icons/cross.png",:alt=>'delete') ,"#", {:onclick=>"delete_row(this,#{form_row.int_sum}); return false", :title=>form_row.id.nil? ? "Radera rad" : "Stryk rad",:class=>"delete_row_link"}
+    - if form_row.canceled?
+      = hidden_field_tag "voucher[voucher_rows_attributes][][canceled]", true
+    - else
+      =link_to  image_tag("icons/cross.png",:alt=>'delete') ,"#", {:onclick=>"delete_row(this,#{form_row.int_sum}); return false", :title=>form_row.id.nil? ? "Radera rad" : "Stryk rad",:class=>"delete_row_link"}
