@@ -56,7 +56,7 @@
                   - change_debet += r.debet(0)
                   - change_kredit += r.kredit(0)
                   %tr
-                    %td= r.voucher.pretty_number
+                    %td= link_to r.voucher.pretty_number, r.voucher
                     %td= format_date r.voucher.accounting_date
                     %td= r.voucher.title
                     %td= r.voucher.organ
