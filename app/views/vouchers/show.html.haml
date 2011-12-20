@@ -2,6 +2,7 @@
 %p#voucher_links
   = link_to "Redigera", edit_voucher_path(@voucher)
   = link_to "Skapa rättningsverifikat", new_voucher_path(:correct=>@voucher.id) unless @voucher.corrected?
+  = link_to "Skriv ut verifikat", print_vouchers_path(:format=>:pdf, :vouchers=>@voucher.id), :class=>"icon print"
 #voucher
   .voucher_data
     %p.voucher_date
