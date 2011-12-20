@@ -207,12 +207,12 @@ private
     #:organ_id, :accounting_date
     #TODO: Also check if not stagnated
     if bookkept?
-      errors[:organ_id] << I18n.t('activerecord.messages.is_readonly') if changed.include?("organ_id")
-      errors[:accounting_date] << I18n.t('activerecord.messages.is_readonly') if changed.include?("accounting_date")
+      errors[:organ_id] << I18n.t('activerecord.errors.messages.is_readonly') if changed.include?("organ_id")
+      errors[:accounting_date] << I18n.t('activerecord.errors.messages.is_readonly') if changed.include?("accounting_date")
     end
   end
 
   def accounting_date_in_activity_year
-    errors[:accounting_date] << I18n.t('activerecord.messages.must_be_in_activity_year') if !activity_year.in_year?(accounting_date)
+    errors[:accounting_date] << I18n.t('activerecord.errors.messages.must_be_in_activity_year') if !activity_year.in_year?(accounting_date)
   end
 end
