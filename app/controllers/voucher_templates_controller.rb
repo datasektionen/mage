@@ -2,7 +2,7 @@ class VoucherTemplatesController < InheritedResources::Base
   def fields
     @voucher_template = VoucherTemplate.find(params[:template])
     @organ = Organ.find(params[:organ])
-    @activity_year = params[:activity_year]
+    @activity_year = ActivityYear.find(params[:activity_year])
     render :layout => nil
   end 
 

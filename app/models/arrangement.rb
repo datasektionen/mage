@@ -7,8 +7,8 @@ class Arrangement < ActiveRecord::Base
   scope :in_year, lambda { |year| where("(valid_from IS NULL OR valid_from <= ? ) AND (valid_to IS NULL OR ? <= valid_to)",  year, year) }
 
   # Other (number==0) must always be valid:
-  validates :valid_to, :inclusion=>{ :in=>[nil] }, :if=> Proc.new { |arr| arr.number == 0 }
-  validates :valid_from, :inclusion=>{ :in=>[nil] }, :if=> Proc.new { |arr| arr.number == 0 }
+  validates :valid_to, :inclusion=>{ :in=>[nil] , :message=>I18n.t('activerecord.errors.messages.arr_0_may_not_expire') } , :if=> Proc.new { |arr| arr.number == 0 }
+  validates :valid_from, :inclusion=>{ :in=>[nil]  , :message=>I18n.t('activerecord.errors.messages.arr_0_may_not_expire') }, :if=> Proc.new { |arr| arr.number == 0}
 
   attr_readonly :number
 

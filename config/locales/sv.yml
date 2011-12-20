@@ -147,6 +147,7 @@
         record_invalid: "Ett fel uppstod: %{errors}"
         is_readonly: "får inte ändras"
         must_be_in_activity_year: "Måste vara inom verksamhetsåret"
+        arr_0_may_not_expire: "Arrangemang övrigt(0) får inte ha utgångs/start-datum"
         # Append your own errors here or at the model/attributes scope.
 
       # You can define own errors for models or model attributes.
