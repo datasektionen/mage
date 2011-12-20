@@ -23,9 +23,8 @@
       %li.arrangement
         %h4
           - unless arrangement.nil?
-            - if @organ.nil?
-              =arrangement.organ
-              \-
+            =arrangement.organ
+            \-
             =arrangement
           - else
             Tillgångs och skuldkonton
