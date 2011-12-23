@@ -20,6 +20,7 @@
     - @rows.each do |arrangement, rows|
       - arr_kredit = 0
       - arr_debet = 0
+      - arr_factor = arrangement.nil? ? 1 : -1 # Invert sign when arrangment is not nil
       %li.arrangement
         %h4
           - unless arrangement.nil?
@@ -50,7 +51,7 @@
                   %td
                   %td= currency_clean(debet_or_zero account.ingoing_balance)
                   %td= currency_clean(kredit_or_zero account.ingoing_balance)
-                  %td= currency_clean account.ingoing_balance
+                  %td= currency_clean account.ingoing_balance*arr_factor
                 - account_rows.sort_by { |r| r.voucher.accounting_date }.each do |r|
                   - change_debet += r.debet(0)
                   - change_kredit += r.kredit(0)
@@ -61,7 +62,7 @@
                     %td= r.voucher.organ
                     %td= currency_clean r.debet(0)
                     %td= currency_clean r.kredit(0)
-                    %td= currency_clean( account.ingoing_balance + change_debet - change_kredit )
+                    %td= currency_clean( (account.ingoing_balance + change_debet - change_kredit)*arr_factor )
                 - arr_kredit += change_kredit
                 - arr_debet += change_debet
                 %tr
@@ -71,10 +72,10 @@
                   %td
                   %td= currency_clean(debet_or_zero(account.ingoing_balance)+change_debet)
                   %td= currency_clean(kredit_or_zero(account.ingoing_balance)+change_kredit)
-                  %td= currency_clean (account.ingoing_balance+change_debet-change_kredit)
+                  %td= currency_clean ( (account.ingoing_balance+change_debet-change_kredit)*arr_factor )
                 %tr
                   %td{:colspan=>6} Förändring #{account} #{format_date @activity_year.starts} - #{format_date @activity_year.ends}:
-                  %td= currency_clean (change_debet-change_kredit)
+                  %td= currency_clean (change_debet-change_kredit)*arr_factor
       .summary
         %strong Summering #{arrangement.nil? ? "Tillgångar och skulder" : arrangement}:
         %p
@@ -82,7 +83,7 @@
           %br
           Kredit: #{currency arr_kredit}
           %br
-          Resultat: #{currency (arrangement.nil? ? (arr_debet-arr_kredit) : (arr_kredit - arr_debet) )} 
+          Resultat: #{currency (arrangement.nil? ? (arr_debet-arr_kredit) : (arr_kredit - arr_debet)*arr_factor )} 
 
       - total_kredit += arr_kredit
       - total_debet += arr_debet

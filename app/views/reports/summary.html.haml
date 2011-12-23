@@ -27,6 +27,7 @@
     - @rows.each do |arrangement, rows|
       - arr_kredit = 0
       - arr_debet = 0
+      - arr_factor = arrangement.nil? ? 1 : -1
       %tr
         %td{:colspan=>6}
           - unless arrangement.nil?
@@ -39,7 +40,7 @@
         %tr
           %td
           %td= account
-          %td= currency_clean account.ingoing_balance
+          %td= currency_clean account.ingoing_balance*arr_factor
           - kredit = 0
           - debet = 0
           - account_rows.each do |row|
@@ -47,7 +48,7 @@
             - debet += row.debet(0)
           %td= currency_clean debet
           %td= currency_clean kredit
-          %td= currency_clean (account.ingoing_balance + debet - kredit)
+          %td= currency_clean (account.ingoing_balance + debet - kredit)*arr_factor
         - arr_kredit += kredit
         - arr_debet += debet
       %tr
@@ -55,7 +56,7 @@
         %td{:colspan=>2} Summering
         %td= currency_clean arr_debet
         %td= currency_clean arr_kredit
-        %td= currency_clean (arr_debet-arr_kredit)
+        %td= currency_clean (arr_debet-arr_kredit)*arr_factor
       - total_kredit += arr_kredit
       - total_debet += arr_debet
     %tr

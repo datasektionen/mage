@@ -57,6 +57,9 @@ module ApplicationHelper
 
   # Without unit
   def currency_clean(amount)
+    if amount == 0
+      amount = 0
+    end
     number_to_currency(amount, :format=>"%n")
   end
   
