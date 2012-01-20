@@ -55,10 +55,10 @@ module ApplicationHelper
     # ("%0.2f" % amount.to_f).gsub('.',',')
   end
 
-  # Without unit
+  # Floats in ruby can be -0.0, and we don't want to output a negative zero.
   def currency_clean(amount)
-    if amount == 0
-      amount = 0
+    if amount.zero?
+      amount = 0.0
     end
     number_to_currency(amount, :format=>"%n")
   end
