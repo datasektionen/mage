@@ -31,7 +31,6 @@ RSpec.configure do |config|
   #end
 
   config.before(:each) {
-    Machinist.reset_before_test
     ay = ActivityYear.make
     ay.save
   }
