@@ -5,7 +5,7 @@ class ActivityYear < ActiveRecord::Base
   has_many :accounts, :order=>:number
   accepts_nested_attributes_for :accounts, :allow_destroy=>true
   validates_associated :accounts
-
+  has_many :vouchers
 
   def to_s
     year
