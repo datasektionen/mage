@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
 
   validates_presence_of :first_name, :last_name, :email, :login, :ugid
 
-  has_friendly_id :login
+  extend FriendlyId
+  friendly_id :login
 
   accepts_nested_attributes_for :accesses, :allow_destroy => true
 

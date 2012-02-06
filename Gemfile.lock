@@ -288,7 +288,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   devise (= 1.4.9)
-  friendly_id
+  friendly_id (~> 4.0.0)
   guard-bundler
   guard-cucumber
   guard-rspec
