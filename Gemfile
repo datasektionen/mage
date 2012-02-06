@@ -31,8 +31,11 @@ group :production do
 end
 
 group :development, :test do
+  gem 'rspec', '~> 2.8.0'
   gem 'rspec-rails'
+  gem 'guard-bundler'
   gem 'guard-rspec'
+  gem 'guard-cucumber'
   gem 'libnotify'
   gem 'rb-inotify'
 end
@@ -43,7 +46,7 @@ end
 
 group :test do
   gem 'ruby-debug19'
-  gem 'rcov'
+  gem 'rcov', '< 1.0.0'
   gem 'capybara'
   gem 'cucumber-rails'
   gem 'database_cleaner'
