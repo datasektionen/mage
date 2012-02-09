@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111220002440) do
+ActiveRecord::Schema.define(:version => 20120209225108) do
 
   create_table "account_groups", :force => true do |t|
     t.string   "title"
@@ -26,11 +26,11 @@ ActiveRecord::Schema.define(:version => 20111220002440) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "account_group_id",                   :null => false
-    t.integer  "ingoing_balance",  :default => 0
-    t.integer  "activity_year_id",                   :null => false
-    t.boolean  "debet_is_normal",  :default => true
-    t.boolean  "kredit_is_normal", :default => true
+    t.integer  "account_group_id",                                                  :null => false
+    t.decimal  "ingoing_balance",  :precision => 12, :scale => 2, :default => 0.0
+    t.integer  "activity_year_id",                                                  :null => false
+    t.boolean  "debet_is_normal",                                 :default => true
+    t.boolean  "kredit_is_normal",                                :default => true
   end
 
   add_index "accounts", ["number", "activity_year_id"], :name => "index_accounts_on_number", :unique => true
@@ -175,6 +175,8 @@ ActiveRecord::Schema.define(:version => 20111220002440) do
     t.integer  "template_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "valid_from"
+    t.integer  "valid_to"
   end
 
   create_table "vouchers", :force => true do |t|

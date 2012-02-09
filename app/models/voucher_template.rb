@@ -6,6 +6,8 @@ class VoucherTemplate < ActiveRecord::Base
   TYPE_MULTIROW = 0
   TYPE_SINGLEROW = 1
 
+  scope :in_year, lambda { |year| where("(valid_from IS NULL OR valid_from <= ? ) AND (valid_to IS NULL OR ? <= valid_to)",  year, year) }
+
   scope :multirow, where("template_type=#{TYPE_MULTIROW}")
   scope :singlerow, where("template_type=#{TYPE_SINGLEROW}")
 
