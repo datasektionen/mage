@@ -2,8 +2,8 @@ Voucher.blueprint do
   title           { "Voucher#{sn}" }
   number          { sn }
   organ           { Organ.make }
-  series           { Series.make :default_organ => object.organ }
-  accounting_date { DateTime.now }
+  series          { Series.make :default_organ => object.organ }
+  accounting_date { Date.new(ActivityYear.first.year, 6)  }
   material_from   { User.make }
   bookkept_by     { User.make }
   activity_year   { ActivityYear.first }
