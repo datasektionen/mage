@@ -208,15 +208,20 @@ describe Voucher do
     voucher.should_not be_valid
   end
 
-  it "should be possible to search" do 
+  it "should be possible to search as both admin and user" do 
     v = Voucher.make
     v.series.save
+    v.activity_year.save
     v.save
+    u = User.make(:admin)
+    search = {:activity_year=>"#{v.activity_year_id}", :series=>"#{v.series_id}"}
+    Voucher.search(search, u).should_not be_empty
     ua = UserAccess.make
     ua.user.save
     ua.series = v.series
-    search = {:activity_year=>"#{v.activity_year.id}", :series=>"#{v.series_id}"}
-    Voucher.search(search, ua.user).should_not be_empty
+    u = ua.user
+    ua.save
+    Voucher.search(search, u).should_not be_empty
 
   end
 end
