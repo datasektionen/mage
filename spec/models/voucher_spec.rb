@@ -207,4 +207,16 @@ describe Voucher do
     voucher.accounting_date = voucher.accounting_date - 1.year
     voucher.should_not be_valid
   end
+
+  it "should be possible to search" do 
+    v = Voucher.make
+    v.series.save
+    v.save
+    ua = UserAccess.make
+    ua.user.save
+    ua.series = v.series
+    search = {:activity_year=>v.activity_year.id, :series=>v.series_id}
+    Voucher.search(search, v.activity_year, ua.user).should_not be_empty
+
+  end
 end

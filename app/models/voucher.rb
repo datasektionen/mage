@@ -59,7 +59,7 @@ class Voucher < ActiveRecord::Base
 
     unless search.nil?
       q = q.where("activity_year_id = ? and title like ?", search[:activity_year], "%#{search[:title]}%")
-      q = q.where("series_id = ?",search[:series]) unless search[:series].empty?
+      q = q.where("series_id = ?",search[:series]) unless search[:series].nil?
       q
     else
       q.where("activity_year_id = ?", current_activity_year.id)
