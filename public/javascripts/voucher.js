@@ -84,14 +84,14 @@ $(function() {
     if(keyCode == 13)
       e.preventDefault()
     if(keyCode == 43) { //+
-      sum = parseFloat($("#voucher_add_row_sum").val())
+      sum = parseFloat(add_row_sum())
       if(!isNaN(sum)) {
         sum = Math.abs(sum)
         $("#voucher_add_row_sum").val("+"+sum)
         return false
       }
       } else if(keyCode == 45) { //-
-      sum = parseFloat($("#voucher_add_row_sum").val())
+      sum = parseFloat(add_row_sum())
       if(!isNaN(sum)) {
         sum = Math.abs(sum)*-1.0
         $("#voucher_add_row_sum").val(sum)
@@ -102,13 +102,16 @@ $(function() {
 
 })
 
+function add_row_sum() {
+  return $("#voucher_add_row_sum").val().replace(",",".").trim()
+}
 
 //Tries to add the row to the voucher
 function add_row() {
   if($("#voucher_add_row_sum").val().trim() == "") {
     $("#voucher_add_row_sum").val("0")
   }
-  sum_str = $("#voucher_add_row_sum").val().replace(",",".").trim()
+  sum_str = add_row_sum()
   sum = parseFloat(sum_str)
   sum = Math.round(sum*100.0)/100.0 //Trim to 2 decimals
   if(isNaN(sum)) {
