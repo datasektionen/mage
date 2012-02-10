@@ -1,3 +1,5 @@
+- javascript "edit_accounts.js"
+
 %h3 Redigerar kontoplan för #{@activity_year.to_s}
 %p
   Inga ändringar sparas innan du trycker "spara"
@@ -14,7 +16,9 @@
           %th Beskrivning
           %th Kontogrupp
           %th Ingående balans (SEK)
-          %th
+          %th= link_to "Debet är normalt", '#', :title=>"Ändra alla i gruppen", :group_id=>account_group.id, :class=>"update_all_debet"
+          %th= link_to "Kredit är normalt",  '#', :title=>"Ändra alla i gruppen", :group_id=>account_group.id, :class=>"update_all_kredit"
+          %th Radera
         = f.simple_fields_for :accounts, accounts.sort_by{|a| a.number.nil? ? 10000 :  a.number } do |fa|
           = render 'account_fields', :f => fa
       =link_to_add_fields "Lägg till konto", f, :accounts , ".accounts"
