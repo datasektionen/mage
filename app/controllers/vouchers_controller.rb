@@ -7,7 +7,10 @@ class VouchersController < InheritedResources::Base
     # Display all vouchers if params[:per] < 0
     per = params[:per].to_i < 0 ? Voucher.count : params[:per]
 
-    @vouchers = Voucher.search(params[:search], current_activity_year, current_user).page(params[:page]).per(per)
+    @search = params[:search] || Hash.new 
+    @search[:activity_year] = current_activity_year.id unless @search[:activity_year]
+
+    @vouchers = Voucher.search(@search, current_user).page(params[:page]).per(per)
   end
 
   def new

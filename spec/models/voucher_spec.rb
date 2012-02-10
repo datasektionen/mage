@@ -215,8 +215,8 @@ describe Voucher do
     ua = UserAccess.make
     ua.user.save
     ua.series = v.series
-    search = {:activity_year=>v.activity_year.id, :series=>v.series_id}
-    Voucher.search(search, v.activity_year, ua.user).should_not be_empty
+    search = {:activity_year=>"#{v.activity_year.id}", :series=>"#{v.series_id}"}
+    Voucher.search(search, ua.user).should_not be_empty
 
   end
 end

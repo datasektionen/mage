@@ -5,8 +5,10 @@
   #search_box
     %p
       = label_tag "Sök i serie:"
-      = select_tag("search[activity_year]", options_from_collection_for_select(ActivityYear.order("year DESC"), :id, :year,current_activity_year.id))
-      = collection_select(:search,:series,Series.accessible_by(current_user), :id, :to_s, {:prompt=>"Alla"})
+      = select_tag("search[activity_year]", options_from_collection_for_select(ActivityYear.order("year DESC"), :id, :year,@search[:activity_year]))
+      = select_tag("search[series]", options_for_select(Series.accessible_by(current_user).map{|s| [s.to_s, s.id]}.insert(0, ["Alla", ""]), @search[:series]))
+      = label_tag :per, "Verifikat per sida"
+      = select_tag :per, options_for_select([10,25,50,100,["Alla", -1]], params[:per] || 25)
     %p
       = label_tag "Beskrivning:"
       = text_field_tag "search[title]"
@@ -15,6 +17,3 @@
 = render :partial=>"voucher_list", :object => @vouchers, :locals=>{:long=>true,:sort=>true}
 
 = paginate @vouchers
-= form_tag vouchers_path, :method=>:get do
-  = label_tag :per, "Verifikat per sida"
-  = select_tag :per, options_for_select([10,25,50,100,["Alla", -1]], params[:per] || 25), :onchange => "this.form.submit();"
