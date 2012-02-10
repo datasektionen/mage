@@ -128,19 +128,19 @@ function add_row() {
   } else {
     if(!(sum_str.charAt(0) == "+" || sum_str.charAt(0) == "-")) {
       //Try to guess sign 
-      if(current_account.account_type == 3) {
+      if(current_account.kredit_is_normal && !current_account.debet_is_normal) {
         sum = -1*sum;
       } 
       // positive for account_type 4
     }
   }
 
-  if(current_account.account_type == 3 && sum > 0 &&
+  if(!current_account.debet_is_normal  && sum > 0 &&
       !confirm(current_account.number+" ska vanligtvis inte konteras i debet, fortsätta?")) {
       return
   }
 
-  if(current_account.account_type == 4 && sum < 0 &&
+  if(!current_account.kredit_is_normal && sum < 0 &&
       !confirm(current_account.number+" ska vanligtvis inte konteras i kredit, fortsätta?")) {
       return
   }

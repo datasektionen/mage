@@ -71,7 +71,7 @@
   var voucher_id = #{@voucher.id ? @voucher.id : -1}
   set_diff(#{@voucher.sum})
 
-  var accounts = #{(current_activity_year.accounts.order("number").map { |a| {:number=>a.number,:name=>a.name,:account_type=>a.account_type,:has_arrangements=>a.has_arrangements?, :type=>'account'} }+
+  var accounts = #{(current_activity_year.accounts.order("number").map { |a| {:number=>a.number,:name=>a.name,:debet_is_normal=>a.debet_is_normal, :kredit_is_normal=>a.kredit_is_normal, :has_arrangements=>a.has_arrangements?, :type=>'account'} }+
                     VoucherTemplate.in_year(current_activity_year.year).singlerow.map { |t| {:number=> "Mall #{t.id}", :name=>t.name, :type=>'template', :has_arrangements=>t.has_arrangements?(current_activity_year.id), :id=>t.id} }).to_json }
 
   var voucher_row_url = "#{rows_vouchers_path}"
