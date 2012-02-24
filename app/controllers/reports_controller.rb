@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 class ReportsController < ApplicationController
   def index
-    @report_templates = {"Redovisning fullständig"=>:complete, "Redovisning summerad"=>:summary}
+    @report_templates = {"Redovisning fullständig"=>:complete, "Redovisning summerad"=>:summary, "Kontorapport"=>:accounts}
   end
 
   def show
