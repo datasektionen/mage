@@ -11,7 +11,7 @@
     %p.hint{:style=>"clear:both"}= t('hints.voucher_template.valid_fields')
 
   .clear
-  %p
+  %div
     %strong= t('activerecord.attributes.voucher_template.input_fields')
     %p.hint= t('hints.voucher_template.input_fields')
     %table
@@ -24,7 +24,7 @@
         = render 'input_field_fields', :f=>fi
     =link_to_add_fields "Lägg till fält", f, :input_fields, "table"
   .clear
-  %p
+  %div
     %strong= t('activerecord.attributes.voucher_template.output_fields')
     %p.hint= t('hints.voucher_template.output_fields')
     %table
@@ -45,6 +45,3 @@
 :javascript
   var accounts = #{Account.order("number").map { |a| {:number=>a.number,:name=>a.name,:account_type=>a.account_type,:has_arrangements=>a.has_arrangements?, :type=>'account', :activity_year=> a.activity_year.year }}.to_json}
 
-  $(".account_autocomplete:not(.ui-autocomplete-input)").live('focus', function(event) {
-   // $(".ui-autocomplete").remove()
-  })

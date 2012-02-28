@@ -241,7 +241,7 @@
     voucher_template:
       template_type: "Kontomall är en mall som placeras i 'konto'-fältet, annars hamnar den i listan över mallar."
       output_fields: "Formeln är helt enkelt en matematisk formel för resultatet, {input_field_script_name} ersätts med värdet för fältet med skriptnamnet angivet inom {}. Skriptnamn är frivilligt för utfälten." 
-      input_fields: "Namn är det som står vid inmatning och beskrivningen står under inmatningsfältet för att förtydliga. Skriptnamn är det som används för att referera till fältet i formlera i utfälten."
+      input_fields: "Namn är det som står vid inmatning och beskrivningen står under inmatningsfältet för att förtydliga. Skriptnamn är det som används för att referera till fältet i formlera i utfälten. Om mallen är en kontomall ska du inte ha några indatafält, det enda indatafältet då är automatiskt {sum}"
       valid_fields: "Endast hela år. Lämna fälten tomma för att inte begränsa åt det hållet"
     arrangements:
       leave_empty_to_not_limit: "Lämna tomt för att inte begränsa"
