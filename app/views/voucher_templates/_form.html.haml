@@ -1,12 +1,19 @@
+- javascript %w(jquery/jquery.ui.custom.min.js accounts.js voucher_templates.js)
+
 = simple_form_for @voucher_template do |f|
   .fields
     = f.input :name
     = f.input :description
     -#= f.input :template_type, :label=>t('attributes.voucher_template.account_template'), :as=>:checkbox, :hint=>t('hints.voucher_template.account_template')
+  .fields
+    = f.input :valid_from
+    = f.input :valid_to
+    %p.hint{:style=>"clear:both"}= t('hints.voucher_template.valid_fields')
 
   .clear
   %p
     %strong= t('attributes.voucher_template.input_fields')
+    %p.hint= t('hints.voucher_template.input_fields')
     %table
       %tr
         %th= t('attributes.voucher_template.name') 
@@ -19,7 +26,7 @@
   .clear
   %p
     %strong= t('attributes.voucher_template.output_fields')
-    %p= t('hints.voucher_template.output_fields')
+    %p.hint= t('hints.voucher_template.output_fields')
     %table
       %tr
         %th= t('attributes.voucher_template.account') 
@@ -31,3 +38,9 @@
     =link_to_add_fields "Lägg till fält", f, :output_fields, "table"
   .actions
     = f.submit 'Save'
+
+
+-# Javascripts for output fields
+- ActiveRecord::Base.include_root_in_json = false
+:javascript
+  var accounts = #{Account.order("number").map { |a| {:number=>a.number,:name=>a.name,:account_type=>a.account_type,:has_arrangements=>a.has_arrangements?, :type=>'account', :activity_year=> a.activity_year.year }}.to_json}
