@@ -4,26 +4,3 @@
   %td= f.input :formula, :label=>false
   %td= f.input :script_name, :label=>false
   %td= link_to_remove_field "Radera", f, ["td", ".input"]
-
-:javascript
-  $(".account_autocomplete").autocomplete({
-    source: ac_account,
-    focus: function(event,ui) {
-      $(this).val(ui.item.number);
-      return false;
-    },
-    select: function(event,ui) {
-      $(this).val(ui.item.number);
-      return false;
-    }
-  })
-  .data("autocomplete")._renderItem = function(ul,item) {
-    a=item
-    return $("<li></li>")
-      .data("item.autocomplete",a)
-      .append("<a>"+
-               "<span class='autocomplete account'>"+a.number+" - "+a.name+"</span>"+
-              "</a>")
-        .appendTo(ul);
-
-  }

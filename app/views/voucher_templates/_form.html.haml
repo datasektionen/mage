@@ -44,3 +44,7 @@
 - ActiveRecord::Base.include_root_in_json = false
 :javascript
   var accounts = #{Account.order("number").map { |a| {:number=>a.number,:name=>a.name,:account_type=>a.account_type,:has_arrangements=>a.has_arrangements?, :type=>'account', :activity_year=> a.activity_year.year }}.to_json}
+
+  $(".account_autocomplete:not(.ui-autocomplete-input)").live('focus', function(event) {
+   // $(".ui-autocomplete").remove()
+  })
