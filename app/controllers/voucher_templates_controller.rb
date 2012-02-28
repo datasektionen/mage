@@ -26,4 +26,13 @@ class VoucherTemplatesController < InheritedResources::Base
     @voucher_template.input_fields << TemplateInputField.new
     @voucher_template.output_fields << TemplateOutputField.new
   end
+
+  def destroy 
+    destroy! do |success, failure|
+      success.html {
+        flash[:notice] = t('voucher_templates.delete_success')
+        redirect_to voucher_templates_path
+      }
+    end     
+  end
 end

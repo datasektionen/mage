@@ -335,6 +335,7 @@
     type4: "Utgiftskonton"  
   voucher_templates:
     delete_success: "Mallen raderades"
+    
   resources: 
     users: "anvandare"
     series: "serier"
