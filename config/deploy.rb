@@ -91,6 +91,11 @@ namespace :deploy do
     run "test -e #{pid} && kill `cat #{pid}` || /bin/true"
   end
 
+  desc "Rebuild SASS"
+  task :sass do
+    run "cd #{current_path} && rake RAILS_ENV=#{rails_env} sass:build"
+  end
+
   desc "Run migrations"
   task :migrate, :except => {:no_release => true} do
     run "cd #{current_path} && RAILS_ENV=#{rails_env} /usr/local/bin/1.9.2_bundle exec rake db:migrate"
@@ -141,6 +146,7 @@ end
 
 after 'deploy:update_code', 'bundler:bundle_new_release'
 after "deploy:restart", "stats:git_revision"
+before 'deploy:restart', "deploy:sass"
 
 def run_rake(cmd)
   run "cd #{current_path}; /usr/local/bin/1.9.2_bundle exec #{rake} #{cmd}"
