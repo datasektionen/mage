@@ -6,6 +6,7 @@ class Ability
       if user.admin?
         can :manage, :all
       else
+        can :manage, VoucherTemplate
         can do |action, subject_call, subject|
           unless subject.kind_of? Enumerable
             if subject.respond_to? :series
