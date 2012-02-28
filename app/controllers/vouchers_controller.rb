@@ -18,7 +18,7 @@ class VouchersController < InheritedResources::Base
     @voucher.organ = current_series.default_organ || Organ.first
     @voucher.series = current_series
     @voucher.activity_year = current_activity_year
-    last_voucher = Voucher.where(:series_id=>current_series.id).last
+    last_voucher = Voucher.where(:series_id=>current_series.id, :activity_year_id=>current_activity_year.id).last
     @voucher.accounting_date = Time.now 
     @voucher.accounting_date = last_voucher.accounting_date unless last_voucher.nil?
 
