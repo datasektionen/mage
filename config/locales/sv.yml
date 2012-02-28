@@ -344,8 +344,9 @@
     journal: "journal"
     vouchers: "verifikat"
     accounting: "bokfora"
-    account: "konto"
-    accoun_group: "kontogrupp"
+    accounts: "konto"
+    account_groups: "kontogrupp"
+    voucher_templates: "mallar"
   path_names:
     new: "ny"
     edit: "redigera"
