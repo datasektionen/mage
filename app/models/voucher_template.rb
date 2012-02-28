@@ -7,9 +7,6 @@ class VoucherTemplate < ActiveRecord::Base
 
   validates :template_type, :presence=>true
   validates :name, :presence=>true
-  validates :description, :presence=>true
-  #validates :valid_from, :numericality=>{:only_integer=>true}
-  #validates :valid_to, :numericality=>{:only_integer=>true}
 
   accepts_nested_attributes_for :input_fields, :allow_destroy => true
   accepts_nested_attributes_for :output_fields, :allow_destroy => true
