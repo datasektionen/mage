@@ -174,7 +174,7 @@ class VouchersController < InheritedResources::Base
     elsif params[:type] == "template"
       template = VoucherTemplate.find(params[:id])
       render :nothing=>true, :status=>400 and return if template.nil?
-      @rows = template.parse({:sum=>params[:sum]},params[:arrangement])
+      @rows = template.parse({:sum=>params[:sum]},params[:arrangement], params[:activity_year])
     else
       render :nothing=>true, :status=>500 and return
     end
