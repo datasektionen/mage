@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120228160056) do
+ActiveRecord::Schema.define(:version => 20120228174413) do
 
   create_table "account_groups", :force => true do |t|
     t.string   "title"
@@ -194,6 +194,9 @@ ActiveRecord::Schema.define(:version => 20120228160056) do
     t.integer  "authorized_by_id"
     t.integer  "material_from_id"
     t.integer  "api_key_id"
+    t.string   "slug",             :null => false
   end
+
+  add_index "vouchers", ["slug"], :name => "index_vouchers_on_slug", :unique => true
 
 end

@@ -34,6 +34,13 @@ class Voucher < ActiveRecord::Base
   attr_readonly  :series_id, :material_from_id, :activity_year_id, :corrects_id, :api_key_id
   attr_writeonce :authorized_by_id, :bookkept_by_id, :number
 
+  extend FriendlyId
+  friendly_id :pretty_id, :use=>:slugged
+
+    def normalize_friendly_id(string)
+      super.upcase
+    end
+
   default_scope where('bookkept_by_id is not null') # By default only show bookkept vouchers
 
   scope :recent, lambda {|s| 
@@ -75,6 +82,14 @@ class Voucher < ActiveRecord::Base
       "#{series.letter}#{number}"
     else
       "M---"
+    end
+  end
+
+  def pretty_id
+    unless number.nil?
+      "#{activity_year.year}-#{pretty_number}"
+    else
+      "#{activity_year.year}-#{series.letter}##{self.id}"
     end
   end
 
@@ -129,7 +144,7 @@ class Voucher < ActiveRecord::Base
   # Define output in log
   def to_log
     # Pretty - ain't it? :D
-    "\n" << voucher_rows.reduce("#{pretty_number} - #{title}
+    "\n" << voucher_rows.reduce("#{pretty_id} - #{title}
 Datum: #{I18n.l accounting_date.to_date}
 Nämnd: #{organ}
 Underlag från: #{material_from}
