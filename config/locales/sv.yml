@@ -11,6 +11,7 @@
   templates: "Mallar"
   add_right: "Lägg till rättighet"
   delete_access: "Radera rättighet"
+  copy: "kopia"
 
   link_actions:
     add_new: "Lägg till %{model}"

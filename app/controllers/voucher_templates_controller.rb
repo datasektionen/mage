@@ -27,6 +27,16 @@ class VoucherTemplatesController < InheritedResources::Base
     @voucher_template.output_fields << TemplateOutputField.new
   end
 
+  def clone
+    @voucher_template = VoucherTemplate.find(params[:id])
+    authorize! :read, @voucher_template
+    authorize! :write, VoucherTemplate.new
+    cloned = @voucher_template.clone
+    cloned.name+=" (#{t('copy')})"
+    cloned.save
+    redirect_to voucher_template_path(cloned)
+  end
+
   def destroy 
     destroy! do |success, failure|
       success.html {

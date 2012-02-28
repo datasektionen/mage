@@ -1,6 +1,7 @@
 %h3= t('activerecord.attributes.voucher_template.template')+" "+@voucher_template.name
 %p
   =link_to t('edit'), edit_voucher_template_path(@voucher_template)
+  =link_to t('clone'), clone_voucher_template_path(@voucher_template)
   =link_to t('destroy'), voucher_template_path(@voucher_template), :method=>:delete, :confirm=>t('are_you_sure')
 %p
   %strong= t('activerecord.attributes.voucher_template.description')+":"

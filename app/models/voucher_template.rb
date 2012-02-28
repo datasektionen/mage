@@ -1,7 +1,7 @@
 #-*- encoding: utf-8 -*-
 class VoucherTemplate < ActiveRecord::Base
-  has_many :input_fields, :class_name=>"TemplateInputField"
-  has_many :output_fields, :class_name=>"TemplateOutputField"
+  has_many :input_fields, :class_name=>"TemplateInputField", :autosave=>true
+  has_many :output_fields, :class_name=>"TemplateOutputField", :autosave=>true
 
   validates_associated :input_fields, :output_fields
 
@@ -60,5 +60,22 @@ class VoucherTemplate < ActiveRecord::Base
   def delete
     self.is_deleted = true
     save
+  end
+private 
+  alias shallow_clone clone
+public
+  def clone
+    v = shallow_clone
+    v.input_fields = input_fields.map { |f| 
+      c = f.clone
+      c.template=v
+      c
+    }
+    v.output_fields = output_fields.map { |f| 
+      c = f.clone
+      c.template=v
+      c
+    }
+    v
   end
 end

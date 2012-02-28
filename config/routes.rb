@@ -55,6 +55,9 @@ Mage::Application.routes.draw do
         get :fields
         post :parse
       end
+      member do
+        get :clone
+      end
     end
 
     resources :api_keys
