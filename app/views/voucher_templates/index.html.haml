@@ -1,0 +1,18 @@
+%h3 Mallar
+
+%table.datatable
+  %thead
+    %th Namn
+    %th Typ
+    %th Giltlighetsperiod
+    %th 
+    %th 
+  %tbody
+    - @voucher_templates.each do |template|
+      %tr
+        %td= link_to template.name, template
+        %td= template.type_string
+        %td #{template.valid_from} - #{template.valid_to}
+        %td= link_to t('edit'), edit_voucher_template_path(template)
+  
+%p=link_to "Skapa ny mall", new_voucher_template_path

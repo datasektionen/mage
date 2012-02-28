@@ -332,7 +332,9 @@
     type1: "Tillgångskonton"
     type2: "Skuldkonton"
     type3: "Intäktskonton"
-    type4: "Utgiftskonton"
+    type4: "Utgiftskonton"  
+  voucher_templates:
+    delete_success: "Mallen raderades"
   resources: 
     users: "anvandare"
     series: "serier"
