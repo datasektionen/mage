@@ -1,0 +1,32 @@
+%h3= t('activerecord.attributes.voucher_template.template')+" "+@voucher_template.name
+%p
+  =link_to t('edit'), edit_voucher_template_path(@voucher_template)
+  =link_to t('destroy'), voucher_template_path(@voucher_template), :method=>:delete, :confirm=>t('are_you_sure')
+%p
+  %strong= t('activerecord.attributes.voucher_template.description')+":"
+  %span= @voucher_template.description
+%p
+  %strong= t('activerecord.attributes.voucher_template.template_type')+":"
+  %span= @voucher_template.type_string
+%p
+  %strong= t('activerecord.attributes.voucher_template.valid_period')+":"
+  %span #{@voucher_template.valid_from} - #{@voucher_template.valid_to}
+
+%hr
+
+%div
+  %h3= t('activerecord.attributes.voucher_template.input_fields')
+  - @voucher_template.input_fields.each do |field|
+    %p
+      %strong #{field.name} (#{field.script_name}):
+      %span #{field.description}
+
+%hr
+
+%div
+  %h3= t('activerecord.attributes.voucher_template.output_fields')
+  - @voucher_template.output_fields.each do |field|
+    %p
+      %strong #{field.account_number} (#{field.script_name}):
+      %span #{field.formula}
+
