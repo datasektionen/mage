@@ -3,6 +3,11 @@ class VoucherTemplate < ActiveRecord::Base
   has_many :input_fields, :class_name=>"TemplateInputField"
   has_many :output_fields, :class_name=>"TemplateOutputField"
 
+  validates_associated :input_fields, :output_fields
+
+  accepts_nested_attributes_for :input_fields, :allow_destroy => true
+  accepts_nested_attributes_for :output_fields, :allow_destroy => true
+
   TYPE_MULTIROW = 0
   TYPE_SINGLEROW = 1
 

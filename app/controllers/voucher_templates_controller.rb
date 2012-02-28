@@ -1,4 +1,6 @@
 class VoucherTemplatesController < InheritedResources::Base
+  load_and_authorize_resource
+
   def fields
     @voucher_template = VoucherTemplate.find(params[:template])
     @organ = Organ.find(params[:organ])
@@ -17,5 +19,11 @@ class VoucherTemplatesController < InheritedResources::Base
     end
     @sum = @rows.reduce(0) { |s, r| s = s + r.int_sum } 
     render 'vouchers/rows'
+  end
+
+  def new
+    # Always one input and output field
+    @voucher_template.input_fields << TemplateInputField.new
+    @voucher_template.output_fields << TemplateOutputField.new
   end
 end
