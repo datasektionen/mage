@@ -7,9 +7,8 @@
       = current_series
 
 - content_for :sub_menu_extra do
-  #quick_navigation
-    = form_tag navigate_accounting_index_path, :method=>:get do
-      = text_field_tag "target", nil, :placeholder=>"Gå till verifikat", :size=>6
+  = form_tag navigate_accounting_index_path, :method=>:get, :id=>"quick_navigation" do
+    = text_field_tag "target", nil, :placeholder=>"Gå till verifikat", :size=>6
 
 - content_for :content do
   = yield

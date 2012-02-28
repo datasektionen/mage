@@ -40,7 +40,7 @@ $(function() {
   }
 
   //Catch submit
-  $("form").submit(function(obj,submit) {
+  $("form.voucher").submit(function(obj,submit) {
     if(total_sum != 0 && !confirm("Totalsumman är inte 0, fortsätta ändå?")) {
       return false
     }
@@ -53,7 +53,7 @@ $(function() {
   })
 
   //Bind keys
-  $("form input, form select").live('keydown', function(e) { 
+  $("form.voucher input, form.voucher select").live('keydown', function(e) { 
     var keyCode = e.keyCode || e.which
     if(keyCode == 13)
       e.preventDefault()
@@ -79,7 +79,7 @@ $(function() {
       }
     }
   })
-  $("form input, form select").keypress(function(e) {
+  $("form.voucher input, form.voucher select").keypress(function(e) {
     var keyCode = e.keyCode || e.which
     if(keyCode == 13)
       e.preventDefault()
