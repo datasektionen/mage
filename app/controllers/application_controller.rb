@@ -17,12 +17,20 @@ class ApplicationController < ActionController::Base
   helper_method :current_activity_year, :current_series
 
   rescue_from Mage::Unauthorized do |exception|
-    render :file => "#{Rails.root}/public/401.html", :layout => false, :status => 401
+    render "errors/error_401"
+  end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    render "errors/error_401"
   end
 
   rescue_from Mage::ApiError do |exception|
  	 render :json=> {"errors"=>"Api Error: #{exception.message}"}, :status=>500
   end	
+
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    render "errors/error_404"
+  end
 
   #rescue_from CanCan::AccessDenied do |exception|
   #  render 'errors/access_denied', :status=>401 and return false

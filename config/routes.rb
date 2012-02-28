@@ -61,6 +61,9 @@ Mage::Application.routes.draw do
       end
     end
 
+    get "404", :to=>"errors#error_404", :as=>:error_404
+    get "401", :to=>"errors#error_401", :as=>:error_401
+
     resources :api_keys
 
     resources :bank_accounting, :only => [:index, :update, :show, :create, :destroy], :controller => :bank_accounting
