@@ -48,6 +48,7 @@
         %nav#sub_menu.horizontal
           - if user_signed_in? && current_user.has_access?
             = render_navigation(:level=>2)
+          =yield(:sub_menu_extra)
         .clear
       %section.clearfix#content
         - if flash[:notice]

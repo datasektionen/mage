@@ -321,6 +321,7 @@
     cant_delete_bookkept: "Kan inte radera bokfört verifikat"
     deleted: "Raderade verifikatet"
     bookkept_plural: "Verifikaten bokförda"
+    invalid_number: "Ogiltligt verifikatsnummer"
 
   activity_years:
     empty_accounts: "Tom kontoplan"

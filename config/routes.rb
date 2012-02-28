@@ -47,6 +47,7 @@ Mage::Application.routes.draw do
     resources :accounting, :only => [:index], :controller => "accounting" do
       collection do
         post :index
+        get :navigate
       end
     end
 
