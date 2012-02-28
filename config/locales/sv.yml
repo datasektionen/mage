@@ -344,7 +344,7 @@
     journal: "journal"
     vouchers: "verifikat"
     accounting: "bokfora"
-    accounts: "konto"
+    accounts: "kontoplan"
     account_groups: "kontogrupp"
     voucher_templates: "mallar"
   path_names:
