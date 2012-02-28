@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120209225108) do
+ActiveRecord::Schema.define(:version => 20120228160056) do
 
   create_table "account_groups", :force => true do |t|
     t.string   "title"
@@ -177,6 +177,7 @@ ActiveRecord::Schema.define(:version => 20120209225108) do
     t.datetime "updated_at"
     t.integer  "valid_from"
     t.integer  "valid_to"
+    t.boolean  "is_deleted",    :default => false
   end
 
   create_table "vouchers", :force => true do |t|

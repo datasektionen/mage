@@ -2,6 +2,9 @@
 class TemplateOutputField < ActiveRecord::Base
   belongs_to :template, :inverse_of => :output_fields, :class_name=>"VoucherTemplate", :foreign_key => :voucher_template_id
 
+  validates :account_number, :presence=>true, :numericality=>{:only_integer => true}
+  validates :formula, :presence=>true
+
   def parse(values,arr,activity_year) 
     complete = true
     _formula = formula.gsub(/\{(.+?)\}/) do |m|

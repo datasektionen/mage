@@ -5,11 +5,19 @@ class VoucherTemplate < ActiveRecord::Base
 
   validates_associated :input_fields, :output_fields
 
+  validates :template_type, :presence=>true
+  validates :name, :presence=>true
+  validates :description, :presence=>true
+  #validates :valid_from, :numericality=>{:only_integer=>true}
+  #validates :valid_to, :numericality=>{:only_integer=>true}
+
   accepts_nested_attributes_for :input_fields, :allow_destroy => true
   accepts_nested_attributes_for :output_fields, :allow_destroy => true
 
   TYPE_MULTIROW = 0
   TYPE_SINGLEROW = 1
+
+  default_scope where({:is_deleted=>false})
 
   scope :in_year, lambda { |year| where("(valid_from IS NULL OR valid_from <= ? ) AND (valid_to IS NULL OR ? <= valid_to)",  year, year) }
 
@@ -42,5 +50,18 @@ class VoucherTemplate < ActiveRecord::Base
 
   def has_arrangements?(activity_year)
     output_fields.any? { |f| f.account(activity_year).has_arrangements? }
+  end
+
+  def type_string
+    I18n.t("activerecord.attributes.voucher_template.template_type_#{template_type}")
+  end
+
+  def destroy
+    _run_destroy_callbacks { delete }
+  end
+
+  def delete
+    self.is_deleted = true
+    save
   end
 end

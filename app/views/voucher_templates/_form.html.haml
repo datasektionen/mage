@@ -4,7 +4,7 @@
   .fields
     = f.input :name
     = f.input :description
-    -#= f.input :template_type, :label=>t('attributes.voucher_template.account_template'), :as=>:checkbox, :hint=>t('hints.voucher_template.account_template')
+    = f.input :template_type, :collection=>{t("activerecord.attributes.voucher_template.template_type_0")=>0, t("activerecord.attributes.voucher_template.template_type_1")=>1}, :prompt=>false, :hint=>t('hints.voucher_template.template_type')
   .fields
     = f.input :valid_from
     = f.input :valid_to
@@ -12,26 +12,26 @@
 
   .clear
   %p
-    %strong= t('attributes.voucher_template.input_fields')
+    %strong= t('activerecord.attributes.voucher_template.input_fields')
     %p.hint= t('hints.voucher_template.input_fields')
     %table
       %tr
-        %th= t('attributes.voucher_template.name') 
-        %th= t('attributes.voucher_template.description') 
-        %th= t('attributes.voucher_template.script_name') 
+        %th= t('activerecord.attributes.voucher_template.name') 
+        %th= t('activerecord.attributes.voucher_template.description') 
+        %th= t('activerecord.attributes.voucher_template.script_name') 
         %th
       = f.simple_fields_for :input_fields do |fi|
         = render 'input_field_fields', :f=>fi
     =link_to_add_fields "Lägg till fält", f, :input_fields, "table"
   .clear
   %p
-    %strong= t('attributes.voucher_template.output_fields')
+    %strong= t('activerecord.attributes.voucher_template.output_fields')
     %p.hint= t('hints.voucher_template.output_fields')
     %table
       %tr
-        %th= t('attributes.voucher_template.account') 
-        %th= t('attributes.voucher_template.formula') 
-        %th= t('attributes.voucher_template.script_name')
+        %th= t('activerecord.attributes.voucher_template.account') 
+        %th= t('activerecord.attributes.voucher_template.formula') 
+        %th= t('activerecord.attributes.voucher_template.script_name')
         %th
       = f.simple_fields_for :output_fields do |fo|
         = render 'output_field_fields', :f=>fo

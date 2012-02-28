@@ -220,6 +220,7 @@
         valid_from: "Aktivt från och med (årtal)"
         valid_to: "Aktivt till och med (årtal)"
       voucher_template:
+        template: "Mall"
         account_template: "Kontomall"
         input_fields: "Indatafält"
         output_fields: "Utdatafält"
@@ -227,11 +228,18 @@
         description: "Beskrivning"
         valid_from: "Giltlig från och med"
         valid_to: "Giltlig till och med"
+        valid_period: "Giltlighetsperiod"
+        template_type_0: "Verifikatsmall"
+        template_type_1: "Kontomall"
+        template_type: "Malltyp"
+        script_name: "Skriptnamn"
+        formula: "Formel"
+        account: "Konto"
 
 
   hints:
     voucher_template:
-      account_template: "Kontomall är en mall som placeras i 'konto'-fältet, annars hamnar den i listan över mallar"
+      template_type: "Kontomall är en mall som placeras i 'konto'-fältet, annars hamnar den i listan över mallar."
       output_fields: "Formeln är helt enkelt en matematisk formel för resultatet, {input_field_script_name} ersätts med värdet för fältet med skriptnamnet angivet inom {}. Skriptnamn är frivilligt för utfälten." 
       input_fields: "Namn är det som står vid inmatning och beskrivningen står under inmatningsfältet för att förtydliga. Skriptnamn är det som används för att referera till fältet i formlera i utfälten."
       valid_fields: "Endast hela år. Lämna fälten tomma för att inte begränsa åt det hållet"
@@ -304,6 +312,7 @@
 
   edit: "Redigera"
   show: "Visa"
+  clone: "Klona"
   destroy: "Ta bort"
   are_you_sure: "Är du säker?"
 
