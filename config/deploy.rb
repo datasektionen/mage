@@ -93,7 +93,7 @@ namespace :deploy do
 
   desc "Rebuild SASS"
   task :sass do
-    run "cd #{current_path} && rake RAILS_ENV=#{rails_env} sass:build"
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} /usr/local/bin/1.9.2_bundle exec rake sass:build"
   end
 
   desc "Run migrations"
