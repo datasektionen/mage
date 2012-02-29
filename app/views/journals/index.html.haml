@@ -1,12 +1,54 @@
-%h2 Serier
+%h1 Journal
 
+#journal
+  %table
+    %thead
+      %tr
+        %th= t 'activerecord.attributes.journal.created_at'
+        %th= t 'activerecord.attributes.journal.object'
+        %th= t 'activerecord.attributes.journal.user'
+        %th= t 'activerecord.attributes.journal.api_key'
+        %th= t 'activerecord.attributes.journal.message'
+    %tbody
+      - @journal_entries.each do |entry|
+        %tr.journal_entry
+          %td= l entry.created_at, :format=>:default
+          %td
+            - begin
+              = link_to entry.object.to_s, entry.object
+            - rescue NoMethodError 
+              = entry.object.to_s
 
-- form_tag series_path , :method=>:get, :remote=>true do
-  #search_box
-    %p
-      = label_tag ":"
-      = text_field_tag "search[title]"
-      = submit_tag "Sök", :name=>nil
+          %td= link_to entry.user.to_s, entry.user
+          %td
+            - if entry.api_key
+              = link_to entry.api_key.to_s, entry.api_key
+            - else
+              \-
+          %td.message
+            %pre= entry.message
 
-= render :partial=>"voucher_list", :object => @vouchers, :locals=>{:long=>true,:sort=>true}
+  = paginate @journal_entries
 
+:javascript
+  $(function() {
+    $(".journal_entry").click(function() {
+      pre = $(this).find("pre")
+      status = pre.data("status")
+      if(status === undefined)
+        status = false
+
+      height = pre.data("height")
+      if(height === undefined) 
+        pre.data("height", pre.css("height"))
+
+      if(status === false) {
+        pre.css("height", "100%")
+        pre.css("overflow", "auto")
+      } else {
+        pre.css("height", height)
+        pre.css("overflow", "hidden")
+      }
+      pre.data("status", !status)
+    })
+  })

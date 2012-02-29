@@ -56,7 +56,6 @@
           tb: "TB"
 
   # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
-  datetime:
     distance_in_words:
       half_a_minute: "en halv minut"
       less_than_x_seconds:
@@ -236,7 +235,12 @@
         script_name: "Skriptnamn"
         formula: "Formel"
         account: "Konto"
-
+      journal:
+        created_at: "Datum"
+        object: "Objekt"
+        user: "Användare"
+        api_key: "Apinyckel"
+        message: "Meddelande"
 
   hints:
     voucher_template:
@@ -277,7 +281,7 @@
 
   time:
     formats:
-      default: "%a, %e %b %Y %H:%M:%S %z"
+      default: "%Y-%m-%d %H:%M:%S" 
       short: "%e %b %H:%M"
       long: "%e %B %Y %H:%M"
       short_time: "%H:%M"
@@ -343,7 +347,7 @@
     series: "serier"
     organs: "namnder"
     activity_years: "verksamhetsar"
-    journal: "journal"
+    journals: "journal"
     vouchers: "verifikat"
     accounting: "bokfora"
     accounts: "kontoplan"

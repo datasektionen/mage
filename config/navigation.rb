@@ -62,6 +62,7 @@ SimpleNavigation::Configuration.run do |navigation|
       admin.item :series, "Serier", series_index_path, :highlights_on=>/\/(series|serier)/
       admin.item :activity_years, "Verksamhetsår och kontoplaner", activity_years_path, :highlights_on=>/\/(activity_year|verksamhetsar)(\/.*)?/
       admin.item :account_groups, "Kontogrupper", account_groups_path, :highlights_on=>/\/(account_group|kontogrupp)(\/.*)?/
+      admin.item :journal , "Journal", journals_path, :highlights_on=>/\/(journals?)(\/.*)?/
       admin.item :api_keys, "Apinycklar", api_keys_path, :highlights_on=>/\/(api_keys|apinycklar)/
     end
 
