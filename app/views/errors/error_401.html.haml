@@ -1,3 +1,15 @@
-= image_tag "gandalf.jpg"
-%p Du har inte rätt att visa den valda sidan. Om du tycker att du borde ha det kan du kontakta kassören.
+:css
+  body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
+  div.dialog {
+    width: 40em;
+    padding: 0 4em;
+    margin: 4em auto 0 auto;
+    border: none;
+    border-right-color: #999;
+    border-bottom-color: #999;
+  }
+  h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
+.dialog
+  = image_tag "gandalf.jpg"
+  %p Du har inte rätt att visa den valda sidan. Om du tycker att du borde ha det kan du kontakta kassören.
 
