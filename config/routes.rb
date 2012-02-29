@@ -63,6 +63,7 @@ Mage::Application.routes.draw do
 
     get "404", :to=>"errors#error_404", :as=>:error_404
     get "401", :to=>"errors#error_401", :as=>:error_401
+    get "500", :to=>"errors#error_500", :as=>:error_500
 
     resources :api_keys
 
