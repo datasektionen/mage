@@ -14,6 +14,7 @@ class ReportsController < ApplicationController
       @series = [Series.find(@report_input[:series])]
       authorize! :read, @series
     end
+
     @activity_year = ActivityYear.find(@report_input[:activity_year])
     @conditions = {:activity_year_id=>@report_input[:activity_year]}
     @organ = @report_input[:organ].empty? ? nil : Organ.find(@report_input[:organ])
