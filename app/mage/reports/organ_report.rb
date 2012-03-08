@@ -17,19 +17,23 @@ module Mage
         current_data = []
         current_arr = {:id=>data.first["arrangements.id"], :name=>data.first["arrangements.name"]}
 
-        data.each |d|
-          if current_arr.id != d["arrangements.id"]
-            if current_arr.id.nil?
-              current_arr = nil #Set whole arr to nil if id was nil
-              report.arrangement_reports << ArrangementReport.generate(current_arr, current_data)
-              current_data = [d]
-              current_arr = {:id=>d["arrangements.id"], :name=>d["arrangements.name"] }
-            else
-              current_data << d
-            end
+        puts "organ: #{organ.inspect}"
+
+        data.each do |d|
+          if current_arr[:id] != d["arrangements.id"]
+            #Set whole arr to nil if id was nil
+            current_arr = nil if current_arr[:id].nil?
+            report.arrangement_reports << ArrangementReport.generate(current_arr, current_data)
+            current_data = [d]
+            current_arr = {:id=>d["arrangements.id"], :name=>d["arrangements.name"] }
+          else
+            current_data << d
           end
         end
+        report.arrangement_reports << ArrangementReport.generate(current_arr, current_data)
 
+        report
+      end
     end
   end
 end
