@@ -26,7 +26,8 @@ module Mage
           end
         end
         report.account_reports << AccountReport.generate(current_account, current_data)
-        #report.calculate_balance_difference
+
+        report.calculate_balance_difference
 
         report
       end

@@ -13,7 +13,7 @@ module Mage
       def self.generate(account, voucher_rows=[])
         report = new(account, voucher_rows)
   
-        #report.calculate_outgoing_balance
+        report.calculate_outgoing_balance
  
         report
       end
@@ -24,7 +24,7 @@ module Mage
       end
 
       def calculate_balance_difference 
-        @balance_difference = voucher_rows.reduce(0) { |memo, row| memo + row[:sum] }
+        @balance_difference = voucher_rows.reduce(0) { |memo, row| memo + row["sum"] }
       end
     end
   end
