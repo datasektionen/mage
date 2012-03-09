@@ -1,7 +1,7 @@
 module Mage
   module Reports
     class OrganReport
-      attr_reader :organ
+      attr_reader :organ, :balance_difference
       attr_accessor :arrangement_reports
 
       def initialize(organ)
@@ -30,7 +30,13 @@ module Mage
         end
         report.arrangement_reports << ArrangementReport.generate(current_arr, current_data)
 
+        report.calculate_balance_difference
+
         report
+      end
+
+      def calculate_balance_difference 
+        @balance_difference = arrangement_reports.reduce(0) { |memo, row| memo + row.balance_difference }
       end
     end
   end

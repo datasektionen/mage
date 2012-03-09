@@ -1,6 +1,7 @@
 module Mage
   module Reports
     class Report
+      attr_reader :balance_difference
       attr_accessor :organ_reports
 
       def initialize()
@@ -30,7 +31,13 @@ module Mage
         #Add the last report
         report.organ_reports << Mage::Reports::OrganReport.generate(current_organ, current_data)
 
+        report.calculate_balance_difference
+
         report
+      end
+
+      def calculate_balance_difference 
+        @balance_difference = organ_reports.reduce(0) { |memo, row| memo + row.balance_difference }
       end
     end
   end
