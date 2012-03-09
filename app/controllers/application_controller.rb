@@ -28,9 +28,9 @@ class ApplicationController < ActionController::Base
  	 render :json=> {"errors"=>"Api Error: #{exception.message}"}, :status=>500
   end	
 
-  rescue_from ActiveRecord::RecordNotFound do |exception|
-    render "errors/error_404"
-  end
+  #rescue_from ActiveRecord::RecordNotFound do |exception|
+  #  render "errors/error_404"
+  #end
 
   #rescue_from CanCan::AccessDenied do |exception|
   #  render 'errors/access_denied', :status=>401 and return false

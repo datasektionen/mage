@@ -4,11 +4,11 @@
     %br
     %span.date= I18n.l Time.now, :format=>:short_time
 
-  %h3 Redovisning - Fullständig rapport
+  %h3 Redovisning - Huvudbok
   %p.conditions
     %p
       = @organ unless @organ.nil?
-      = @series[0] if @series.count == 1
+      = @series unless @series.nil?
     %p.date
       Datum:
       = format_date @activity_year.starts
@@ -17,24 +17,25 @@
   %ul
     - total_kredit = 0
     - total_debet = 0
-    - @rows.each do |arrangement, rows|
+    - @report.arrangement_reports.each do |arr_report|
+      - arrangement = arr_report.arrangement
       - arr_kredit = 0
       - arr_debet = 0
       - arr_factor = arrangement.nil? ? 1 : -1 # Invert sign when arrangment is not nil
       %li.arrangement
         %h4
           - unless arrangement.nil?
-            =arrangement.organ
+            =arrangement[:organ]
             \-
             =arrangement
           - else
             Tillgångs och skuldkonton
         %ul  
-          - rows.group_by(&:account).sort_by{|account,r| account.number }.each do |account,account_rows| 
+          - arr_report.account_reports.each do |account_report|
             - change_debet = 0
             - change_kredit = 0
             %li.account
-              %strong Konto: #{account}
+              %strong Konto: #{account_report.account[:number]}
               %table
                 %tr
                   %th Vernr
@@ -49,20 +50,24 @@
                   %td= format_date @activity_year.starts
                   %td Ingående saldo
                   %td
-                  %td= currency_clean(debet_or_zero account.ingoing_balance)
-                  %td= currency_clean(kredit_or_zero account.ingoing_balance)
-                  %td= currency_clean account.ingoing_balance*arr_factor
-                - account_rows.sort_by { |r| r.voucher.accounting_date }.each do |r|
-                  - change_debet += r.debet(0)
-                  - change_kredit += r.kredit(0)
+                  %td= currency_clean(debet_or_zero account_report.ingoing_balance)
+                  %td= currency_clean(kredit_or_zero account_report.ingoing_balance)
+                  %td= currency_clean account_report.ingoing_balance*arr_factor
+                - account_report.voucher_rows.each do |row|
+                  - debet = [0, row["sum"]].max
+                  - kredit = [0, row["sum"]].min
+                  - change_debet += debet
+                  - change_kredit += kredit
+                  - voucher = Voucher.new({:id=>row["voucher_id"], :number=>row["voucher_number"], :title=>row["voucher_title"], :series_id=>row["series_id"], :organ_id=>row["organ_id"], :accounting_date=>row["accounting_date"]})
+                  - Rails.logger.debug voucher.inspect
                   %tr
-                    %td= link_to r.voucher.pretty_number, r.voucher
-                    %td= format_date r.voucher.accounting_date
-                    %td= r.voucher.title
-                    %td= r.voucher.organ
-                    %td= currency_clean r.debet(0)
-                    %td= currency_clean r.kredit(0)
-                    %td= currency_clean( (account.ingoing_balance + change_debet - change_kredit)*arr_factor )
+                    %td= link_to voucher.pretty_number, voucher
+                    %td= format_date voucher.accounting_date
+                    %td= voucher.title
+                    %td= voucher.organ
+                    %td= currency_clean debet
+                    %td= currency_clean kredit
+                    %td= currency_clean( (account_report.ingoing_balance + change_debet - change_kredit)*arr_factor )
                 - arr_kredit += change_kredit
                 - arr_debet += change_debet
                 %tr
@@ -70,11 +75,11 @@
                   %td= format_date @activity_year.ends
                   %td Utgående saldo
                   %td
-                  %td= currency_clean(debet_or_zero(account.ingoing_balance)+change_debet)
-                  %td= currency_clean(kredit_or_zero(account.ingoing_balance)+change_kredit)
-                  %td= currency_clean ( (account.ingoing_balance+change_debet-change_kredit)*arr_factor )
+                  %td= currency_clean(debet_or_zero(account_report.ingoing_balance)+change_debet)
+                  %td= currency_clean(kredit_or_zero(account_report.ingoing_balance)+change_kredit)
+                  %td= currency_clean ( (account_report.ingoing_balance+change_debet-change_kredit)*arr_factor )
                 %tr
-                  %td{:colspan=>6} Förändring #{account} #{format_date @activity_year.starts} - #{format_date @activity_year.ends}:
+                  %td{:colspan=>6} Förändring #{account_report.account[:number]} #{format_date @activity_year.starts} - #{format_date @activity_year.ends}:
                   %td= currency_clean (change_debet-change_kredit)*arr_factor
       .summary
         %strong Summering #{arrangement.nil? ? "Tillgångar och skulder" : arrangement}:
