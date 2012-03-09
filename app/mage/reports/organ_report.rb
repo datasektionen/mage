@@ -14,21 +14,6 @@ module Mage
       def self.generate(organ, data) 
         report = new(organ)
         
-        current_data = []
-        current_arr = {:id=>data.first["arrangement_id"], :name=>data.first["arrangement_name"]}
-
-        data.each do |d|
-          if current_arr[:id] != d["arrangement_id"]
-            #Set whole arr to nil if id was nil
-            current_arr = nil if current_arr[:id].nil?
-            report.arrangement_reports << ArrangementReport.generate(current_arr, current_data)
-            current_data = [d]
-            current_arr = {:id=>d["arrangement_id"], :name=>d["arrangement_name"] }
-          else
-            current_data << d
-          end
-        end
-        report.arrangement_reports << ArrangementReport.generate(current_arr, current_data)
 
         report.calculate_balance_difference
 

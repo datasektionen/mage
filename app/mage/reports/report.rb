@@ -2,10 +2,10 @@ module Mage
   module Reports
     class Report
       attr_reader :balance_difference
-      attr_accessor :organ_reports
+      attr_accessor :arrangement_reports
 
       def initialize()
-        @organ_reports = []
+        @arrangement_reports = []
       end
 
       ##
@@ -14,22 +14,20 @@ module Mage
         report = new()
       
         current_data = []
-        current_organ = {:id=>data.first["organ_id"], :name=>data.first["organ_name"]}
+        current_arr = {:id=>data.first["arrangement_id"], :name=>data.first["arrangement_name"], :organ=>data.first["organ_name"]}
 
         data.each do |d|
-          if current_organ[:id] != d["organ_id"]
-            if current_organ[:id].nil?
-              current_organ = nil # Set the whole organ to nil if the id is nil
-            end
-            report.organ_reports << Mage::Reports::OrganReport.generate(current_organ, current_data)
-            current_organ = {:id=>d["organ_id"], :name=>d["organ_name"]}
+          if current_arr[:id] != d["arrangement_id"]
+            #Set whole arr to nil if id was nil
+            current_arr = nil if current_arr[:id].nil?
+            report.arrangement_reports << ArrangementReport.generate(current_arr, current_data)
             current_data = [d]
+            current_arr = {:id=>d["arrangement_id"], :name=>d["arrangement_name"], :organ=>d["organ_name"] }
           else
             current_data << d
           end
         end
-        #Add the last report
-        report.organ_reports << Mage::Reports::OrganReport.generate(current_organ, current_data)
+        report.arrangement_reports << ArrangementReport.generate(current_arr, current_data)
 
         report.calculate_balance_difference
 
@@ -37,7 +35,7 @@ module Mage
       end
 
       def calculate_balance_difference 
-        @balance_difference = organ_reports.reduce(0) { |memo, row| memo + row.balance_difference }
+        @balance_difference = arrangement_reports.reduce(0) { |memo, row| memo + row.balance_difference }
       end
     end
   end

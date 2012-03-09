@@ -8,29 +8,15 @@ class ReportsController < ApplicationController
     @report_input = params[:report]
     @report_template = @report_input[:template]
 
-    if @report_input[:series].empty?
-      @series = Series.all
-    else
-      @series = [Series.find(@report_input[:series])]
-      authorize! :read, @series
-    end
-
+    @series = [Series.find(@report_input[:series])] unless @report_input[:series].empty?
     @activity_year = ActivityYear.find(@report_input[:activity_year])
-    @conditions = {:activity_year_id=>@report_input[:activity_year]}
     @organ = @report_input[:organ].empty? ? nil : Organ.find(@report_input[:organ])
-    @conditions[:organ_id] = @organ.id unless @organ.nil?
-    @vouchers = @series.collect { |series| series.vouchers.where(@conditions) }.flatten
-    @rows = @vouchers.map { |voucher| voucher.voucher_rows.where(:canceled=>false) }.flatten
 
-    self.send(@report_template) if self.respond_to?(@report_template)
+    if self.respond_to?(@report_template)
+      self.send(@report_template)
+    else
+      @report = Mage::Report.full_report(@activity_year, @series, @organ)
+    end
     render @report_template
   end 
-
-  def complete
-    @rows = @rows.group_by(&:arrangement).sort_by {|arr,row| arr.nil? ? -1 : arr.number }
-  end
-
-  def summary
-    @rows = @rows.group_by(&:arrangement).sort_by {|arr,rows| arr.nil? ? -1 : arr.number }
-  end
 end
