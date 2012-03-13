@@ -20,8 +20,9 @@ module Mage
 
       return Mage::Reports::Report.generate(
           self.data_from_query("
-                          select
+                          select distinct
                             accounts.ingoing_balance,
+                            accounts.name as 'account_name', 
                             voucher_rows.id,
                             voucher_rows.sum,
                             voucher_rows.arrangement_id, 
@@ -29,16 +30,17 @@ module Mage
                             voucher_rows.account_number,
                             vouchers.number as 'voucher_number',
                             vouchers.title as 'voucher_title',
-                            vouchers.id as 'voucher_id',
+                            vouchers.slug as 'voucher_slug',
                             vouchers.accounting_date,
                             vouchers.series_id,
                             series.letter as 'series_letter',
                             arrangements.name as 'arrangement_name',
+                            arrangements.number as 'arrangement_number',
                             organs.id as 'organ_id', organs.name as 'organ_name'
                           from voucher_rows
                              left join arrangements on voucher_rows.arrangement_id = arrangements.id
-                             left join organs on arrangements.organ_id = organs.id
                              join vouchers on voucher_rows.voucher_id = vouchers.id 
+                             join organs on vouchers.organ_id = organs.id
                              join accounts on accounts.number = voucher_rows.account_number
                              join series on vouchers.series_id = series.id
                           where
@@ -46,8 +48,7 @@ module Mage
                             and voucher_rows.canceled = 0
                             #{optional_conditions}
                          order by 
-                           vouchers.organ_id,
-                           voucher_rows.arrangement_id,
+                           arrangement_number,
                            voucher_rows.account_number,
                            vouchers.accounting_date
                           ")

@@ -13,14 +13,14 @@ module Mage
         report = new(arrangement)
 
         current_data = []
-        current_account = {:number=>data.first["account_number"], :ingoing_balance=>data.first["ingoing_balance"]}
+        current_account = {:number=>data.first["account_number"], :name=>data.first["account_name"], :ingoing_balance=>data.first["ingoing_balance"]}
         
         data.each do |d|
           if current_account[:number] != d["account_number"]
             current_account = nil if current_account[:number].nil?
             report.account_reports << AccountReport.generate(current_account, current_data)
             current_data = [d]
-            current_account = {:number=>d["account_number"], :ingoing_balance=>d["ingoing_balance"]}
+            current_account = {:number=>d["account_number"], :name=>d["account_name"], :ingoing_balance=>d["ingoing_balance"]}
           else
             current_data << d
           end
