@@ -1,4 +1,4 @@
-= benchmark("Render view") do
+- benchmark("Render view") do
   #report
     %p.timestamp
       %span.date= format_date(Time.now)
@@ -23,20 +23,15 @@
         - arr_kredit = 0
         - arr_debet = 0
         - arr_factor = arrangement.nil? ? 1 : -1 # Invert sign when arrangment is not nil
+        - arrangement_name = arrangement.nil? ? "Tillgångs och skuldkonton" : "#{arrangement[:organ]} - #{arrangement[:name]}(#{arrangement[:number]})"
         %li.arrangement
-          %h4
-            - unless arrangement.nil?
-              =arrangement[:organ]
-              \-
-              =arrangement
-            - else
-              Tillgångs och skuldkonton
+          %h4= arrangement_name
           %ul  
             - arr_report.account_reports.each do |account_report|
               - change_debet = 0
               - change_kredit = 0
               %li.account
-                %strong Konto: #{account_report.account[:number]}
+                %strong #{account_report.account[:number]} - #{account_report.account[:name]}
                 %table
                   %tr
                     %th Vernr
@@ -59,10 +54,10 @@
                     - kredit = [0, row["sum"]].min
                     - change_debet += debet
                     - change_kredit += kredit
-                    - voucher = Voucher.new({:id=>row["voucher_id"], :number=>row["voucher_number"], :title=>row["voucher_title"], :series_id=>row["series_id"], :organ_id=>row["organ_id"], :accounting_date=>row["accounting_date"]})
+                    - voucher = Voucher.new({:slug=>row["voucher_slug"], :number=>row["voucher_number"], :title=>row["voucher_title"], :series_id=>row["series_id"], :organ_id=>row["organ_id"], :accounting_date=>row["accounting_date"], :activity_year=>@activity_year})
                     - Rails.logger.debug voucher.inspect
                     %tr
-                      %td= link_to voucher.pretty_number, voucher
+                      %td= link_to voucher.pretty_number, voucher_path(voucher.slug)
                       %td= format_date voucher.accounting_date
                       %td= voucher.title
                       %td= voucher.organ
@@ -83,7 +78,7 @@
                     %td{:colspan=>6} Förändring #{account_report.account[:number]} #{format_date @activity_year.starts} - #{format_date @activity_year.ends}:
                     %td= currency_clean (change_debet-change_kredit)*arr_factor
         .summary
-          %strong Summering #{arrangement.nil? ? "Tillgångar och skulder" : arrangement}:
+          %strong Summering #{arrangement_name}:
           %p
             Debet: #{currency arr_debet}
             %br

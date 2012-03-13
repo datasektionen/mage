@@ -14,7 +14,7 @@ module Mage
         report = new()
       
         current_data = []
-        current_arr = {:id=>data.first["arrangement_id"], :name=>data.first["arrangement_name"], :organ=>data.first["organ_name"]}
+        current_arr = {:id=>data.first["arrangement_id"],  :number=>data.first["arrangement_number"], :name=>data.first["arrangement_name"], :organ=>data.first["organ_name"]}
 
         data.each do |d|
           if current_arr[:id] != d["arrangement_id"]
@@ -22,7 +22,7 @@ module Mage
             current_arr = nil if current_arr[:id].nil?
             report.arrangement_reports << ArrangementReport.generate(current_arr, current_data)
             current_data = [d]
-            current_arr = {:id=>d["arrangement_id"], :name=>d["arrangement_name"], :organ=>d["organ_name"] }
+            current_arr = {:id=>d["arrangement_id"], :number=>d["arrangement_number"], :name=>d["arrangement_name"], :organ=>d["organ_name"] }
           else
             current_data << d
           end
