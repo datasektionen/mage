@@ -20,7 +20,7 @@ module Mage
 
       return Mage::Reports::Report.generate(
           self.data_from_query("
-                          select distinct
+                          select
                             accounts.ingoing_balance,
                             accounts.name as 'account_name', 
                             voucher_rows.id,
@@ -41,7 +41,7 @@ module Mage
                              left join arrangements on voucher_rows.arrangement_id = arrangements.id
                              join vouchers on voucher_rows.voucher_id = vouchers.id 
                              join organs on vouchers.organ_id = organs.id
-                             join accounts on accounts.number = voucher_rows.account_number
+                             join accounts on accounts.number = voucher_rows.account_number and accounts.activity_year_id = vouchers.activity_year_id
                              join series on vouchers.series_id = series.id
                           where
                             vouchers.activity_year_id = #{activity_year.id.to_i}
