@@ -25,12 +25,6 @@ class User < ActiveRecord::Base
     "%s %s" % [first_name, last_name]
   end
 
-  # Returns true if user has access to given series
-  # Set use_admin to false to ignore admin status
-  def has_access_to?(series,use_admin=true)
-    use_admin && self.admin? || accesses.any? {|a| a.series == series }
-  end
-
   def admin?
     admin
   end
