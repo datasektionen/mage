@@ -26,7 +26,7 @@ class Ability
                 true # Read access for everyone
               elsif action == :write || action == :update || action == :create || action == :destroy
                 a = user.accesses.find_by_series_id(series.id)
-                a ? a.write_access? : false
+                !a.nil?
               else
                 # Only :write and :read should be used for normal user actions
                 false

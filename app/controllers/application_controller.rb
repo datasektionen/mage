@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
   # Returns the series set in session[:current_series] or default_series if it is not set
   def current_series
     if session[:current_series] 
-      Series.find(session[:current_series]))
+      Series.find(session[:current_series])
     elsif current_user.default_series 
       current_user.default_series
     else

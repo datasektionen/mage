@@ -7,7 +7,6 @@
 "sv":
   rights: "Rättigheter"
   detete_access: "Radera rättighet"
-  write_access: "Får skriva"
   templates: "Mallar"
   add_right: "Lägg till rättighet"
   delete_access: "Radera rättighet"
@@ -201,8 +200,6 @@
         default_series: "Standard serie"
         admin: "Administratör"
         has_access: "Har access"
-        add_right:
-          write_access: "Skrivaccess"
       organ:
         name: "Namn"
       series:
