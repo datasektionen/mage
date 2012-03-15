@@ -1,5 +1,5 @@
 class ActivityYearsController < ApplicationController
-  load_resource :find_by => :year, :except=>[:index]
+  load_resource :find_by => :year
   authorize_resource :except=>[:index]
 
   def index
