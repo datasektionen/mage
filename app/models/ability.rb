@@ -10,6 +10,7 @@ class Ability
         can :read, Series
         can :read, Voucher
         can :read, VoucherRow
+        can :read, Arrangement
 
         can do |action, subject_call, subject|
           unless subject.kind_of? Enumerable
