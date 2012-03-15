@@ -2,11 +2,12 @@
   -if defined?(show_links) && show_links
     - show_delete = defined?(show_delete) && show_delete
     %p.voucher_links
-      -if show_delete
-        = link_to("Radera", voucher_path(voucher), :method=>:delete, :confirm=>"Är du säker?")
+      - if can? :write, current_series
+        -if show_delete 
+          = link_to("Radera", voucher_path(voucher), :method=>:delete, :confirm=>"Är du säker?") 
+          |
+        = link_to("Redigera", edit_voucher_path(voucher))
         |
-      = link_to("Redigera", edit_voucher_path(voucher))
-      |
       = link_to("Visa", voucher_path(voucher))
     = render 'vouchers/voucher_info', :voucher=>voucher
 %table.voucher_rows
