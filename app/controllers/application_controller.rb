@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
     elsif current_user.default_series and current_user.has_access_to?(current_user.default_series)
       current_user.default_series
     else
-      Series.accessible_by(current_user).first
+      Series.all.first
     end
   end
 

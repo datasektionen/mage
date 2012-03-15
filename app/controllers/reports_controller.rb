@@ -9,7 +9,7 @@ class ReportsController < ApplicationController
     @report_template = @report_input[:template]
 
     if @report_input[:series].empty?
-      @series = Series.accessible_by(current_user)
+      @series = Series.all
     else
       @series = [Series.find(@report_input[:series])]
       authorize! :read, @series

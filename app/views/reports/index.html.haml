@@ -6,7 +6,7 @@
       = select_tag("report[activity_year]", options_from_collection_for_select(ActivityYear.order("year DESC"), :id, :year,current_activity_year.id))
    %p.input
       = label_tag "report[series]", "Serie"
-      = collection_select(:report,:series,Series.accessible_by(current_user), :id, :to_s, {:prompt=>"Alla"})
+      = collection_select(:report,:series,Series.all, :id, :to_s, {:prompt=>"Alla"})
    %p.input
       = label_tag "report[organ]", "Nämnd"
       = collection_select(:report, :organ, Organ.all, :id, :to_s, {:prompt=>"Alla"})
