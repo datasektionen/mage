@@ -30,8 +30,8 @@ module Mage
         @total_kredit = 0
         voucher_rows.each do |row|
           @balance_difference+=row["sum"]
-          row["debet"] = [0, row["sum"]].max
-          row["kredit"] = [0, row["sum"]].min
+          row["debet"] = [0, row["sum"]].max unless row["debet"]
+          row["kredit"] = [0, row["sum"]].min unless row["kredit"]
           @total_debet += row["debet"]
           @total_kredit += row["kredit"]
           row["accumulated"] = @ingoing_balance + @balance_difference

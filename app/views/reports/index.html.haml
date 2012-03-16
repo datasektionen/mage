@@ -12,7 +12,7 @@
       = collection_select(:report, :organ, Organ.all, :id, :to_s, {:prompt=>"Alla"})
    %p.input
       = label_tag "report[template]", "Rapport"
-      = select_tag("report[template]", options_for_select(@report_templates))
+      = select_tag("report[template]", options_for_select(@report_templates.map{|k,v| [v,k]}))
    .clear
    %p.actions
       = submit_tag "Skapa rapport"

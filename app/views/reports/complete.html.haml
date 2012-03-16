@@ -1,19 +1,5 @@
 #report
-  %p.timestamp
-    %span.date= format_date(Time.now)
-    %br
-    %span.date= I18n.l Time.now, :format=>:short_time
-
-  %h3 Huvudbok redovisning
-  %p.conditions
-    %p
-      = @organ unless @organ.nil?
-      = @series unless @series.nil?
-    %p.date
-      Datum:
-      = format_date @activity_year.starts
-      \-
-      = format_date @activity_year.ends
+  = render "report_header"
   %ul
     - @report.arrangement_reports.each do |arr_report|
       - arrangement = arr_report.arrangement
