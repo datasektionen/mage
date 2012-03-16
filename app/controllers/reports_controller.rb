@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 class ReportsController < ApplicationController
   def index
-    @report_templates = {"Redovisning fullständig"=>:complete, "Redovisning summerad"=>:summary, "Kontorapport"=>:accounts}
+    @report_templates = {"Huvudbok"=>:complete, "Huvudbok summerad"=>:summary, "Kontorapport"=>:accounts}
   end
 
   def show
@@ -24,4 +24,8 @@ class ReportsController < ApplicationController
 
     render @report_template
   end 
+
+  def summary
+    @report = Mage::Report.full_report_summarized(@activity_year, @series, @organ)
+  end
 end

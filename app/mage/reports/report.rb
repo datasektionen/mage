@@ -1,7 +1,7 @@
 module Mage
   module Reports
     class Report
-      attr_reader :balance_difference
+      attr_reader :balance_difference, :total_debet, :total_kredit
       attr_accessor :arrangement_reports
 
       def initialize()
@@ -35,7 +35,14 @@ module Mage
       end
 
       def calculate_balance_difference 
-        @balance_difference = arrangement_reports.reduce(0) { |memo, row| memo + row.balance_difference }
+        @balance_difference = 0
+        @total_debet = 0
+        @total_kredit = 0
+        arrangement_reports.each do |report|
+          @balance_difference+=report.balance_difference
+          @total_debet += report.total_debet
+          @total_kredit += report.total_kredit
+        end
       end
     end
   end
