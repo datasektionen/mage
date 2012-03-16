@@ -26,6 +26,9 @@ class ArrangementsController < InheritedResources::Base
 
   def show
     @arrangements = Arrangement.in_year(params[:id])
+    if params[:organ_number]
+      @arrangements = @arrangements.joins(:organ).where("organs.number = ?", params[:organ_number])
+    end
     render :action=>:index
   end
 end
