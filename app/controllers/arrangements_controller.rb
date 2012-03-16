@@ -25,7 +25,7 @@ class ArrangementsController < InheritedResources::Base
   end
 
   def show
-    @arrangements = Arrangement.in_year(params[:id])
+    @arrangements = Arrangement.in_year(params[:id]).includes(:organ)
     if params[:organ_number]
       @arrangements = @arrangements.joins(:organ).where("organs.number = ?", params[:organ_number])
     end
