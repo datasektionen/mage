@@ -19,7 +19,7 @@
           %tr
             %td
             %td #{account_report.account[:number]} #{account_report.account[:name]}
-            %td= currency account_report.account[:ingoing_balance]
+            %td= currency account_report.ingoing_balance
             %td= currency_clean account_report.total_debet
             %td= currency_clean account_report.total_kredit
             %td= currency_clean account_report.outgoing_balance

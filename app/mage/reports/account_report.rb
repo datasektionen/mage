@@ -7,8 +7,7 @@ module Mage
       def initialize(account, voucher_rows=[])
         @account = account
         @voucher_rows = voucher_rows
-        @ingoing_balance = account[:ingoing_balance]
-        raise "ingoing balance is nil for #{account.inspect}" if @ingoing_balance.nil?
+        @ingoing_balance = account[:ingoing_balance] || 0
       end
 
       def self.generate(account, voucher_rows=[])
