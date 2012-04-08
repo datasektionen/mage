@@ -47,6 +47,21 @@ class Voucher < ActiveRecord::Base
     where("series_id = ?", s.id).
     order("created_at DESC")
   }
+
+  searchable do
+    integer :activity_year_id
+    integer :series_id, :references => Series
+    integer :organ_id, :references => Organ
+
+    text :title
+    date :accounting_date
+    date :created_at
+    integer :bookkept_by_id, :references => User
+
+    integer :enfoldment
+    boolean :corrected, :using => :corrected?
+    boolean :corrects, :using => :corrects?
+  end
   
   #Warning, this methods unscopes!
   def self.incomplete
@@ -55,12 +70,6 @@ class Voucher < ActiveRecord::Base
 
   def self.find_by_account_and_activity_year(account_number, activity_year_id) 
     joins(:voucher_rows).where("voucher_rows.account_number"=>account_number, :activity_year_id=>activity_year_id)
-  end
-
-  def self.search(search, user)
-    q = scoped.where("vouchers.activity_year_id = ? and title like ?", search[:activity_year].to_i, "%#{search[:title]}%")
-    q = q.where("vouchers.series_id = ?",search[:series].to_i) unless search[:series].nil? || search[:series].empty?
-    q
   end
 
   def corrected?
