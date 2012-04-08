@@ -4,4 +4,6 @@ db/*.sqlite3
 log/*.log
 config/database.yml
 config/configuration.yml
+solr/data/
+solr/pids/
 tmp/
