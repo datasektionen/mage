@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120228174413) do
+ActiveRecord::Schema.define(:version => 20120315191515) do
 
   create_table "account_groups", :force => true do |t|
     t.string   "title"
@@ -137,7 +137,6 @@ ActiveRecord::Schema.define(:version => 20120228174413) do
     t.integer  "granted_by_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "write_access",  :default => false
   end
 
   add_index "user_accesses", ["series_id"], :name => "index_user_accesses_on_serie_id"

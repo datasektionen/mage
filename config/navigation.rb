@@ -45,7 +45,7 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            against the current URI.
     #
     primary.item :accounting, 'Bokför', accounting_index_path do |accounting|
-      accounting.item :new_voucher, "Nytt verifikat", new_voucher_path
+      accounting.item :new_voucher, "Nytt verifikat", new_voucher_path, :if=> Proc.new { can? :write, current_series }
       #accounting.item :bank_accounting, "Bankhändelser", bank_accounting_index_path
       accounting.item :search_vouchers, "Sök verifikat", vouchers_path, :highlights_on=>/\/(vouchers|verifikat)\/[0-9]+/
       accounting.item :manage_templates, "Hantera mallar", voucher_templates_path, :highlights_on=>/\/(voucher_templates|mallar)(\/[0-9]+)?/

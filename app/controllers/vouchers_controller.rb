@@ -96,7 +96,7 @@ class VouchersController < InheritedResources::Base
     #params[:voucher][:arrangement]
     params[:voucher][:voucher_rows_attributes].each do |vr|
       vr[:arrangement] = params[:voucher][:organ].arrangements.find_by_number(vr[:arrangement]) if vr[:arrangement]
-      vr[:arrangement] = nil unless Account.find_by_number_and_activity_year_id(vr[:account_number],vr[:activity_year]).has_arrangements?
+      vr[:arrangement] = nil unless Account.find_by_number_and_activity_year_id(vr[:account_number],params[:voucher][:activity_year].id).has_arrangements?
     end
 
 

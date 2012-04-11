@@ -1,0 +1,20 @@
+%p.timestamp
+  %span.date= format_date(Time.now)
+  %br
+  %span.date= I18n.l Time.now, :format=>:short_time
+
+%h3= @report_name
+%p.conditions
+  - unless @series.nil?
+    %p
+      %strong Serie:
+      @series unless @series.nil?
+  - unless @organ.nil?
+    %p
+      %strong Nämnd:
+      = @organ unless @organ.nil?
+  %p.date
+    Datum:
+    = format_date @activity_year.starts
+    \-
+    = format_date @activity_year.ends

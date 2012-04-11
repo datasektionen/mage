@@ -1,7 +1,7 @@
 #selectors
   = form_tag current_url,{:method=>:post,:id=>:selector} do
     = select_tag(:current_activity_year, options_from_collection_for_select(ActivityYear.order("year DESC"), :id, :year,current_activity_year.try(:id)))
-    = select_tag(:current_series, options_from_collection_for_select(Series.accessible_by(current_user), :id, :to_s, current_series.try(:id)))
+    = select_tag(:current_series, options_from_collection_for_select(Series.all, :id, :to_s, current_series.try(:id)))
 
 :javascript
   $("#selector select").change(function(){$("#selector").submit()})

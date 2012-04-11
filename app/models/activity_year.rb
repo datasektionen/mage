@@ -27,6 +27,10 @@ class ActivityYear < ActiveRecord::Base
     return date >= starts && date <= ends
   end
 
+  def to_param
+    return year.to_s
+  end
+
   # Clones all accounts nd accounts into target (an activityyear)
   # Ingoing balance is set to 0 in the new accounts
   # activity_year_id is set to nil

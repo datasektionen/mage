@@ -1,8 +1,10 @@
 class ActivityYearsController < ApplicationController
-  load_and_authorize_resource :only=>[:index]
+  load_resource :find_by => :year
+  authorize_resource :except=>[:index]
 
   def index
     @activity_year = ActivityYear.new
+    authorize! :manage, @activity_year
   end
 
   def create

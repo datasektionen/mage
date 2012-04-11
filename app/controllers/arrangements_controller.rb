@@ -1,6 +1,6 @@
 class ArrangementsController < InheritedResources::Base
   #actions :only=>[:new, :create, :edit, :update]
-  load_and_authorize_resource :only=>[:new, :create, :edit, :update]
+  load_and_authorize_resource :only=>[:new, :create, :edit, :update, :index]
 
   def new
     @arrangement.organ_id = params[:organ_id]
@@ -24,7 +24,11 @@ class ArrangementsController < InheritedResources::Base
     end
   end
 
-  def index
-    @arrangements = Arrangement.all
+  def show
+    @arrangements = Arrangement.in_year(params[:id]).includes(:organ)
+    if params[:organ_number]
+      @arrangements = @arrangements.joins(:organ).where("organs.number = ?", params[:organ_number])
+    end
+    render :action=>:index
   end
 end
