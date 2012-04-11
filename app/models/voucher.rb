@@ -58,13 +58,7 @@ class Voucher < ActiveRecord::Base
   end
 
   def self.search(search, user)
-    if user.admin?
-      q = scoped
-    else
-      q = joins(:series=>:user_accesses).where("user_accesses.user_id" => user.id)
-    end
-
-    q = q.where("vouchers.activity_year_id = ? and title like ?", search[:activity_year].to_i, "%#{search[:title]}%")
+    q = scoped.where("vouchers.activity_year_id = ? and title like ?", search[:activity_year].to_i, "%#{search[:title]}%")
     q = q.where("vouchers.series_id = ?",search[:series].to_i) unless search[:series].nil? || search[:series].empty?
     q
   end

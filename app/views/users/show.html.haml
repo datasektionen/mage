@@ -21,12 +21,10 @@
     %tr
       %th Serie
       %th= t 'granted_by'
-      %th= t 'write_access'
   %tbody
     - @user.accesses.each do |a|
       %tr
         %td= a.series
         %td= a.granted_by
-        %td= yes_no(a.write_access)
 
 %p= link_to "Redigera", edit_user_path(@user)

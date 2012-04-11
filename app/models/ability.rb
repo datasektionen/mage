@@ -7,10 +7,14 @@ class Ability
         can :manage, :all
       else
         can :manage, VoucherTemplate
+        can :read, Series
+        can :read, Voucher
+        can :read, VoucherRow
+        can :read, Arrangement
+
         can do |action, subject_call, subject|
           unless subject.kind_of? Enumerable
             if subject.respond_to? :series
-              puts "Respons to :series #{subject.series}"
               series = subject.series
             elsif subject.kind_of? Series
               series = subject
@@ -20,10 +24,10 @@ class Ability
 
             unless series.nil?
               if action == :read
-                user.series.include? series
+                true # Read access for everyone
               elsif action == :write || action == :update || action == :create || action == :destroy
                 a = user.accesses.find_by_series_id(series.id)
-                a ? a.write_access? : false
+                !a.nil?
               else
                 # Only :write and :read should be used for normal user actions
                 false

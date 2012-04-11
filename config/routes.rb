@@ -10,7 +10,7 @@ Mage::Application.routes.draw do
     resources :series
     resources :users
     resources :organs
-    resources :arrangements, :only=>[:create, :new, :edit, :update,:index]
+    resources :arrangements, :only=>[:create, :new, :edit, :update, :show]
 
     resources :account_groups
 
@@ -22,7 +22,6 @@ Mage::Application.routes.draw do
           put :edit, :action=>:update
         end
       end
-      
     end
 
 

@@ -27,4 +27,10 @@ class Arrangement < ActiveRecord::Base
   def list_print
     "#{number} - #{name}"
   end
+
+  # Method for fetching the number of the organ this arr belongs to
+  # Used in the api
+  def organ_number
+    return organ.number
+  end
 end

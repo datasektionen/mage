@@ -7,11 +7,10 @@
         UserAccess.create(
           :user_id=>@user.id,
           :series_id=>add_right[:series],
-          :write_access=>add_right[:write_access],
           :granted_by_id=>current_user.id)
     end
     params[:user].delete(:add_right)
     
-    update!
+    update! { edit_user_path(@user) }
   end
 end

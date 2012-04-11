@@ -18,13 +18,11 @@
       %thead
         %tr
           %th Serie
-          %th= t 'write_access'
           %th= t 'delete_access'
       %tbody
         = f.simple_fields_for :accesses do |fa|
           %tr
             %td= fa.object.series
-            %td=fa.input :write_access, :label=>false
             %td=fa.input :_destroy, :as=>:boolean, :label=>false  #('delete_access'),{}, {:class=>"delete_link"}
 
     %hr
@@ -32,7 +30,6 @@
       %p
         %strong= t('add_right')
         = ar.input :series , :collection=>(Series.all-@user.accesses.map {|a| a.series })
-        = ar.input :write_access, :as=>:boolean
 
 
   .actions
