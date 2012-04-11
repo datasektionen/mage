@@ -11,6 +11,7 @@ class Ability
         can :read, Voucher
         can :read, VoucherRow
         can :read, Arrangement
+        can :read, ActivityYear
 
         can do |action, subject_call, subject|
           unless subject.kind_of? Enumerable

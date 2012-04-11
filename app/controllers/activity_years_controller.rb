@@ -3,8 +3,16 @@ class ActivityYearsController < ApplicationController
   authorize_resource :except=>[:index]
 
   def index
-    @activity_year = ActivityYear.new
-    authorize! :manage, @activity_year
+    respond_to do |format|
+      format.html do
+        @activity_year = ActivityYear.new
+        authorize! :manage, @activity_year
+      end
+      format.json {
+        @activity_years = ActivityYear.all
+        render :json => @activity_years
+      }
+    end
   end
 
   def create

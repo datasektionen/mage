@@ -2,6 +2,8 @@ class ApiAbility
   include CanCan::Ability
 
   def initialize(key)
+    can :read, ActivityYear
+
     can do |action, subject_call, subject|
       unless subject.kind_of? Enumerable
         if subject.respond_to? :series
@@ -11,7 +13,6 @@ class ApiAbility
           puts "Is series, set from subject: #{subject}"
           series = subject
         else
-          puts "Nope. #{subject_call.inspect}"
           series = nil
         end
         
