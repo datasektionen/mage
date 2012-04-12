@@ -49,8 +49,8 @@ module Mage
                             and voucher_rows.canceled = 0
                             #{optional_conditions}
                          order by 
+                          organ_number,
                            arrangement_number,
-                           organ_number,
                            account_groups.number,
                            voucher_rows.account_number,
                            vouchers.accounting_date
@@ -93,6 +93,7 @@ module Mage
                             #{optional_conditions}
                          group by organ_number, arrangements.number, accounts.number
                          order by 
+                           organ_number,
                            arrangement_number,
                            account_groups.number,
                            accounts.number
