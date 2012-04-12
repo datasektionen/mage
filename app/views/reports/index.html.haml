@@ -3,34 +3,34 @@
 - form_tag reports_path do
   %p.input
     = label_tag "report[activity_year]","Verksamhetsår"
-      = select_tag("report[activity_year]", options_from_collection_for_select(ActivityYear.order("year DESC"), :id, :year,current_activity_year.id))
-   %p.input
-     = label_tag "report[series]", "Serie"
-       = collection_select(:report,:series,Series.all, :id, :to_s, {:prompt=>"Alla"})
-   %p.input
-     = label_tag "report[organ]", "Nämnd"
-       = collection_select(:report, :organ, Organ.all, :id, :to_s, {:prompt=>"Alla"})
-   %p.input
-     = label_tag "report[template]", "Rapport"
-       = select_tag("report[template]", options_for_select(@report_templates.map{|k,v| [v,k]}))
-   .clear
-     %p.actions
-       = submit_tag "Skapa rapport"
+    = select_tag("report[activity_year]", options_from_collection_for_select(ActivityYear.order("year DESC"), :id, :year,current_activity_year.id))
+  %p.input
+    = label_tag "report[series]", "Serie"
+    = collection_select(:report,:series,Series.all, :id, :to_s, {:prompt=>"Alla"})
+  %p.input
+    = label_tag "report[organ]", "Nämnd"
+    = collection_select(:report, :organ, Organ.all, :id, :to_s, {:prompt=>"Alla"})
+  %p.input
+    = label_tag "report[template]", "Rapport"
+    = select_tag("report[template]", options_for_select(@report_templates.map{|k,v| [v,k]}))
+  .clear
+    %p.actions
+      = submit_tag "Skapa rapport"
 
 %div
   %h2 Beskrivning av rapporttyper
 
   %p
-    %strong Huvudbok redovisning
+    %strong Huvudbok redovisning:
     Kompletta bokföringen, innehåller alla rader i alla verifikat grupperade på nämnd, arr, kontogrupp och  konto
   %p
-    %strong Huvudbok summerad
+    %strong Huvudbok summerad:
     Kompletta bokföringen, summerad per konto.
 
   %p
-    %strong Balansrapport
+    %strong Balansrapport:
     Summering per konto på alla tillgångs- och skuldkonton
 
   %p
-    %strong Resultatrapport
+    %strong Resultatrapport:
     Summering per konto på alla utgifts- och inkomstkonton
