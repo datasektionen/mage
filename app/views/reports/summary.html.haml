@@ -2,38 +2,46 @@
   = render "report_header"
   %table
     %tr
-      %th Arrangemang
+      - unless @hide_arrangement
+        - arrangement_width = 1
+        %th Arrangemang
+      - else
+        - arrangement_width = 0
+
       %th Konto
       %th Ingående
       %th Debet
       %th Kredit
       %th Utgående
     - @report.arrangement_reports.each do |arrangement_report|
-      - arrangement = arrangement_report.arrangement
-      - arrangement = arrangement.nil? ? "Tillgångs och skuldkonton" : "#{arrangement[:organ]} - #{arrangement[:name]}"
-      %tr
-        %td{:colspan=>6}
-          %strong= arrangement
+      - unless @hide_arrangement
+        - arrangement = arrangement_report.arrangement
+        - arrangement = arrangement.nil? ? "Tillgångs och skuldkonton" : "#{arrangement[:organ]} - #{arrangement[:name]}"
+        %tr
+          %td{:colspan=>6}
+            %strong= arrangement
       - arrangement_report.account_group_reports.each do |account_group_report|
         - account_group_report.account_reports.each do |account_report|
           %tr
-            %td
+            - unless @hide_arrangement
+              %td
             %td #{account_report.account[:number]} #{account_report.account[:name]}
             %td= currency account_report.ingoing_balance
             %td= currency_clean account_report.total_debet
             %td= currency_clean account_report.total_kredit
             %td= currency_clean account_report.outgoing_balance
       %tr
-        %td
+        - unless @hide_arrangement
+          %td
         %td{:colspan=>2 }
           %strong Förändring i perioden
         %td= currency_clean arrangement_report.total_debet
         %td= currency_clean arrangement_report.total_kredit
         %td= currency_clean arrangement_report.balance_difference
       %tr
-        %td{:colspan=>6} &nbsp;
+        %td{:colspan=>5+arrangement_width} &nbsp;
     %tr
-      %td{:colspan=>3} 
+      %td{:colspan=>2+arrangement_width} 
         %strong Totalt förändring
       %td= currency_clean @report.total_debet
       %td= currency_clean @report.total_kredit
