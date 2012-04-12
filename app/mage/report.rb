@@ -35,7 +35,8 @@ module Mage
                             series.letter as 'series_letter',
                             arrangements.name as 'arrangement_name',
                             arrangements.number as 'arrangement_number',
-                            organs.id as 'organ_id', organs.name as 'organ_name'
+                            organs.id as 'organ_id', organs.name as 'organ_name',
+                            IF(account_groups.account_type < 3, NULL, organs.number) as 'organ_number'
                           from voucher_rows
                              left join arrangements on voucher_rows.arrangement_id = arrangements.id
                              join vouchers on voucher_rows.voucher_id = vouchers.id 
@@ -49,7 +50,7 @@ module Mage
                             #{optional_conditions}
                          order by 
                            arrangement_number,
-                           organs.number,
+                           organ_number,
                            account_groups.number,
                            voucher_rows.account_number,
                            vouchers.accounting_date
@@ -77,7 +78,8 @@ module Mage
                             voucher_rows.arrangement_id,
                             arrangements.name as 'arrangement_name',
                             arrangements.number as 'arrangement_number',
-                            organs.id as 'organ_id', organs.name as 'organ_name'
+                            organs.id as 'organ_id', organs.name as 'organ_name',
+                            IF(account_groups.account_type < 3, NULL, organs.number) as 'organ_number'
                           from voucher_rows
                              left join arrangements on voucher_rows.arrangement_id = arrangements.id
                              join vouchers on voucher_rows.voucher_id = vouchers.id 
@@ -89,7 +91,7 @@ module Mage
                             vouchers.activity_year_id = #{activity_year.id.to_i}
                             and voucher_rows.canceled = 0
                             #{optional_conditions}
-                         group by organs.number, arrangements.number, accounts.number
+                         group by organ_number, arrangements.number, accounts.number
                          order by 
                            arrangement_number,
                            account_groups.number,
