@@ -37,7 +37,7 @@ class ReportsController < ApplicationController
   end
 
   def balance
-    @report = Mage::Report.full_report_summarized(@activity_year, @series, @organ, [Account::ASSET_ACCOUNT, Account::DEBT_ACCOUNT], true)
+    @report = Mage::Report.full_report_summarized(@activity_year, @series, @organ, [Account::ASSET_ACCOUNT, Account::DEBT_ACCOUNT], false)
     @hide_arrangement = true
     render :summary
   end
