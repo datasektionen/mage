@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 class ReportsController < ApplicationController
-  @@report_templates = {:complete =>"Huvudbok redovisning", :summary =>"Huvudbok summerad", :accounts => "Kontorapport", :balance=>"Balansrapport", :result=>"Resultatrapport"}
+  @@report_templates = {:complete =>"Huvudbok redovisning", :summary =>"Huvudbok summerad", :balance=>"Balansrapport", :result=>"Resultatrapport"}
 
   def index
     @report_templates = @@report_templates
