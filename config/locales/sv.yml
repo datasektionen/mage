@@ -222,6 +222,7 @@
         input_fields: "Indatafält"
         output_fields: "Utdatafält"
         name: "Namn"
+        series: "Serie"
         description: "Beskrivning"
         valid_from: "Giltlig från och med"
         valid_to: "Giltlig till och med"

@@ -1,7 +1,4 @@
 %h3 Nytt verifikat
-- Rails.logger.debug @voucher.errors.inspect
-
-  
 
 = simple_form_for @voucher do |f|
   = f.error :base
@@ -11,8 +8,8 @@
       %span= link_to @voucher.corrects, voucher_path(@voucher.corrects), :target=>:_blank
       = f.input :corrects_id, :as=>:hidden
 
-  /Hidden fields
-  = f.input :series_id, :as=>:hidden
+  = f.input :series_id, :collection=>Series.all, :include_blank=>false, :label_method=>:to_s
+
   = f.input :activity_year_id, :as=>:hidden
 
   #voucher_head_form
