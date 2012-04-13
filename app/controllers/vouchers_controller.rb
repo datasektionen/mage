@@ -21,11 +21,11 @@ class VouchersController < InheritedResources::Base
     last_user_voucher = current_user.vouchers.where(:series_id=>current_series.id, :activity_year_id=>current_activity_year.id).last
     last_voucher = Voucher.where(:series_id=>current_series.id, :activity_year_id=>current_activity_year.id).last
     if last_user_voucher
-      @voucher.accounting_date = last_voucher.accounting_date
-      @voucher.organ = last_voucher.organ
-    elsif last_voucher
       @voucher.accounting_date = last_user_voucher.accounting_date
       @voucher.organ = last_user_voucher.organ
+    elsif last_voucher
+      @voucher.accounting_date = last_voucher.accounting_date
+      @voucher.organ = last_voucher.organ
     else
       @voucher.accounting_date = Time.now 
     end
