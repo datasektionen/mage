@@ -42,4 +42,10 @@ class ActivityYear < ActiveRecord::Base
       new_account
     end
   end
+
+  # Fetch the correct activity year from a given date
+  def self.find_by_date(d)
+    # At the moment only calender years are supported as activity years
+    find_by_year(d.year)
+  end
 end
