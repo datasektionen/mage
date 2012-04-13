@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   belongs_to :default_series, :class_name => "Series"
   has_many :accesses, :class_name=>"UserAccess"
   has_many :series, :through => :accesses
+  has_many :vouchers, :foreign_key => :bookkept_by_id
 
   devise :omniauthable
 
