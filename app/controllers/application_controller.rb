@@ -38,18 +38,39 @@ class ApplicationController < ActionController::Base
   
   # Returns the series set in session[:current_series] or default_series if it is not set
   def current_series
-    if session[:current_series] 
-      Series.find(session[:current_series])
-    elsif current_user.default_series 
-      current_user.default_series
-    else
-      Series.all.first
+    if @current_series
+      @current_series
+    else 
+      @current_series = Series.find(session[:current_series]) if session[:current_series] 
+      if @current_series.nil? && current_user.default_series 
+        @current_series = current_user.default_series
+      elsif @current_series.nil?
+        @current_series = Series.all.first
+      end
+      @current_series
     end
   end
 
+  def current_series=(series)
+    session[:current_series] = series.id
+    @current_series = series
+  end
+
   def current_activity_year
-    return ActivityYear.find(session[:current_activity_year]) if session[:current_activity_year]
-    return ActivityYear.order("year").last
+    if @current_activity_year
+      @current_activity_year
+    else
+      @current_activity_year = ActivityYear.find(session[:current_activity_year]) if session[:current_activity_year]
+      if @current_activity_year.nil?
+        @current_activity_year = ActivityYear.order("year").last
+      end
+      @current_activity_year
+    end
+  end
+
+  def current_activity_year=(activity_year)
+    session[:current_activity_year] = activity_year.id 
+    @current_activity_year = activity_year
   end
 
   def current_ability
@@ -97,10 +118,12 @@ class ApplicationController < ActionController::Base
   def set_globals
     if params[:current_series]
       session[:current_series] = params[:current_series]
+      @current_series = nil
     end
 
     if params[:current_activity_year]
       session[:current_activity_year] = params[:current_activity_year]
+      @current_activity_year = nil
     end
   end
 
