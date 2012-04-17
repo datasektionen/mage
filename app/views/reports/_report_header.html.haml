@@ -8,11 +8,11 @@
   - unless @series.nil?
     %p
       %strong Serie:
-      @series unless @series.nil?
+      = @series
   - unless @organ.nil?
     %p
       %strong Nämnd:
-      = @organ unless @organ.nil?
+      = @organ
   %p.date
     Datum:
     = format_date @activity_year.starts

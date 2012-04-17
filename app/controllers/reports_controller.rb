@@ -11,7 +11,7 @@ class ReportsController < ApplicationController
     @report_template = @report_input[:template]
     @report_name = @@report_templates[@report_template.to_sym]
 
-    @series = [Series.find(@report_input[:series])] unless @report_input[:series].empty?
+    @series = Series.find(@report_input[:series]) unless @report_input[:series].empty?
     @activity_year = ActivityYear.find(@report_input[:activity_year])
     @organ = @report_input[:organ].empty? ? nil : Organ.find(@report_input[:organ])
 
