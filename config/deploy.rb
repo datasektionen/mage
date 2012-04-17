@@ -84,16 +84,15 @@ namespace :deploy do
     cmd = files.map {|file| "ln -sf #{shared_path}/config/#{file} #{release_path}/config/#{file}" }.join(" && ")
     run cmd
   end
+ 
+  desc "compile stylesheets"
+  task :compile_stylesheets do
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} /usr/local/bin/1.9.2_bundle exec rake sass:build"
+  end
   
-  desc "Restart passenger with restart.txt"
   task :restart, :except => { :no_release => true } do
     pid = "#{shared_path}/pids/unicorn.pid"
-    run "test -e #{pid} && kill `cat #{pid}` || /bin/true"
-  end
-
-  desc "Rebuild SASS"
-  task :sass do
-    run "cd #{current_path} && RAILS_ENV=#{rails_env} /usr/local/bin/1.9.2_bundle exec rake sass:build"
+    run "test -e #{pid} && kill -USR2 `cat #{pid}` || /bin/true"
   end
 
   desc "Run migrations"
@@ -145,8 +144,8 @@ end
 
 
 after 'deploy:update_code', 'bundler:bundle_new_release'
+after 'deploy:update_code', 'deploy:compile_stylesheets'
 after "deploy:restart", "stats:git_revision"
-before 'deploy:restart', "deploy:sass"
 
 def run_rake(cmd)
   run "cd #{current_path}; /usr/local/bin/1.9.2_bundle exec #{rake} #{cmd}"
