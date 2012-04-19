@@ -88,15 +88,14 @@ describe Voucher do
 
   end
 
-  it "should not allow change of most attributes" do
+  it "should not allow change of most attributes series, number,activity_year bookkept_by" do
     voucher = Voucher.make
+    voucher.should be_valid
     voucher.save
     
     pre = voucher.attributes
     ++voucher.number
     voucher.series = Series.make
-    voucher.organ = Organ.make
-    voucher.accounting_date = Time.now.years_since(1)
     voucher.bookkept_by = User.make
     voucher.activity_year = ActivityYear.make
     voucher.save
@@ -104,10 +103,48 @@ describe Voucher do
 
     post = voucher.attributes
     post[:series_id].should == pre[:series_id]
-    post[:organ_id].should == pre[:organ_id]
-    post[:accounting_date].should == pre[:accounting_date]
     post[:created_by_id].should == pre[:created_by_id]
     post[:activity_year_id].should == pre[:activity_year_id]
+  end
+
+  describe "stagnated voucher" do
+    before(:each) do
+      @voucher = Voucher.make
+      @voucher.created_at = (Mage::Application.settings[:voucher_stagnation_time]+1).minutes.ago
+      @voucher.save
+    end
+
+    it "should not allow change of accounting date" do 
+      @voucher.accounting_date = 2.days.ago
+      @voucher.should_not be_valid
+    end
+
+    it "should not allow change of organ" do 
+      organ = Organ.make
+      organ.save
+      @voucher.organ_id = organ.id
+      @voucher.should_not be_valid
+    end
+  end
+
+  describe "fresh voucher" do
+    before(:each) do
+      @voucher = Voucher.make
+      @voucher.created_at = (Mage::Application.settings[:voucher_stagnation_time]-1).minutes.ago
+      @voucher.save
+    end
+
+    it "should not allow change of accounting date" do 
+      @voucher.accounting_date = 2.days.ago
+      @voucher.should be_valid
+    end
+
+    it "should not allow change of organ" do 
+      organ = Organ.make
+      organ.save
+      @voucher.organ_id = organ.id
+      @voucher.should be_valid
+    end
   end
 
   it "should not allow empty vouchers" do
