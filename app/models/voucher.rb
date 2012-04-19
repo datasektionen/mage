@@ -31,7 +31,7 @@ class Voucher < ActiveRecord::Base
   validate :accounting_date_in_activity_year
 
   validate :readonly_if_stagnate 
-  attr_readonly  :series_id, :material_from_id, :activity_year_id, :corrects_id, :api_key_id
+  attr_readonly  :material_from_id, :activity_year_id, :corrects_id, :api_key_id
   attr_writeonce :authorized_by_id, :bookkept_by_id, :number
 
   extend FriendlyId
@@ -213,9 +213,10 @@ private
   end
     
   def readonly_if_stagnate
-    #:organ_id, :accounting_date
+    #:organ_id, :accounting_date, :series_id
     if bookkept? && !stagnated?
       errors[:organ_id] << I18n.t('activerecord.errors.messages.is_readonly') if changed.include?("organ_id")
+      errors[:series_id] << I18n.t('activerecord.errors.messages.is_readonly') if changed.include?("series_id")
       errors[:accounting_date] << I18n.t('activerecord.errors.messages.is_readonly') if changed.include?("accounting_date")
     end
   end
