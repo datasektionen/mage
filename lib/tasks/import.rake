@@ -11,8 +11,29 @@ namespace "import" do
   desc "Importerar kontoplan"
   task :kontoplan => :environment do
     data = ActiveSupport::JSON.decode(File.open("kontoplan.json",'r').read)
+    ag = Array.new
+    ag[0] = AccountGroup.create(:title=>"Tillgångar", :number=>1000, :account_type=>1)
+    ag[1] = AccountGroup.create(:title=>"Skulder", :number=>2000, :account_type=>2)
+    ag[2] = AccountGroup.create(:title=>"Inkomster", :number=>3000, :account_type=>3)
+    ag[3] = AccountGroup.create(:title=>"Utgifter", :number=>4000, :account_type=>4)
+    ay = ActivityYear.first
+    ay = ActivityYear.create(:year=>Time.now.year) if ay.nil?
     data.each do |d|
-      a = Account.create(:number=>d['nr'], :name=>d['name'])
+      nr = d['nr'].to_i
+      kredit = true
+      debet = true
+      if(nr < 2000)
+        account_group = ag[0]
+      elsif(nr < 3000) 
+        account_group = ag[1]
+      elsif(nr < 4000) 
+        account_group = ag[2]
+        debet = false
+      else
+        account_group = ag[3]
+        kredit = false
+      end
+      a = Account.create(:number=>nr, :name=>d['name'], :activity_year_id=>ay.id, :account_group_id=>account_group.id, :kredit_is_normal => kredit, :debet_is_normal=>debet)
       puts a.inspect
     end
   end
@@ -76,7 +97,11 @@ namespace "import" do
           end
         end
         unless @voucher.save
-          puts "Kunde inte spara verifikat #{@voucher.pretty_number}: #{@voucher.errors.inspect}"
+          puts "Kunde inte spara verifikat #{@voucher.pretty_number}: #{@voucher.errors.inspect}:"
+          puts @voucher.inspect
+          @voucher.voucher_rows.each do |vr|
+            puts "#{vr.account_number}: #{vr.sum}"
+          end
           exit
         else
           puts "Sparade verifikat #{@voucher.pretty_number}"
@@ -136,13 +161,7 @@ namespace "import" do
             # Skapa översättingstabell för projekt => arr
             if Arrangement.find_by_number(item[2]).nil? 
               a = Arrangement.new(:name=>item[3], :number=>item[2].to_i)
-              if a.number < 100
-                a.organ = Organ.find_by_name("Mottagningen")
-              elsif a.number < 200
-                a.organ = Organ.find_by_name("DKM")
-              else
-                a.organ = Organ.find_by_name("Centralt")
-              end
+              a.organ = Organ.first
               a.save
               Journal.log(:import,a,current_user)
               @arr_translate[item[2]] = a
@@ -159,7 +178,7 @@ private
   def parse_trans(data)
     a = Account.find_by_number(data[1])
     unless a.nil?
-      vr = VoucherRow.new(:account=>a, :sum=>data[3].to_i)
+      vr = VoucherRow.new(:account=>a, :sum=>data[3].to_f)
       if a.has_arrangements?
         if data[2][3] == "0"
           organ = @voucher.organ
