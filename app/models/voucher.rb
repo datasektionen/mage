@@ -75,7 +75,7 @@ class Voucher < ActiveRecord::Base
     unless number.nil?
       "#{series.letter}#{number}"
     else
-      "M---"
+      "#{series.letter}---"
     end
   end
 
