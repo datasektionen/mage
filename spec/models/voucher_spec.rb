@@ -105,12 +105,17 @@ describe Voucher do
     post[:activity_year_id].should == pre[:activity_year_id]
   end
 
-  describe "stagnated voucher" do
+  describe "that has stagnated" do
     before(:each) do
       @voucher = Voucher.make
       @voucher.created_at = (Mage::Application.settings[:voucher_stagnation_time]+1).minutes.ago
       @voucher.save
     end
+
+    it "stagnated? should return true" do
+      @voucher.stagnated?.should be_true
+    end
+
 
     it "should not allow change of accounting date" do 
       @voucher.accounting_date = 2.days.ago

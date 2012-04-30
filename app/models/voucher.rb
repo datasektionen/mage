@@ -170,7 +170,11 @@ Attesterat av: #{authorized_by_to_s}
   end
 
   def stagnated?
-    return ( minutes_since_creation <= Mage::Application.settings[:voucher_stagnation_time] )
+    return bookkept? && ( minutes_until_stagnation <= 0  )
+  end
+
+  def minutes_until_stagnation
+    (Mage::Application.settings[:voucher_stagnation_time] - minutes_since_creation )
   end
 
 
@@ -214,7 +218,7 @@ private
     
   def readonly_if_stagnate
     #:organ_id, :accounting_date, :series_id
-    if bookkept? && !stagnated?
+    if stagnated?
       errors[:organ_id] << I18n.t('activerecord.errors.messages.is_readonly') if changed.include?("organ_id")
       errors[:series_id] << I18n.t('activerecord.errors.messages.is_readonly') if changed.include?("series_id")
       errors[:accounting_date] << I18n.t('activerecord.errors.messages.is_readonly') if changed.include?("accounting_date")
@@ -228,6 +232,6 @@ private
   ##
   # Returns the number of minutes since this voucher was created
   def minutes_since_creation
-    (Time.now - created_at).round/60
+    ((Time.now - created_at)/60.0).floor
   end
 end

@@ -123,9 +123,9 @@ function add_row() {
     return
   }
 
-  if(sum == 0 && total_sum == 0 &&
-      !confirm("Summan är 0 kr, fortsätta?")) {
-    return
+	if(sum == 0 && total_sum == 0) {
+	  alert("Kan inte lägga till rad med summa 0 kr")
+	  return
   } else if(sum == 0) {
     sum = get_diff()*-1.0;
   } else {
@@ -157,16 +157,14 @@ function add_row() {
     url: voucher_row_url,
     data: params,
     success: function(data, textStatus, xhr) {
-      ///DEBUG CODE: TODO: Remove
-        sum_to_add = parseInt($(data).find("sum").text())
-        if(sum_to_add == 0) {
-          alert("Warning, sum to add was 0 (<sum>: "+$(data).find("sum").text()+")")
-        }
-      //End debug code
-      update_sum(sum_to_add)
-      $("#voucher_rows tbody").append($(data).find("html_content").text())
-      num_rows += parseInt($(data).find("num_rows").text())
-      $("#spinner").hide()
+      sum_to_add = parseInt($(data).find("sum").text())
+      if(sum_to_add != 0) {
+        update_sum(sum_to_add)
+        $("#voucher_rows tbody").append($(data).find("html_content").text())
+        num_rows += parseInt($(data).find("num_rows").text())
+      }
+      
+      $("#spinner").hide() //Hide spinner
       update_account(undefined) //Unset account
     },
     error: function(xhr, textStatus, errorThrown) {
