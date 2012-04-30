@@ -2,7 +2,7 @@ common:
   ldap_basedn: ou=Addressbook,dc=kth,dc=se
   default_host: "www.d.kth.se/staging/cashflow"
   organization_name: "Konglig Datasektionen"
-  include_organ_name_in_printed_vouchers: false
+  include_organ_name_in_printed_vouchers: false #Set to true to include (Organ) in printed vouchers
   keep_journal_days: 730 # number of days to keep journal entries 2 years 
   voucher_stagnation_time: 30 #number of minutes before organ and accounting date has stagnated
 
