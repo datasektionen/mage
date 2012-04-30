@@ -46,6 +46,16 @@ class Account < ActiveRecord::Base
     end
   end
 
+  # Returns the result of this account for this year
+  # (sum of all voucher rows with this account)
+  def result
+    VoucherRow.joins(:voucher).where(:account_number=>number, 'vouchers.activity_year_id' =>activity_year_id, :canceled=>false).sum(:sum).to_f
+  end
+
+  def current_balance
+    ingoing_balance+result
+  end
+
   def to_s
     "#{number} #{name}"
   end

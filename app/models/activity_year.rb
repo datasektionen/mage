@@ -34,10 +34,15 @@ class ActivityYear < ActiveRecord::Base
   # Clones all accounts nd accounts into target (an activityyear)
   # Ingoing balance is set to 0 in the new accounts
   # activity_year_id is set to nil
-  def clone_accounts
+  # set transfer_saldo to true to copy saldo on asset and debt accounts
+  def clone_accounts(transfer_saldo)
     accounts.collect do |account|
       new_account = account.clone
-      new_account.ingoing_balance = 0
+      if new_account.account_type == Account::ASSET_ACCOUNT || new_account.account_type == Account::DEBT_ACCOUNT
+        new_account.ingoing_balance = account.current_balance
+      else
+        new_account.ingoing_balance = 0
+      end
       new_account.activity_year = nil
       new_account
     end

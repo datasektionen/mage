@@ -5,6 +5,10 @@
   = link_to "Skriv ut verifikat", print_vouchers_path(:format=>:pdf, :vouchers=>@voucher.id), :class=>"icon print"
 #voucher
   .voucher_data
+    - if !@voucher.stagnated?
+      %p
+        %strong Verifikatet är fortfarande nytt, och stagnerar om #{@voucher.minutes_until_stagnation} minuter
+
     %p.voucher_date
       %strong Transaktionsdatum:
       %span.date= format_date(@voucher.accounting_date)

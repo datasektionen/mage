@@ -38,6 +38,10 @@ class VouchersController < InheritedResources::Base
       @voucher.voucher_rows = @voucher.corrects.inverted_rows
       @voucher.accounting_date = @voucher.corrects.accounting_date
       @voucher.title = "Rättar #{@voucher.corrects}"
+      @voucher.series = @voucher.corrects.series
+      @voucher.activity_year = @voucher.corrects.activity_year
+      self.current_series = @voucher.series 
+      self.current_activity_year = @voucher.activity_year
     end
   end
 
@@ -69,6 +73,7 @@ class VouchersController < InheritedResources::Base
       @vouchers.each do |v|
         unless v.bookkept?
           v.bookkept_by = current_user 
+          v.created_at = Time.now
           if v.save
             Journal.log(:complete,v,current_user, nil)
           end
@@ -134,9 +139,23 @@ class VouchersController < InheritedResources::Base
         vr[:signature_id] = nil #If it is not yet bookkept we shall have no signatures
       end
     end
-    params[:bookkept_by] = current_user unless @voucher.bookkept?
+
+    unless @voucher.bookkept?
+      params[:bookkept_by] = current_user 
+      update_created_at = true
+    else 
+      update_created_at = false
+    end
+
     update! do |success, failure|
       success.html {
+
+        # If the voucher came from the api and was bookept now, update created at
+        if update_created_at 
+          @voucher.created_at = Time.now
+          @voucher.save
+        end
+
         if @voucher.bookkept_by_id.nil?
           @voucher.bookkept_by_id = current_user.id 
           @voucher.save

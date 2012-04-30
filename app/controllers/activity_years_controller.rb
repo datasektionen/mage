@@ -1,5 +1,5 @@
 class ActivityYearsController < ApplicationController
-  load_resource :find_by => :year
+  load_resource :find_by => :year, :except=>[:create]
   authorize_resource :except=>[:index]
 
   def index
@@ -17,12 +17,13 @@ class ActivityYearsController < ApplicationController
 
   def create
     @activity_year = ActivityYear.new(:year=>params[:activity_year][:year])
+    authorize! :create, @activity_year
     if @activity_year.save
       clone_accounts = params[:activity_year][:account][:clone]
       
       @clone_year = ActivityYear.find(clone_accounts)
       if @clone_year
-        @activity_year.accounts = @clone_year.clone_accounts
+        @activity_year.accounts = @clone_year.clone_accounts(params[:activity_year][:account][:transfer_saldo])
       end
 
       if @activity_year.save
