@@ -28,7 +28,9 @@ class VoucherPDF < Prawn::Document
     define_grid(:columns=>6,:rows=>45)
 
 
-    text "#{Mage::Application.settings[:organization_name]} (#{voucher.organ})", :align=>:center, :size=>18, :style=>:bold
+    title = "#{Mage::Application.settings[:organization_name]}"
+    title = "#{title} (#{voucher.organ})" if Mage::Application.settings[:include_organ_name_in_printed_vouchers]
+    text title, :align=>:center, :size=>18, :style=>:bold
     stroken_box grid([1,0],[2,1]) do
       text "Transaktionsdatum:", :size=>10, :style=>:bold
       move_down(2)

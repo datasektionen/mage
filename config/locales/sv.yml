@@ -328,6 +328,7 @@
   activity_years:
     empty_accounts: "Tom kontoplan"
     copy_accounts: "Kopiera kontoplan"
+    transfer_saldo: "Överför utgående värden till ingående värden"
 
   accounts:
     changes_saved: "Ändringarna sparades"

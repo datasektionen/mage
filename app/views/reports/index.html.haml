@@ -11,6 +11,9 @@
     = label_tag "report[organ]", "Nämnd"
     = collection_select(:report, :organ, Organ.all, :id, :to_s, {:prompt=>"Alla"})
   %p.input
+    = label_tag "report[account]", "Konto"
+    = collection_select(:report, :account, current_activity_year.accounts, :id, :to_s, {:prompt=>"Alla"})
+  %p.input
     = label_tag "report[template]", "Rapport"
     = select_tag("report[template]", options_for_select(@report_templates.map{|k,v| [v,k]}))
   .clear
@@ -18,7 +21,7 @@
       = submit_tag "Skapa rapport"
 
 %div
-  Tänk på att när du filtrerar på serie tas inget med från andra serier, och summeringarna av kontona stämmer förmodligen inte med verkligheten.
+  Tänk på att när du filtrerar på serie tas inget med från andra serier, och summeringarna av kontona stämmer då förmodligen inte med verkligheten.
 
   %h2 Beskrivning av rapporttyper
 

@@ -31,7 +31,7 @@ class Voucher < ActiveRecord::Base
   validate :accounting_date_in_activity_year
 
   validate :readonly_if_stagnate 
-  attr_readonly  :series_id, :material_from_id, :activity_year_id, :corrects_id, :api_key_id
+  attr_readonly  :material_from_id, :activity_year_id, :corrects_id, :api_key_id
   attr_writeonce :authorized_by_id, :bookkept_by_id, :number
 
   extend FriendlyId
@@ -169,6 +169,14 @@ Attesterat av: #{authorized_by_to_s}
     return !(bookkept_by.nil? || id.nil?)
   end
 
+  def stagnated?
+    return bookkept? && ( minutes_until_stagnation <= 0  )
+  end
+
+  def minutes_until_stagnation
+    (Mage::Application.settings[:voucher_stagnation_time] - minutes_since_creation )
+  end
+
 
   #Used in validations, checks value of _was and not new value
   def bookkept_validation?
@@ -209,15 +217,21 @@ private
   end
     
   def readonly_if_stagnate
-    #:organ_id, :accounting_date
-    #TODO: Also check if not stagnated
-    if bookkept?
+    #:organ_id, :accounting_date, :series_id
+    if stagnated?
       errors[:organ_id] << I18n.t('activerecord.errors.messages.is_readonly') if changed.include?("organ_id")
+      errors[:series_id] << I18n.t('activerecord.errors.messages.is_readonly') if changed.include?("series_id")
       errors[:accounting_date] << I18n.t('activerecord.errors.messages.is_readonly') if changed.include?("accounting_date")
     end
   end
 
   def accounting_date_in_activity_year
     errors[:accounting_date] << I18n.t('activerecord.errors.messages.must_be_in_activity_year') if !activity_year.in_year?(accounting_date)
+  end
+
+  ##
+  # Returns the number of minutes since this voucher was created
+  def minutes_since_creation
+    ((Time.now - created_at)/60.0).floor
   end
 end

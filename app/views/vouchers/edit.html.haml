@@ -17,7 +17,8 @@
   = f.error :base
   #voucher_head_form
     = f.input :title, :size=>20, :required => false
-    - unless @voucher.bookkept?
+    - unless @voucher.stagnated?
+      = f.input :series_id, :collection=>Series.all, :include_blank=>false, :label_method=>:to_s
       = f.association :organ, :include_blank => false, :required => false
       = f.input :accounting_date, :as => :date, :add_month_numbers=>true, :required => false
     .clear

@@ -8,11 +8,11 @@
       %span= link_to @voucher.corrects, voucher_path(@voucher.corrects), :target=>:_blank
       = f.input :corrects_id, :as=>:hidden
 
-  = f.input :series_id, :collection=>Series.all, :include_blank=>false, :label_method=>:to_s
 
   = f.input :activity_year_id, :as=>:hidden
 
   #voucher_head_form
+    = f.input :series_id, :collection=>Series.all, :include_blank=>false, :label_method=>:to_s
     = f.input :title, :size=>20, :required => false
     = f.association :organ, :include_blank => false, :required => false
     = f.input :accounting_date, :as => :date, :add_month_numbers=>true, :required => false

@@ -12,6 +12,7 @@ class ReportsController < ApplicationController
     @report_name = @@report_templates[@report_template.to_sym]
 
     @series = Series.find(@report_input[:series]) unless @report_input[:series].empty?
+    @account = Account.find(@report_input[:account]) unless @report_input[:account].empty?
     @activity_year = ActivityYear.find(@report_input[:activity_year])
     @organ = @report_input[:organ].empty? ? nil : Organ.find(@report_input[:organ])
 
@@ -20,30 +21,32 @@ class ReportsController < ApplicationController
     if self.respond_to?(@report_template)
       self.send(@report_template)
     else
-      @report = Mage::Report.full_report(@activity_year, @series, @organ)
+      @report = Mage::Report.full_report(@activity_year, @series, @organ, @account)
       render @report_template
     end
 
   end 
 
   def summary
-    @report = Mage::Report.full_report_summarized(@activity_year, @series, @organ)
+    @report = Mage::Report.full_report_summarized(@activity_year, @series, @organ, @account)
     render @report_template
   end
 
+  # Den här rapporten saknar vy än så länge, användes för att ta fram data till resturangrapporten
+  # Ska summera per konto utan några arrangemang eller dyl
   def accounts
-    @report = Mage::Report.account_report(@activity_year, @series, @organ)
+    @report = Mage::Report.account_report(@activity_year, @series, @organ, @account)
     render @report_template
   end
 
   def balance
-    @report = Mage::Report.full_report_summarized(@activity_year, @series, @organ, [Account::ASSET_ACCOUNT, Account::DEBT_ACCOUNT], false)
+    @report = Mage::Report.full_report_summarized(@activity_year, @series, @organ, @account, [Account::ASSET_ACCOUNT, Account::DEBT_ACCOUNT], false)
     @hide_arrangement = true
     render :summary
   end
 
   def result
-    @report = Mage::Report.full_report_summarized(@activity_year, @series, @organ, [Account::INCOME_ACCOUNT, Account::COST_ACCOUNT], true)
+    @report = Mage::Report.full_report_summarized(@activity_year, @series, @organ, @account, [Account::INCOME_ACCOUNT, Account::COST_ACCOUNT], true)
     render :summary
   end
 end

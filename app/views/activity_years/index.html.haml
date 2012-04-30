@@ -7,6 +7,7 @@
     = f.input :year
     = f.simple_fields_for :account do |fe|
       = fe.input :clone , :collection=>ActivityYear.all, :prompt=>t('activity_years.empty_accounts'), :label=>t('activity_years.copy_accounts')
+      = fe.input :transfer_saldo, :label=>t('activity_years.transfer_saldo'), :as=>:boolean
 
     .clear
 
