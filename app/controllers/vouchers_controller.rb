@@ -134,7 +134,16 @@ class VouchersController < InheritedResources::Base
     params[:voucher].delete(:add_row)
     params[:voucher][:voucher_rows_attributes].each do |vr|
       if @voucher.bookkept?
-        vr[:signature_id] = current_user.id if vr[:signature_id] 
+        # Detect changes:
+        voucher_row = @voucher.voucher_rows.find_by_id(vr[:id])
+        if voucher_row
+          voucher_row.attributes = vr
+          # Add signature if row changed
+          vr[:signature_id] = current_user.id if voucher_row.changed?
+        else
+          # New row, add signature
+          vr[:signature_id] = current_user.id 
+        end
       else
         vr[:signature_id] = nil #If it is not yet bookkept we shall have no signatures
       end
