@@ -10,6 +10,7 @@ class VoucherRow < ActiveRecord::Base
   validates_presence_of :arrangement, :if => Proc.new { account.has_arrangements? }
   validates_presence_of :account
   validate :no_arrangement, :unless => Proc.new { account.has_arrangements? }
+  validate :dont_revert_cancellation
   
   attr_readonly :account_number, :sum, :arrangement_id, :voucher_id
 
@@ -60,5 +61,9 @@ class VoucherRow < ActiveRecord::Base
 protected
   def no_arrangement
     errors[:arrangement]<< "Får inte ha arrangemang" unless arrangement.nil? && arrangement_id.nil?
+  end
+
+  def dont_revert_cancellation
+    errors[:canceled] << "Får inte tas bort" if canceled_was && !canceled
   end
 end

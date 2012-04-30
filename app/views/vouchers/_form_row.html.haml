@@ -18,7 +18,6 @@
       %span.date= format_date(form_row.updated_at || Time.now)
       ! -
       %span= link_to form_row.signature.initials, user_path(form_row.signature)
-      = hidden_field_tag "voucher[voucher_rows_attributes][][signature_id]", current_user.id 
   %td.actions
     - if form_row.canceled?
       = hidden_field_tag "voucher[voucher_rows_attributes][][canceled]", true
