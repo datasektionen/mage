@@ -44,4 +44,25 @@ describe VoucherRow do
       voucher.should_not be_valid 
     end
   end
+
+  it "should not allow removal of cancellation" do
+    voucher = Voucher.make
+    voucher.save
+
+    user = User.make
+    user.save
+
+    voucher.voucher_rows[0].signature = user
+    voucher_row = voucher.voucher_rows[0].clone
+    voucher.voucher_rows[0].canceled = true
+    voucher.voucher_rows << voucher_row
+
+    voucher.save.should be_true
+
+    voucher.voucher_rows[0].canceled = false
+    voucher.voucher_rows[0].signature = user
+    voucher.voucher_rows.last.canceled = true
+
+    voucher.should_not be_valid
+  end
 end
