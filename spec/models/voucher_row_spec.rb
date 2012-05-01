@@ -65,4 +65,35 @@ describe VoucherRow do
 
     voucher.should_not be_valid
   end
+
+  it "should allow arrangements inside the organ" do
+    voucher = Voucher.make
+    voucher.should be_valid
+  end
+
+  it "should not allow arrangements outside the organ" do
+    voucher = Voucher.make
+    voucher.voucher_rows[0].arrangement = Arrangement.make(:organ=>Organ.make)
+    voucher.should_not be_valid
+  end
+
+  it "should allow invalid arrangements outside the organ on cancelled rows" do
+    voucher = Voucher.make
+    voucher.save
+    voucher_row = voucher.voucher_rows[0].clone
+    voucher_row.signature = User.make
+    voucher.voucher_rows << voucher_row
+    voucher.voucher_rows[0].canceled = true
+    voucher.voucher_rows[0].signature = User.make
+
+    voucher.should be_valid 
+
+    voucher.voucher_rows[0].arrangement = Arrangement.make(:organ=>Organ.make)
+
+    voucher.should be_valid
+
+
+
+  end
+
 end
