@@ -4,6 +4,11 @@
 	Twitter: @Torandi
 	From: Stockholm, Sweden
 
+	Victor Koronen
+	Contact: koronen [at] kth [dot] se
+	Twitter: @victorkoronen
+	From: Stockholm, Sweden
+
 /* SITE */
 	Doctype: HTML5 with CSS3
 	Language: Ruby
