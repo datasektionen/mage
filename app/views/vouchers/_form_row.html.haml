@@ -23,3 +23,8 @@
       = hidden_field_tag "voucher[voucher_rows_attributes][][canceled]", true
     - else
       =link_to  image_tag("icons/cross.png",:alt=>'delete') ,"#", {:onclick=>"delete_row(this,#{form_row.int_sum}); return false", :title=>form_row.id.nil? ? "Radera rad" : "Stryk rad",:class=>"delete_row_link"}
+  - if form_row.errors.any?
+    %td.errors
+      %span.error
+        - form_row.errors.each do |field, error|
+          = t("activerecord.attributes.voucher_row.#{field.to_s}")+" #{error.downcase}"
