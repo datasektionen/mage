@@ -49,7 +49,7 @@
       %tr
         %td{:colspan=>3}
         %td Diff:
-        %td#diff #{@voucher.sum} kr
+        %td#diff= currency(@voucher.sum)
         %td
         %td
 

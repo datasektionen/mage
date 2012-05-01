@@ -43,7 +43,7 @@
       - if not defined?(foot)
         %td{:colspan=>4}
         %td Omslutning:
-        %td#enfoldment #{voucher.enfoldment} kr
+        %td#enfoldment= currency(voucher.enfoldment)
       - else
         - foot_colspan ||= 2
         %td{:colspan=>6-foot_colspan}
