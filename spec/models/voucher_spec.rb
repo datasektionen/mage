@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe Voucher do
+
+  it "should be valid" do
+    voucher = Voucher.make
+    voucher.should be_valid
+  end
+
   it "should enforce sum == 0" do
     voucher = Voucher.make
     voucher.should be_valid
@@ -153,6 +159,21 @@ describe Voucher do
       organ = Organ.make
       organ.save
       @voucher.organ = organ
+      # We must cancel all rows and add new with this organ
+      user = User.make
+      user.save
+      new_rows = []
+      @voucher.voucher_rows.each do |vr|
+        new_vr = vr.clone
+        new_vr.signature = user
+        new_vr.arrangement = Arrangement.make(:organ=>organ)
+        vr.signature = user
+        vr.cancel!
+        new_rows << new_vr
+      end
+
+      @voucher.voucher_rows.push *new_rows
+
       @voucher.should be_valid
     end
 

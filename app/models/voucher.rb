@@ -199,7 +199,7 @@ private
   end
 
   def check_signature(row) 
-    raise "[Voucher] Added row lacks signature" if bookkept_validation? and row.signature.nil? and not current_voucher_rows.include?(row)
+    raise "[Voucher] Added row lacks signature: #{row.inspect}" if bookkept_validation? and row.signature.nil? and not current_voucher_rows.include?(row)
   end
   
   def added_rows_has_signature 

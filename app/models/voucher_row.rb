@@ -11,6 +11,7 @@ class VoucherRow < ActiveRecord::Base
   validates_presence_of :account
   validate :no_arrangement, :unless => Proc.new { account.has_arrangements? }
   validate :dont_revert_cancellation
+  validate :arrangement_in_organ, :unless => :canceled
   
   attr_readonly :account_number, :sum, :arrangement_id, :voucher_id
 
@@ -28,6 +29,10 @@ class VoucherRow < ActiveRecord::Base
   def canceled?
     return canceled
   end 
+
+  def cancel!
+    self.canceled = true
+  end
 
   def signed?
     return (not signature.nil?)
@@ -65,5 +70,11 @@ protected
 
   def dont_revert_cancellation
     errors[:canceled] << "Får inte tas bort" if canceled_was && !canceled
+  end
+
+  def arrangement_in_organ 
+    unless arrangement.nil?
+      errors[:arrangement] << "Måste vara inom vald nämnd" unless arrangement.organ_id == voucher.organ_id
+    end
   end
 end
