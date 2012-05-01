@@ -76,3 +76,9 @@
   var num_rows = #{@voucher.voucher_rows.size}
   var user_initials = "#{current_user.initials}"
   var activity_year_id = #{current_activity_year.id}
+
+/ Signature, use in javascript
+#signature{:style=>"display:none"}
+  %span.date= format_date(Time.now)
+  ! -
+  %span= link_to current_user.initials, user_path(current_user)
