@@ -199,7 +199,7 @@ function get_diff() {
 //diff must be an integer round(real sum*100.0)
 function update_sum(diff) {
   total_sum += diff
-  $("#diff").html((total_sum/100.0)+" kr")
+  $("#diff").html(currency(total_sum/100.0)+" kr")
 }
 
 function organ_val() {
@@ -236,4 +236,17 @@ function delete_row(link,sum) {
     )
   }
   return false
+}
+
+function currency(value)
+{
+   nStr = value.toFixed(2);
+   x = nStr.split('.');
+   x1 = x[0];
+   x2 = x.length > 1 ? ',' + x[1] : '';
+   var rgx = /(\d+)(\d{3})/;
+   while (rgx.test(x1)) {
+      x1 = x1.replace(rgx, '$1' + ' ' + '$2');
+   }
+   return x1 + x2;
 }
