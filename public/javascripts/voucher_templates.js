@@ -3,7 +3,7 @@ $.ui.autocomplete.prototype._renderItem = function(ul,item) {
     return $("<li></li>")
       .data("item.autocomplete",a)
       .append("<a>"+
-               "<span class='autocomplete account'>"+a.number+" - "+a.name+"</span>"+
+               "<span class='autocomplete account'>"+a.number+" - "+a.name+" ("+a.activity_year+")</span>"+
               "</a>")
         .appendTo(ul);
 
