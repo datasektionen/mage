@@ -4,16 +4,16 @@ set -e
 
 # Ruby
 if ! which ruby > /dev/null; then
-  echo "[-] Ruby not found, please install Ruby!"
-  echo "[-] http://www.ruby-lang.org/en/"
-  exit 1
+    echo "[-] Ruby not found, please install Ruby!"
+    echo "[-] http://www.ruby-lang.org/en/"
+    exit 1
 fi
 
 # Bundler
 if ! which bundle > /dev/null; then
-  echo "[-] Bundler not found, please install Bundler!"
-  echo "[-] http://gembundler.com/"
-  exit 1
+    echo "[-] Bundler not found, please install Bundler!"
+    echo "[-] http://gembundler.com/"
+    exit 1
 fi
 
 # Bundle
