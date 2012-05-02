@@ -1,0 +1,47 @@
+#!/bin/sh
+
+set -e
+
+# Ruby
+if ! which ruby > /dev/null; then
+  echo "[-] Ruby not found, please install Ruby!"
+  echo "[-] http://www.ruby-lang.org/en/"
+  exit 1
+fi
+
+# Bundler
+if ! which bundle > /dev/null; then
+  echo "[-] Bundler not found, please install Bundler!"
+  echo "[-] http://gembundler.com/"
+  exit 1
+fi
+
+# Bundle
+echo "[+] Running 'bundle install'..."
+bundle install
+
+# Application config
+if [ ! -f config/configuration.yml ]; then
+    echo "[+] No application config found, copying template..."
+    cp config/configuration.yml.sample config/configuration.yml
+fi
+
+# Database config
+if [ ! -f config/database.yml ]; then
+    echo "[-] No database config found, copying template..."
+    cp config/database.yml.sample config/database.yml
+    echo "[-] Now, go ahead and update config/database.yml to match your setup!"
+    exit 1
+fi
+
+# Sunspot config
+if [ ! -f config/sunspot.yml ]; then
+    echo "[-] No sunspot config found, copying template..."
+    cp config/sunspot.yml.sample config/sunspot.yml
+    echo "[-] Now, go ahead and update config/sunspot.yml to match your setup!"
+    exit 1
+fi
+
+# Setup rake tasks
+echo "[+] Running setup rake tasks..."
+bundle exec rake db:create db:migrate db:seed sunspot:reindex
