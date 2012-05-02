@@ -25,6 +25,7 @@ gem 'prawn-qrcode', '~> 0.1.1', :git=>'https://github.com/torandi/prawn-qrcode.g
 gem 'cancan'
 gem 'kaminari'
 gem 'airbrake'
+gem 'sunspot_rails'
 
 group :production do
   gem 'mysql2', '~> 0.2.6'
@@ -34,11 +35,13 @@ end
 group :development, :test do
   gem 'rspec', '~> 2.8.0'
   gem 'rspec-rails'
+  gem 'guard', '>= 1.0.0'
   gem 'guard-bundler'
   gem 'guard-rspec'
   gem 'guard-cucumber'
   gem 'libnotify'
   gem 'rb-inotify'
+  gem 'sunspot_solr'
 end
 
 group :development do

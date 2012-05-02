@@ -5,13 +5,13 @@
   #search_box
     %p
       = label_tag "Sök i serie:"
-      = select_tag("search[activity_year]", options_from_collection_for_select(ActivityYear.order("year DESC"), :id, :year,@search[:activity_year]))
-      = select_tag("search[series]", options_for_select(Series.all.map{|s| [s.to_s, s.id]}.insert(0, ["Alla", ""]), @search[:series]))
+      = select_tag("search[activity_year_id]", options_from_collection_for_select(ActivityYear.order("year DESC"), :id, :year, params[:search].try(:[], 'activity_year_id')))
+      = select_tag("search[series_id]", options_for_select(Series.all.map{|s| [s.to_s, s.id]}.insert(0, ["Alla", ""]), params[:search].try(:[], 'series_id')))
       = label_tag :per, "Verifikat per sida"
       = select_tag :per, options_for_select([10,25,50,100,["Alla", -1]], params[:per] || 25)
     %p
       = label_tag "Beskrivning:"
-      = text_field_tag "search[title]"
+      = text_field_tag "search[title]", params[:search].try(:[], 'title')
       = submit_tag "Sök", :name=>nil
 
 = render :partial=>"voucher_list", :object => @vouchers, :locals=>{:long=>true,:sort=>true}

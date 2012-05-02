@@ -5,12 +5,21 @@ class VouchersController < InheritedResources::Base
 
   def index
     # Display all vouchers if params[:per] < 0
-    per = params[:per].to_i < 0 ? Voucher.count : params[:per]
+    per_page = params[:per].to_i < 0 ? Voucher.count : params[:per]
 
-    @search = params[:search] || Hash.new 
-    @search[:activity_year] = current_activity_year.id unless @search[:activity_year]
+    params[:search] ||= {}
+    params[:search][:activity_year_id] ||= current_activity_year.id
 
-    @vouchers = Voucher.search(@search, current_user).page(params[:page]).per(per)
+    @search = Voucher.search do
+      with(:activity_year_id, search_param(:activity_year_id))
+      with(:series_id, search_param(:series_id)) unless search_param(:series_id).blank?
+      with(:organ_id, search_param(:organ_id)) unless search_param(:organ_id).blank?
+
+      keywords(search_param(:title)) unless search_param(:title).blank?
+
+      paginate :page => params[:page], :per_page => per_page
+    end
+    @vouchers = @search.results
   end
 
   def new
@@ -235,8 +244,14 @@ class VouchersController < InheritedResources::Base
   end
 
 protected 
+
   def resource
     @voucher ||= Voucher.unscoped.find(params[:id])
     authorize! :read, @voucher
+  end
+
+private
+  def search_param name
+    params[:search].try(:[], name.to_s)
   end
 end
