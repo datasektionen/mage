@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 class ReportsController < ApplicationController
-  @@report_templates = {:complete =>"Huvudbok redovisning", :summary =>"Huvudbok summerad", :balance=>"Balansrapport", :result=>"Resultatrapport"}
+  @@report_templates = {:complete =>"Huvudbok redovisning", :summary =>"Huvudbok summerad", :balance=>"Balansrapport", :result=>"Resultatrapport", :accounts=>"Kontorapport"}
 
   def index
     @report_templates = @@report_templates
@@ -35,8 +35,8 @@ class ReportsController < ApplicationController
   # Den här rapporten saknar vy än så länge, användes för att ta fram data till resturangrapporten
   # Ska summera per konto utan några arrangemang eller dyl
   def accounts
-    @report = Mage::Report.account_report(@activity_year, @series, @organ, @account)
-    render @report_template
+    @report = Mage::Report.account_report(@activity_year, @series, @organ, @account, nil , false)
+    render :summary
   end
 
   def balance
