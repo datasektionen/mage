@@ -103,10 +103,11 @@ module Mage
     end
 
 
+    ##
+    # Get a summarized report (no organs or stuff)
     def self.account_report(activity_year, series = nil, organ = nil, account = nil, account_type_filter = nil, invert_sign = false)
-      sign = invert_sign ? '- ' : ''
       optional_conditions = build_optional_condition(series, organ, account, account_type_filter)
-
+      sign = invert_sign ? '- ' : ''
       return Mage::Reports::Report.generate(
           self.data_from_query("
                           select
@@ -117,15 +118,10 @@ module Mage
                             accounts.name as 'account_name', 
                             account_groups.title as 'account_group_name',
                             account_groups.number as 'account_group_number',
-                            voucher_rows.account_number,
-                            voucher_rows.arrangement_id,
-                            arrangements.name as 'arrangement_name',
-                            arrangements.number as 'arrangement_number',
-                            organs.id as 'organ_id', organs.name as 'organ_name'
-                          from voucher_rows
+                            voucher_rows.account_number
+                            from voucher_rows
                              left join arrangements on voucher_rows.arrangement_id = arrangements.id
                              join vouchers on voucher_rows.voucher_id = vouchers.id 
-                             join organs on vouchers.organ_id = organs.id
                              join accounts on accounts.number = voucher_rows.account_number and accounts.activity_year_id = vouchers.activity_year_id
                              join account_groups on accounts.account_group_id = account_groups.id
                              join series on vouchers.series_id = series.id
@@ -135,13 +131,13 @@ module Mage
                             #{optional_conditions}
                          group by accounts.number
                          order by 
-                           arrangement_number,
                            account_groups.number,
                            accounts.number
                           ")
           )
 
     end
+
 
     private
 
