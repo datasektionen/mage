@@ -12,6 +12,7 @@
       %th Ingående
       %th Debet
       %th Kredit
+      %th Förändring
       %th Utgående
     - @report.arrangement_reports.each do |arrangement_report|
       - unless @hide_arrangement
@@ -29,6 +30,7 @@
             %td= currency account_report.ingoing_balance
             %td= currency_clean account_report.total_debet
             %td= currency_clean account_report.total_kredit
+            %td= currency_clean account_report.balance_difference
             %td= currency_clean account_report.outgoing_balance
       %tr
         - unless @hide_arrangement
