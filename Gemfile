@@ -27,6 +27,7 @@ gem 'kaminari'
 gem 'airbrake'
 gem 'sunspot_rails'
 gem 'progress_bar'
+gem 'enum_column3'
 
 group :production do
   gem 'mysql2', '~> 0.2.6'

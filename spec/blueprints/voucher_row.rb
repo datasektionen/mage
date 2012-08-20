@@ -9,3 +9,13 @@ VoucherRow.blueprint :cancelled do
   cancelled { true }
   signature { User.make }
 end
+
+VoucherRow.blueprint :type_1 do
+  account  { Account.make(:type_1) }
+  arrangement  { nil }
+end
+
+VoucherRow.blueprint :type_2 do
+  account  { Account.make(:type_2) }
+  arrangement  { nil }
+end

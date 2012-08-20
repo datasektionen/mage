@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120315191515) do
+ActiveRecord::Schema.define(:version => 20120820131811) do
 
   create_table "account_groups", :force => true do |t|
     t.string   "title"
@@ -72,6 +72,17 @@ ActiveRecord::Schema.define(:version => 20120315191515) do
     t.integer  "number",     :null => false
     t.integer  "valid_from"
     t.integer  "valid_to"
+  end
+
+  create_table "invoices", :force => true do |t|
+    t.string   "title",                                                                                       :null => false
+    t.enum     "direction",  :limit => [:ingoing, :outgoing]
+    t.integer  "voucher_id",                                                                                  :null => false
+    t.enum     "status",     :limit => [:new, :partly_paid, :paid, :canceled]
+    t.decimal  "paid_sum",                                                     :precision => 12, :scale => 2
+    t.integer  "due_days",                                                                                    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "journal", :force => true do |t|
