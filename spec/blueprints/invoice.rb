@@ -3,9 +3,13 @@ Invoice.blueprint do
   direction { :ingoing }
   voucher   { Voucher.make(:invoice_in) }
   status    { :new }
-  paid_sum  { sn.to_i * 100 + 0.55 }
   due_days  { 10 + sn.to_i }
+  number    { "I#{sn}" }
+end
 
+Invoice.blueprint :ingoing do
+  voucher { Voucher.make(:invoice_in) }
+  direction { :ingoing }
 end
 
 Invoice.blueprint :outgoing do

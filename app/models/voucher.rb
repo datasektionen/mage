@@ -13,6 +13,7 @@ class Voucher < ActiveRecord::Base
   belongs_to :authorized_by , :class_name => "User"
   belongs_to :bookkept_by , :class_name => "User"
 
+  belongs_to :pays_invoice, :class_name => "Invoice", :foreign_key => :pays_invoice_id
   belongs_to :api_key
 
   before_validation :set_number!, :if=>:bookkept_by_id

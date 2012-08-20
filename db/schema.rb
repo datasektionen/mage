@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120820131811) do
+ActiveRecord::Schema.define(:version => 20120820145317) do
 
   create_table "account_groups", :force => true do |t|
     t.string   "title"
@@ -75,14 +75,14 @@ ActiveRecord::Schema.define(:version => 20120820131811) do
   end
 
   create_table "invoices", :force => true do |t|
-    t.string   "title",                                                                                       :null => false
+    t.string   "title",                                                                          :null => false
     t.enum     "direction",  :limit => [:ingoing, :outgoing]
-    t.integer  "voucher_id",                                                                                  :null => false
-    t.enum     "status",     :limit => [:new, :partly_paid, :paid, :canceled]
-    t.decimal  "paid_sum",                                                     :precision => 12, :scale => 2
-    t.integer  "due_days",                                                                                    :null => false
+    t.integer  "voucher_id",                                                                     :null => false
+    t.enum     "status",     :limit => [:new, :partly_paid, :paid, :canceled], :default => :new
+    t.integer  "due_days",                                                                       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "number",                                                                         :null => false
   end
 
   create_table "journal", :force => true do |t|
@@ -205,6 +205,7 @@ ActiveRecord::Schema.define(:version => 20120820131811) do
     t.integer  "material_from_id"
     t.integer  "api_key_id"
     t.string   "slug",             :null => false
+    t.integer  "pays_invoice_id"
   end
 
   add_index "vouchers", ["slug"], :name => "index_vouchers_on_slug", :unique => true
