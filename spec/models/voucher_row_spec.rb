@@ -114,4 +114,15 @@ describe VoucherRow do
 
   end
 
+  it "type_1 works" do
+    voucher_row = VoucherRow.make(:type_1)
+    voucher_row.should be_valid
+    voucher_row.account.should_not be_nil
+  end
+
+  it "type_2 works" do
+    voucher_row = VoucherRow.make(:type_2)
+    voucher_row.should be_valid
+    voucher_row.account.should_not be_nil
+  end
 end
