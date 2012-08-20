@@ -278,9 +278,9 @@
     abbr_month_names: [~, jan, feb, mar, apr, maj, jun, jul, aug, sep, okt, nov, dec]
     # Used in date_select and datime_select.
     order:
-      :day
-      :month
-      :year
+      - :year
+      - :month
+      - :day
 
   time:
     formats:
