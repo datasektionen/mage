@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(:version => 20121119195806) do
   end
 
   create_table "invoices", :force => true do |t|
-    t.string   "couterpart"
+    t.string   "counterpart"
     t.string   "reference"
     t.date     "expire_date"
     t.boolean  "supplier_invoice"
