@@ -1,18 +1,15 @@
 Invoice.blueprint do
-  title     { "Invoice#{sn}" }
-  direction { :ingoing }
-  voucher   { Voucher.make(:invoice_in) }
-  status    { :new }
-  due_days  { 10 + sn.to_i }
-  number    { "I#{sn}" }
+  counterpart { "A random company #{sn}" }
+  expire_days { 10 }
+  supplier_invoice { false }
 end
 
-Invoice.blueprint :ingoing do
-  voucher { Voucher.make(:invoice_in) }
-  direction { :ingoing }
+Invoice.blueprint :supplier do
+  voucher { Voucher.make(:supplier_invoice) }
+  supplier_invoice { true }
 end
 
-Invoice.blueprint :outgoing do
-  voucher { Voucher.make(:invoice_out) }
-  direction { :outgoing }
+Invoice.blueprint :normal do
+  voucher { Voucher.make(:invoice) }
+  supplier_invoice { false }
 end

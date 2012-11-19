@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120820145317) do
+ActiveRecord::Schema.define(:version => 20121119195806) do
 
   create_table "account_groups", :force => true do |t|
     t.string   "title"
@@ -75,14 +75,17 @@ ActiveRecord::Schema.define(:version => 20120820145317) do
   end
 
   create_table "invoices", :force => true do |t|
-    t.string   "title",                                                                          :null => false
-    t.enum     "direction",  :limit => [:ingoing, :outgoing]
-    t.integer  "voucher_id",                                                                     :null => false
-    t.enum     "status",     :limit => [:new, :partly_paid, :paid, :canceled], :default => :new
-    t.integer  "due_days",                                                                       :null => false
+    t.string   "couterpart"
+    t.string   "reference"
+    t.date     "expire_date"
+    t.boolean  "supplier_invoice"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "number",                                                                         :null => false
+  end
+
+  create_table "invoices_vouchers", :id => false, :force => true do |t|
+    t.integer "invoice_id", :null => false
+    t.integer "voucher_id", :null => false
   end
 
   create_table "journal", :force => true do |t|
@@ -205,7 +208,6 @@ ActiveRecord::Schema.define(:version => 20120820145317) do
     t.integer  "material_from_id"
     t.integer  "api_key_id"
     t.string   "slug",             :null => false
-    t.integer  "pays_invoice_id"
   end
 
   add_index "vouchers", ["slug"], :name => "index_vouchers_on_slug", :unique => true
