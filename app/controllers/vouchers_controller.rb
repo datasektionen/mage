@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 class VouchersController < InheritedResources::Base 
+  include VoucherActions
+
   actions :all
   after_filter LogFilter , :only=>[:create,:update, :destroy]
 
@@ -23,7 +25,7 @@ class VouchersController < InheritedResources::Base
   end
 
   def new
-    @voucher = create_new_voucher
+    @voucher = new_voucher
     authorize! :write, @voucher
 
     if params[:correct]
@@ -40,8 +42,7 @@ class VouchersController < InheritedResources::Base
   end
 
   def create
-    params[:voucher].delete(:add_row)
-    @voucher = Voucher.new(params[:voucher])
+    @voucher = create_voucher(params)
     authorize! :write, @voucher
     if not current_api_key
       @voucher.bookkept_by = current_user
