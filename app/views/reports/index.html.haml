@@ -9,7 +9,7 @@
     = collection_select(:report,:series,Series.all, :id, :to_s, {:prompt=>"Alla"})
   %p.input
     = label_tag "report[organ]", "Nämnd"
-    = collection_select(:report, :organ, Organ.all, :id, :to_s, {:prompt=>"Alla"})
+    = collection_select(:report, :organ, Organ.all, :id, :to_s, {}, {:multiple=>'multiple'})
   %p.input
     = label_tag "report[account]", "Konto"
     = collection_select(:report, :account, current_activity_year.accounts, :id, :to_s, {:prompt=>"Alla"})
