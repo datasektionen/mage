@@ -14,9 +14,24 @@
       %th Kredit
       %th Förändring
       %th Utgående
+    - organ = nil
     - @report.arrangement_reports.each do |arrangement_report|
       - unless @hide_arrangement
         - arrangement = arrangement_report.arrangement
+        - if organ != nil && ( arrangement == nil || arrangement[:organ] != organ )
+          %tr
+            %td{:colspan=>3+arrangement_width}
+              %strong Totalt förändring (#{organ})
+            %td= currency_clean @report.organ_summary[organ][:total_debet]
+            %td= currency_clean @report.organ_summary[organ][:total_kredit]
+            %td= currency_clean @report.organ_summary[organ][:balance_difference]
+          %tr
+            %td{:colspan=>6+arrangement_width} &nbsp;
+          - organ = arrangement[:organ]
+        - elsif arrangement != nil && arrangement[:organ] != organ
+          - organ = arrangement[:organ]
+
+
         - arrangement = arrangement.nil? ? "Tillgångs och skuldkonton" : "#{arrangement[:organ]} - #{arrangement[:name]}"
         %tr
           %td{:colspan=>6}
@@ -35,15 +50,15 @@
       %tr
         - unless @hide_arrangement
           %td
-        %td{:colspan=>2 }
+        %td{:colspan=>3 }
           %strong Förändring i perioden
         %td= currency_clean arrangement_report.total_debet
         %td= currency_clean arrangement_report.total_kredit
         %td= currency_clean arrangement_report.balance_difference
       %tr
-        %td{:colspan=>5+arrangement_width} &nbsp;
+        %td{:colspan=>6+arrangement_width} &nbsp;
     %tr
-      %td{:colspan=>2+arrangement_width} 
+      %td{:colspan=>3+arrangement_width}
         %strong Totalt förändring
       %td= currency_clean @report.total_debet
       %td= currency_clean @report.total_kredit

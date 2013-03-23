@@ -1,0 +1,10 @@
+#!/bin/bash
+# A script to run to get your environment running
+
+rake sunspot:solr:start
+rake sunspot:solr:start RAILS_ENV=test
+ssh -L 9999:ldap.kth.se:389 my
+
+
+rake sunspot:solr:stop RAILS_ENV=test
+rake sunspot:solr:stop

@@ -123,8 +123,7 @@ class VoucherPDF < Prawn::Document
       table table_data, 
           :row_colors => ['dddddd','ffffff'], 
           :column_widths => [11*wf, 33*wf,19*wf, 19*wf, 18*wf] ,
-          :cell_style => {:height=>19.84},
-          do |t|
+          :cell_style => {:height=>19.84}, do |t|
             t.rows(0).font_style = :bold
             t.columns(2..3).align = :right
             t.columns(0..4).style(:overflow => :shrink_to_fit,:inline_format=>true)

@@ -23,3 +23,19 @@ Voucher.blueprint :not_bookkept do
   number {nil}
   bookkept_by {nil}
 end
+
+Voucher.blueprint :invoice_out do
+  sum = sn.to_i % 1000
+  voucher_rows { [
+    VoucherRow.make(:type_1, :voucher => object, :sum => sum),
+    VoucherRow.make(:voucher => object, :sum => -sum)
+  ] }
+end
+
+Voucher.blueprint :invoice_in do
+  sum = sn.to_i % 1000
+  voucher_rows { [
+    VoucherRow.make(:type_2, :voucher => object, :sum => -sum),
+    VoucherRow.make(:voucher => object, :sum => sum)
+  ] }
+end
