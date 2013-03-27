@@ -34,7 +34,7 @@
 
         - arrangement = arrangement.nil? ? "Tillgångs och skuldkonton" : "#{arrangement[:organ]} - #{arrangement[:name]}"
         %tr
-          %td{:colspan=>6}
+          %td{:colspan=>7}
             %strong= arrangement
       - arrangement_report.account_group_reports.each do |account_group_report|
         - account_group_report.account_reports.each do |account_report|
