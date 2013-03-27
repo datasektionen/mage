@@ -57,6 +57,15 @@
         %td= currency_clean arrangement_report.balance_difference
       %tr
         %td{:colspan=>6+arrangement_width} &nbsp;
+
+    %tr
+      %td{:colspan=>3+arrangement_width}
+        %strong Totalt förändring (#{organ})
+      %td= currency_clean @report.organ_summary[organ][:total_debet]
+      %td= currency_clean @report.organ_summary[organ][:total_kredit]
+      %td= currency_clean @report.organ_summary[organ][:balance_difference]
+    %tr
+      %td{:colspan=>6+arrangement_width} &nbsp;
     %tr
       %td{:colspan=>3+arrangement_width}
         %strong Totalt förändring
