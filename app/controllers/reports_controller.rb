@@ -38,6 +38,7 @@ class ReportsController < ApplicationController
   # Ska summera per konto utan några arrangemang eller dyl
   def accounts
     @report = Mage::Report.account_report(@activity_year, @series, @organs, @account, nil , false)
+    @hide_arrangement = true
     render :summary
   end
 
