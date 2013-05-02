@@ -19,7 +19,7 @@ gem 'net-ldap'
 gem 'haml-rails'
 gem 'simple-navigation'
 gem 'jquery-rails'
-gem 'prawn', :git=>'https://github.com/sandal/prawn.git', :submodules=>true
+gem 'prawn', :git=>'https://github.com/prawnpdf/prawn', :submodules=>true
 gem 'rqrcode'
 gem 'prawn-qrcode', '~> 0.1.1', :git=>'https://github.com/torandi/prawn-qrcode.git'
 gem 'cancan'
