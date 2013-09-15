@@ -116,18 +116,24 @@ class VouchersController < InheritedResources::Base
       raise Mage::ApiError.new("Missing activity year")
     end
 
-    params[:voucher][:authorized_by] = User.find_or_create_by_ugid(params[:voucher][:authorized_by]) if params[:voucher][:authorized_by]
-    params[:voucher][:material_from] = User.find_or_create_by_ugid(params[:voucher][:material_from]) if params[:voucher][:material_from]
+    begin
 
-    # Parse arrangement number to id
-    #params[:voucher][:arrangement]
-    params[:voucher][:voucher_rows_attributes].each do |vr|
-      vr[:arrangement] = params[:voucher][:organ].arrangements.find_by_number(vr[:arrangement]) if vr[:arrangement]
-      vr[:arrangement] = nil unless Account.find_by_number_and_activity_year_id(vr[:account_number],params[:voucher][:activity_year].id).has_arrangements?
+      params[:voucher][:authorized_by] = User.find_or_create_by_ugid(params[:voucher][:authorized_by]) if params[:voucher][:authorized_by]
+      params[:voucher][:material_from] = User.find_or_create_by_ugid(params[:voucher][:material_from]) if params[:voucher][:material_from]
+
+      # Parse arrangement number to id
+      #params[:voucher][:arrangement]
+      params[:voucher][:voucher_rows_attributes].each do |vr|
+        vr[:arrangement] = params[:voucher][:organ].arrangements.find_by_number(vr[:arrangement]) if vr[:arrangement]
+        vr[:arrangement] = nil unless Account.find_by_number_and_activity_year_id(vr[:account_number],params[:voucher][:activity_year].id).has_arrangements?
+      end
+
+      @voucher = Voucher.new(params[:voucher])
+
+    rescue Exception => e
+      raise Mage::ApiError::new(e.to_s)
     end
 
-
-    @voucher = Voucher.new(params[:voucher])
     begin
       authorize! :write, @voucher
     rescue CanCan::AccessDenied
