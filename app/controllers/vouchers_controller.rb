@@ -81,7 +81,7 @@ class VouchersController < InheritedResources::Base
       authorize! :write, @vouchers
       @vouchers.each do |v|
         unless v.bookkept?
-          v.bookkept_by = current_user 
+          v.bookkept_by = current_user
           v.created_at = Time.now
           if v.save
             Journal.log(:complete,v,current_user, nil)
@@ -110,10 +110,14 @@ class VouchersController < InheritedResources::Base
         raise Mage::ApiError.new("Invalid organ number")
       end
     end
+    if params[:voucher][:activity_year]
+      params[:voucher][:activity_year] = ActivityYear.find_by_year(params[:voucher][:activity_year])
+    else
+      raise Mage::ApiError.new("Missing activity year")
+    end
 
-    params[:voucher][:activity_year] = ActivityYear.find_by_year(params[:voucher][:activity_year])
-    params[:voucher][:authorized_by] = User.find_or_create_by_ugid(params[:voucher][:authorized_by])
-    params[:voucher][:material_from] = User.find_or_create_by_ugid(params[:voucher][:material_from])
+    params[:voucher][:authorized_by] = User.find_or_create_by_ugid(params[:voucher][:authorized_by]) if params[:voucher][:authorized_by]
+    params[:voucher][:material_from] = User.find_or_create_by_ugid(params[:voucher][:material_from]) if params[:voucher][:material_from]
 
     # Parse arrangement number to id
     #params[:voucher][:arrangement]
