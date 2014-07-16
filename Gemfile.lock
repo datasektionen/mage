@@ -18,13 +18,12 @@ GIT
       rqrcode
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     Ascii85 (1.0.2)
     RedCloth (4.2.9)
     XMLCanonicalizer (1.0.1)
       log4r (>= 1.0.4)
-    ZenTest (4.9.1)
     abstract (1.0.0)
     actionmailer (3.0.11)
       actionpack (= 3.0.11)
@@ -59,8 +58,6 @@ GEM
       builder
     archive-tar-minitar (0.5.2)
     arel (2.0.10)
-    autotest (4.4.6)
-      ZenTest (>= 4.4.1)
     bcrypt-ruby (3.0.1)
     builder (2.1.2)
     cancan (1.6.7)
@@ -310,7 +307,6 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   airbrake
-  autotest
   cancan
   capistrano
   capistrano-ext
