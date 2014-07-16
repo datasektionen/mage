@@ -66,7 +66,8 @@ class VoucherPDF < Prawn::Document
         text voucher.corrected_by.pretty_number, :size=>16, :align=>:right,:style=>:bold
       end
     end
-    stroken_box grid([3,2],[4,5]) do 
+
+    stroken_box grid([3,2],[4,5]) do
       text "Underlag från:", :size=>14, :style=>:bold_italic
       text_box voucher.material_from.name,:at=>[0,cursor], :size=>16, :align=>:right, :overflow=>:shrink_to_fit
     end
@@ -94,7 +95,7 @@ class VoucherPDF < Prawn::Document
         ]
         if r.canceled?
           d[0..-2].map { |i| "<strikethrough>#{i}</strikethrough>" } + [d[-1]] # Don't strike last
-        else 
+        else
           d
         end
     end
@@ -110,23 +111,24 @@ class VoucherPDF < Prawn::Document
 
     num_rows = 31
     if table_data.length < num_rows
-      (num_rows - table_data.length).times do 
+      (num_rows - table_data.length).times do
         table_data << ["","","","",""]
       end
     end
-    
+
     font_size(10)
 
     grid([5,2],[40,5]).bounding_box do
       stroke_bounds
       wf = bounds.width/100 #width fraction
-      table table_data, 
-          :row_colors => ['dddddd','ffffff'], 
-          :column_widths => [11*wf, 33*wf,19*wf, 19*wf, 18*wf] ,
-          :cell_style => {:height=>19.84}, do |t|
+      table(table_data,
+          :row_colors => ['dddddd','ffffff'],
+          :column_widths => [11*wf, 33*wf,19*wf, 19*wf, 18*wf],
+          :cell_style => {:height=>19.84}) do |t|
             t.rows(0).font_style = :bold
             t.columns(2..3).align = :right
-            t.columns(0..4).style(:overflow => :shrink_to_fit,:inline_format=>true)
+            t.columns(0..4).style(:overflow => :shrink_to_fit,
+                                  :inline_format => true)
             t.rows(0).columns(0..4).align = :center
           end
     end
@@ -140,7 +142,7 @@ class VoucherPDF < Prawn::Document
     end
   end
 
-  def stroken_box(g, options={}, &block) 
+  def stroken_box(g, options={}, &block)
     options[:padding_left] ||= 2
     options[:padding_right] ||= 2
     options[:padding_top] ||= 3
