@@ -28,9 +28,10 @@ gem 'airbrake'
 gem 'sunspot_rails'
 gem 'progress_bar'
 gem 'enum_column3'
+gem 'nokogiri', '~> 1.5.4'
+gem 'mysql2', '~> 0.2.6'
 
 group :production do
-  gem 'mysql2', '~> 0.2.6'
   gem 'unicorn'
 end
 
@@ -44,10 +45,6 @@ group :development, :test do
   gem 'libnotify'
   gem 'rb-inotify'
   gem 'sunspot_solr'
-end
-
-group :development do
-  gem 'mysql2', '~> 0.2.6'
 end
 
 group :test do
