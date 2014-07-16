@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.0.9'
+gem 'rails', '~> 3.2.0'
 
 gem 'RedCloth'
 gem 'sass'
@@ -26,7 +26,7 @@ gem 'sunspot_rails'
 gem 'progress_bar'
 gem 'enum_column3'
 gem 'nokogiri', '~> 1.5.4'
-gem 'mysql2', '~> 0.2.6'
+gem 'mysql'
 
 group :production do
   gem 'unicorn'
