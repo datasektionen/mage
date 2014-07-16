@@ -2,17 +2,14 @@ source 'http://rubygems.org'
 
 gem 'rails', '~> 3.0.9'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 gem 'RedCloth'
 gem 'sass'
 gem 'inherited_resources'
 gem 'has_scope'
 gem 'simple_form'
 gem 'devise', '1.4.9'
-gem 'oa-enterprise'#, :git => 'https://github.com/intridea/omniauth.git'
-gem 'oa-oauth'#, :git => 'https://github.com/intridea/omniauth.git'
+gem 'oa-enterprise'
+gem 'oa-oauth'
 gem 'i18n_routing'
 gem 'friendly_id', '~> 4.0.0'
 gem 'net-ldap'
