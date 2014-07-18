@@ -6,7 +6,7 @@ class VoucherTemplatesController < InheritedResources::Base
     @organ = Organ.find(params[:organ])
     @activity_year = ActivityYear.find(params[:activity_year])
     render :layout => nil
-  end 
+  end
 
   def parse
     arr = params[:arrangement].to_i
@@ -17,7 +17,7 @@ class VoucherTemplatesController < InheritedResources::Base
     rescue Exception => e
       render :inline=>e.message, :status=>400 and return
     end
-    @sum = @rows.reduce(0) { |s, r| s = s + r.int_sum } 
+    @sum = @rows.reduce(0) { |s, r| s = s + r.int_sum }
     render 'vouchers/rows'
   end
 
@@ -37,12 +37,12 @@ class VoucherTemplatesController < InheritedResources::Base
     redirect_to voucher_template_path(cloned)
   end
 
-  def destroy 
+  def destroy
     destroy! do |success, failure|
       success.html {
         flash[:notice] = t('voucher_templates.delete_success')
         redirect_to voucher_templates_path
       }
-    end     
+    end
   end
 end

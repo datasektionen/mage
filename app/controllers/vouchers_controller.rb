@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-class VouchersController < InheritedResources::Base 
+class VouchersController < InheritedResources::Base
   actions :all
   after_filter LogFilter , :only=>[:create,:update, :destroy]
 
