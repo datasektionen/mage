@@ -1,6 +1,6 @@
 %h2 Rapporter
 
-- form_tag reports_path do
+= form_tag reports_path do
   %p.input
     = label_tag "report[activity_year]","Verksamhetsår"
     = select_tag("report[activity_year]", options_from_collection_for_select(ActivityYear.order("year DESC"), :id, :year,current_activity_year.id))
