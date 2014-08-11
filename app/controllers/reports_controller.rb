@@ -14,9 +14,8 @@ class ReportsController < ApplicationController
     @series = Series.find(@report_input[:series]) unless @report_input[:series].empty?
     @account = Account.find(@report_input[:account]) unless @report_input[:account].empty?
     @activity_year = ActivityYear.find(@report_input[:activity_year])
-    @organs = @report_input[:organ].blank? ? nil : @report_input[:organ].map do |o|
-      Organ.find(o)
-    end
+    @organs = Array(@report_input[:organ]).select(&:present?).map { |o| Organ.find(o) }
+    @organs = nil if @organs.blank?
 
     @report_name += " (filtrerad)" if @series || @organs
 
