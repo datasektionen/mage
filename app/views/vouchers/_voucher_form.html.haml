@@ -13,7 +13,7 @@
     #templates{:style=>"display:none"}
       %p.input
         = r.label "Mall", :required=>false
-        = r.select :template, "<option/>"+options_from_collection_for_select(VoucherTemplate.in_year(current_activity_year.year).multirow, :id, :name)
+        = r.select :template, options_from_collection_for_select(VoucherTemplate.in_year(current_activity_year.year), :id, :name), include_blank: true
       #template_fields.clear
       
 
