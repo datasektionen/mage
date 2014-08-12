@@ -6,7 +6,7 @@
   %dt Är admin?
   %dd= @user.admin? ? "Ja" : "Nej"
   %dt Email
-  %dd= auto_link(@user.email).html_safe
+  %dd= link_to(@user.email, "mailto:#{@user.email}")
   %dt Initialer
   %dd= @user.initials
   %dt Standardserie
