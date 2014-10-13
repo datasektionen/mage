@@ -4,13 +4,13 @@ class ApiAccess < ActiveRecord::Base
 
   validates_format_of :read_write, :with => /r?w?/
 
-  # Returns api access objects for all 
+  # Returns api access objects for all
   # items in series, with api_key.
   def self.for_series(series, api_key)
     series.map do |s|
       api_key.find_access(s) or ApiAccess.new(:api_key=>api_key, :series=>s)
     end
-  end 
+  end
 
   # :none, :read, :write, :read_write
   def access=(type)

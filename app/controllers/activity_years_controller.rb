@@ -20,7 +20,7 @@ class ActivityYearsController < ApplicationController
     authorize! :create, @activity_year
     if @activity_year.save
       clone_accounts = params[:activity_year][:account][:clone]
-      
+
       @clone_year = ActivityYear.find(clone_accounts)
       if @clone_year
         @activity_year.accounts = @clone_year.clone_accounts(params[:activity_year][:account][:transfer_saldo])

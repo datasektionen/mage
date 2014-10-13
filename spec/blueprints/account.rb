@@ -5,10 +5,10 @@ Account.blueprint do
   activity_year { ActivityYear.first }
 end
 
-Account.blueprint :type_1 do 
+Account.blueprint :type_1 do
   account_group { AccountGroup.make(:account_type => 1 ) }
 end
 
-Account.blueprint :type_2 do 
+Account.blueprint :type_2 do
   account_group { AccountGroup.make(:account_type => 2 ) }
 end

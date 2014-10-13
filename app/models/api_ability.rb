@@ -15,7 +15,7 @@ class ApiAbility
         else
           series = nil
         end
-        
+
         unless series.nil?
           if action == :read
             key.has_access? series, :read

@@ -35,14 +35,14 @@ $(function() {
       fields[$(o).attr("script_name")] = $(o).val()
     })
     params =  {
-      "template": $("#voucher_add_row_template").val(), 
+      "template": $("#voucher_add_row_template").val(),
       "arrangement" : $("#voucher_add_row_template_arrangement").val(),
       "activity_year" : activity_year_id,
       "fields" : fields
     }
 
     $.ajax( {
-      url: template_parse_url, 
+      url: template_parse_url,
       type: "POST",
       data: params,
       success: function(data, textStatus, xhr) {

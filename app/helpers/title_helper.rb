@@ -4,7 +4,7 @@ module TitleHelper
   def title(title)
     @title = title
   end
-  
+
   def render_title
     if @title.present?
       title = @title
@@ -13,13 +13,13 @@ module TitleHelper
         @page.title.present? ? @page.title  : ""
       end
     end
-    
+
     if title.blank?
       title = "MAGE"
     else
-      title += " – MAGE" 
+      title += " – MAGE"
     end
     title
   end
-  
+
 end

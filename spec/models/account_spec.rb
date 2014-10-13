@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Account do
- 
+
   it "should validate uniquness of number in year" do
     a = Account.make
     a.save
@@ -45,7 +45,7 @@ describe Account do
     a = Account.make
     a.activity_year= nil
     a.should_not be_valid
-  end 
+  end
 
   it "should not be allowed to change number in used account" do
     a = Account.make

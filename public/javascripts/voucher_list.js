@@ -1,4 +1,4 @@
-var select_toggle=true 
+var select_toggle=true
 
 $(function() {
   active_voucher_list()

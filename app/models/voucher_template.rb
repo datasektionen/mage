@@ -32,7 +32,7 @@ class VoucherTemplate < ActiveRecord::Base
         r = f.parse(values,arr, activity_year)
         unless r.nil?
           to_parse.delete(f)
-          result[f.id] = r unless r.sum == 0 
+          result[f.id] = r unless r.sum == 0
           values[f.script_name] = r.sum unless f.script_name.nil? or f.script_name.empty?
         end
       end
@@ -61,17 +61,17 @@ class VoucherTemplate < ActiveRecord::Base
     self.is_deleted = true
     save
   end
-private 
+private
   alias shallow_clone clone
 public
   def clone
     v = shallow_clone
-    v.input_fields = input_fields.map { |f| 
+    v.input_fields = input_fields.map { |f|
       c = f.clone
       c.template=v
       c
     }
-    v.output_fields = output_fields.map { |f| 
+    v.output_fields = output_fields.map { |f|
       c = f.clone
       c.template=v
       c

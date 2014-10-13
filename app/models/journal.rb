@@ -9,7 +9,7 @@ class Journal < ActiveRecord::Base
     object_data = obj.inspect
     object_data = obj.to_log if obj.respond_to? :to_log
     # suppress warning about changing object_id:
-    silence_warnings do 
+    silence_warnings do
       create(
         :message=>"#{action_name} #{model_name}: #{object_data}",
         :user=>user,

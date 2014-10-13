@@ -16,7 +16,7 @@ class ApiKey < ActiveRecord::Base
     end
   end
 
-  def self.authorize(params,body) 
+  def self.authorize(params,body)
     if params[:apikey]
       api_key = self.find_by_key(params[:apikey])
       if api_key
@@ -44,7 +44,7 @@ class ApiKey < ActiveRecord::Base
   end
 
   # Type is :read, :write or :read_write
-  def has_access?(series=nil, type=nil) 
+  def has_access?(series=nil, type=nil)
     return false if revoked?
 	 return true if series.nil? && type.nil?
     a = find_access(series)

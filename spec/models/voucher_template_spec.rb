@@ -19,7 +19,7 @@ describe VoucherTemplate do
     v.save
 
     v2 = v.clone
-    old_o = v2.output_fields[0].account_number 
+    old_o = v2.output_fields[0].account_number
     old_i = v2.input_fields[0].name
     v2.save
 

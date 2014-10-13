@@ -35,7 +35,7 @@ describe Arrangement do
     a3.number = a1.number+1000
     a3.should be_valid
     a3.number = a1.number
-  
+
     a3.should_not be_valid
   end
 

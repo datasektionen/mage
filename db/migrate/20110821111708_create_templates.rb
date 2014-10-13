@@ -12,7 +12,7 @@ class CreateTemplates < ActiveRecord::Migration
       t.string :name
       t.string :description
       t.string :script_name
-    end 
+    end
 
     create_table :template_output_fields do |t|
       t.integer :template_id

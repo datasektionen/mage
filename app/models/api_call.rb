@@ -8,14 +8,14 @@ class ApiCall
     params["ugid"] = user_ugid
     body = params.to_json
     checksum = create_hash(body,private_key)
- 
+
     url_ = "#{url}?checksum=#{checksum}"
     uri = URI.parse url_
 
     request = Net::HTTP::Post.new(url_)
     request.add_field "Content-Type", "application/json"
     request.body = body
-  
+
     http = Net::HTTP.new(uri.host,uri.port)
     res = http.request request
   end

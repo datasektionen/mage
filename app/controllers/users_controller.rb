@@ -1,4 +1,4 @@
-class UsersController < InheritedResources::Base 
+class UsersController < InheritedResources::Base
   load_and_authorize_resource
   skip_load_and_authorize_resource only: :index
 
@@ -7,7 +7,7 @@ class UsersController < InheritedResources::Base
     super
   end
 
-  def update 
+  def update
     add_right = params[:user][:add_right]
     unless add_right[:series].empty?
       UserAccess.create(

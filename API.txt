@@ -28,7 +28,7 @@ parameters:
   ]
 }
 
-This should be placed in the request body. 
+This should be placed in the request body.
 
 A checksum calculated by taking the request body and appending the private key should be sent an extra parameter (not in the request body) (get or post)
 

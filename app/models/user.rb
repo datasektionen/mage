@@ -43,9 +43,9 @@ class User < ActiveRecord::Base
   # * ugid
   # * login
   # * email
-  # 
+  #
   # If supplied with more than one filter, the search will be more specific (first_name=foo & last_name=bar).
-  # 
+  #
   # Make sure to supply it with specific filters, since it will only return the first user it finds.
   def self.from_ldap(options = {})
     filters = {:givenName   => options[:first_name],
@@ -53,9 +53,9 @@ class User < ActiveRecord::Base
                :ugKthid     => options[:ugid],
                :ugUsername  => options[:login],
                :mail        => options[:email]}
-    
+
     filters.reject! {|k,v| v.blank? }
-    
+
     # if we don't have any filters, we won't have to search
     return nil if filters.empty?
     # map filters to proper ldap filters,
@@ -63,11 +63,11 @@ class User < ActiveRecord::Base
     filter = filters.map do |k,v|
       Net::LDAP::Filter.eq(k,v)
     end.inject {|x,y| x&y }
-    
-    ldap = Net::LDAP.new( :host => Mage::Application.settings["ldap_host"], 
-                          :base => Mage::Application.settings["ldap_basedn"], 
+
+    ldap = Net::LDAP.new( :host => Mage::Application.settings["ldap_host"],
+                          :base => Mage::Application.settings["ldap_basedn"],
                           :port => Mage::Application.settings["ldap_port"])
-    
+
     ldap.search(:filter => filter) do |u|
       user = new()
       user.first_name = u.givenName.first
@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
     end
     return nil
   end
-  
+
   # Utilize User.from_ldap and save the resulting user.
   # This is for example used by UserSessionController in order to make sure that all logged in CAS users have a corresponding User-object.
   def self.create_from_ldap(options)

@@ -4,7 +4,7 @@ describe VoucherRow do
   it "readonly attributes" do
     vr = VoucherRow.make
     vr.save
-    
+
     pre = vr.attributes
     vr.account = Account.make
     vr.sum+=100
@@ -27,9 +27,9 @@ describe VoucherRow do
       voucher.voucher_rows[0].account.account_group.account_type = i
       voucher.voucher_rows[0].account.has_arrangements?.should == true
       voucher.voucher_rows[0].arrangement = Arrangement.make
-      voucher.should be_valid 
+      voucher.should be_valid
       voucher.voucher_rows[0].arrangement = nil
-      voucher.should_not be_valid 
+      voucher.should_not be_valid
     end
   end
 
@@ -39,9 +39,9 @@ describe VoucherRow do
       voucher.voucher_rows[0].account.account_group.account_type = i
       voucher.voucher_rows[0].account.has_arrangements?.should == false
       voucher.voucher_rows[0].arrangement = nil
-      voucher.should be_valid 
+      voucher.should be_valid
       voucher.voucher_rows[0].arrangement = Arrangement.make
-      voucher.should_not be_valid 
+      voucher.should_not be_valid
     end
   end
 
@@ -104,7 +104,7 @@ describe VoucherRow do
     voucher.voucher_rows[0].cancel!
     voucher.voucher_rows[0].signature = User.make
 
-    voucher.should be_valid 
+    voucher.should be_valid
 
     voucher.voucher_rows[0].arrangement = Arrangement.make(:organ=>Organ.make)
 

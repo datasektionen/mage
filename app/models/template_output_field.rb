@@ -5,7 +5,7 @@ class TemplateOutputField < ActiveRecord::Base
   validates :account_number, :presence=>true, :numericality=>{:only_integer => true}
   validates :formula, :presence=>true
 
-  def parse(values,arr,activity_year) 
+  def parse(values,arr,activity_year)
     complete = true
     _formula = formula.gsub(/\{(.+?)\}/) do |m|
       if values.key?($1)

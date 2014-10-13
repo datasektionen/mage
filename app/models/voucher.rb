@@ -31,7 +31,7 @@ class Voucher < ActiveRecord::Base
 
   validate :accounting_date_in_activity_year
 
-  validate :readonly_if_stagnate 
+  validate :readonly_if_stagnate
   attr_readonly  :material_from_id, :activity_year_id, :corrects_id, :api_key_id
   attr_writeonce :authorized_by_id, :bookkept_by_id, :number
 
@@ -44,7 +44,7 @@ class Voucher < ActiveRecord::Base
 
   default_scope where('bookkept_by_id is not null') # By default only show bookkept vouchers
 
-  scope :recent, lambda {|s| 
+  scope :recent, lambda {|s|
     where("series_id = ?", s.id).
     order("created_at DESC")
   }
@@ -63,13 +63,13 @@ class Voucher < ActiveRecord::Base
     boolean :corrected, :using => :corrected?
     boolean :corrects, :using => :corrects?
   end
-  
+
   #Warning, this methods unscopes!
   def self.incomplete
     return unscoped.where("bookkept_by_id is null")
   end
 
-  def self.find_by_account_and_activity_year(account_number, activity_year_id) 
+  def self.find_by_account_and_activity_year(account_number, activity_year_id)
     joins(:voucher_rows).where("voucher_rows.account_number"=>account_number, :activity_year_id=>activity_year_id)
   end
 
@@ -119,7 +119,7 @@ class Voucher < ActiveRecord::Base
       super
     end
   end
-    
+
   # sum(abs(row.sum))/2
   def enfoldment
     voucher_rows.reduce(0) {|sum, vr| sum + (vr.canceled? ? 0 : vr.sum.abs) } / 2
@@ -131,7 +131,7 @@ class Voucher < ActiveRecord::Base
 
   def to_s
     return pretty_number
-  end 
+  end
 
   # Returns name or name + api key name
   def authorized_by_to_s
@@ -143,7 +143,7 @@ class Voucher < ActiveRecord::Base
       r = "Unknown via #{api_key.name}" unless api_key.nil?
     end
     r
-  end 
+  end
 
   # Define output in log
   def to_log
@@ -208,11 +208,11 @@ private
     raise "[Voucher] Tried to delete VoucherRows!" if bookkept_validation?
   end
 
-  def check_signature(row) 
+  def check_signature(row)
     raise "[Voucher] Added row lacks signature: #{row.inspect}" if bookkept_validation? and row.signature.nil? and not current_voucher_rows.include?(row)
   end
-  
-  def added_rows_has_signature 
+
+  def added_rows_has_signature
     if (voucher_rows-current_voucher_rows).any? {|vr| vr.signature.nil? }
       errors[:base] << "Tillagd rad saknar signatur"
     end
@@ -225,7 +225,7 @@ private
   def not_empty
     errors[:base] << "Verifikatet är tomt" unless voucher_rows.size > 0
   end
-    
+
   def readonly_if_stagnate
     #:organ_id, :accounting_date, :series_id
     if stagnated?

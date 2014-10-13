@@ -4,7 +4,7 @@ module Mage
       attr_reader :arrangement, :account_group_reports
       attr_reader :balance_difference, :total_debet, :total_kredit
 
-      def initialize(arrangement) 
+      def initialize(arrangement)
         @arrangement = arrangement
         @account_group_reports = []
       end
@@ -14,7 +14,7 @@ module Mage
 
         current_data = []
         current_account_group = {:number=>data.first["account_group_number"], :name=>data.first["account_group_name"]}
-        
+
         data.each do |d|
           if current_account_group[:number] != d["account_group_number"]
             current_account_group = nil if current_account_group[:number].nil?
@@ -32,7 +32,7 @@ module Mage
         report
       end
 
-      def calculate_balance_difference 
+      def calculate_balance_difference
         @balance_difference = 0
         @total_debet = 0
         @total_kredit = 0

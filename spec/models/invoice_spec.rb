@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Invoice do
-  
+
   it "should be vaild" do
     invoice = Invoice.make
     invoice.should be_valid
@@ -17,7 +17,7 @@ describe Invoice do
     invoice = Invoice.make(:ingoing)
     invoice.sum_account_type.should eq(Account::DEBT_ACCOUNT)
   end
-  
+
   it "the blueprints should set correct account types" do
     invoice = Invoice.make(:outgoing)
     invoice.voucher.voucher_rows[0].account.account_type.should eq(invoice.sum_account_type)

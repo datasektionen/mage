@@ -1,7 +1,7 @@
 module Mage
   class Report
 
-    def self.data_from_query(query) 
+    def self.data_from_query(query)
       result = ActiveRecord::Base.connection.execute(query)
       data = []
       result.each do |r|
@@ -19,12 +19,12 @@ module Mage
           self.data_from_query("
                           select
                             accounts.ingoing_balance,
-                            accounts.name as 'account_name', 
+                            accounts.name as 'account_name',
                             account_groups.title as 'account_group_name',
                             account_groups.number as 'account_group_number',
                             voucher_rows.id,
                             voucher_rows.sum,
-                            voucher_rows.arrangement_id, 
+                            voucher_rows.arrangement_id,
                             voucher_rows.signature_id,
                             voucher_rows.account_number,
                             vouchers.number as 'voucher_number',
@@ -39,7 +39,7 @@ module Mage
                             IF(account_groups.account_type < 3, NULL, organs.number) as 'organ_number'
                           from voucher_rows
                              left join arrangements on voucher_rows.arrangement_id = arrangements.id
-                             join vouchers on voucher_rows.voucher_id = vouchers.id 
+                             join vouchers on voucher_rows.voucher_id = vouchers.id
                              join organs on vouchers.organ_id = organs.id
                              join accounts on accounts.number = voucher_rows.account_number and accounts.activity_year_id = vouchers.activity_year_id
                              join account_groups on accounts.account_group_id = account_groups.id
@@ -48,7 +48,7 @@ module Mage
                             vouchers.activity_year_id = #{activity_year.id.to_i}
                             and voucher_rows.canceled = 0
                             #{optional_conditions}
-                         order by 
+                         order by
                           organ_number,
                            arrangement_number,
                            account_groups.number,
@@ -71,7 +71,7 @@ module Mage
                             #{sign}SUM(GREATEST(voucher_rows.sum,0)) as 'debet',
                             #{sign}SUM(LEAST(voucher_rows.sum,0)) as 'kredit',
                             #{sign}accounts.ingoing_balance,
-                            accounts.name as 'account_name', 
+                            accounts.name as 'account_name',
                             account_groups.title as 'account_group_name',
                             account_groups.number as 'account_group_number',
                             voucher_rows.account_number,
@@ -82,7 +82,7 @@ module Mage
                             IF(account_groups.account_type < 3, NULL, organs.number) as 'organ_number'
                           from voucher_rows
                              left join arrangements on voucher_rows.arrangement_id = arrangements.id
-                             join vouchers on voucher_rows.voucher_id = vouchers.id 
+                             join vouchers on voucher_rows.voucher_id = vouchers.id
                              join organs on vouchers.organ_id = organs.id
                              join accounts on accounts.number = voucher_rows.account_number and accounts.activity_year_id = vouchers.activity_year_id
                              join account_groups on accounts.account_group_id = account_groups.id
@@ -92,7 +92,7 @@ module Mage
                             and voucher_rows.canceled = 0
                             #{optional_conditions}
                          group by organ_number, arrangements.number, accounts.number
-                         order by 
+                         order by
                            organ_number,
                            arrangement_number,
                            account_groups.number,
@@ -115,13 +115,13 @@ module Mage
                             #{sign}SUM(GREATEST(voucher_rows.sum,0)) as 'debet',
                             #{sign}SUM(LEAST(voucher_rows.sum,0)) as 'kredit',
                             #{sign}accounts.ingoing_balance,
-                            accounts.name as 'account_name', 
+                            accounts.name as 'account_name',
                             account_groups.title as 'account_group_name',
                             account_groups.number as 'account_group_number',
                             voucher_rows.account_number
                             from voucher_rows
                              left join arrangements on voucher_rows.arrangement_id = arrangements.id
-                             join vouchers on voucher_rows.voucher_id = vouchers.id 
+                             join vouchers on voucher_rows.voucher_id = vouchers.id
                              join accounts on accounts.number = voucher_rows.account_number and accounts.activity_year_id = vouchers.activity_year_id
                              join account_groups on accounts.account_group_id = account_groups.id
                              join series on vouchers.series_id = series.id
@@ -130,7 +130,7 @@ module Mage
                             and voucher_rows.canceled = 0
                             #{optional_conditions}
                          group by accounts.number
-                         order by 
+                         order by
                            account_groups.number,
                            accounts.number
                           ")
@@ -141,7 +141,7 @@ module Mage
 
     private
 
-    def self.build_optional_condition(series, organs, account, account_type_filter = nil) 
+    def self.build_optional_condition(series, organs, account, account_type_filter = nil)
       optional_conditions = ""
       optional_conditions += " and vouchers.series_id = #{series.id.to_i}" unless series.nil?
       optional_conditions += " and vouchers.organ_id IN (#{organs.map {|o| o.id.to_i}.join(",") })" unless organs.nil?

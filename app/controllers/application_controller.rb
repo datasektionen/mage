@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from Mage::ApiError do |exception|
  	 render :json=> {"errors"=>"Api Error: #{exception.message}"}, :status=>500
-  end	
+  end
 
   #rescue_from ActiveRecord::RecordNotFound do |exception|
   #  render "errors/error_404"
@@ -35,14 +35,14 @@ class ApplicationController < ActionController::Base
   #rescue_from CanCan::AccessDenied do |exception|
   #  render 'errors/access_denied', :status=>401 and return false
   #end
-  
+
   # Returns the series set in session[:current_series] or default_series if it is not set
   def current_series
     if @current_series
       @current_series
-    else 
-      @current_series = Series.find(session[:current_series]) if session[:current_series] 
-      if @current_series.nil? && current_user.default_series 
+    else
+      @current_series = Series.find(session[:current_series]) if session[:current_series]
+      if @current_series.nil? && current_user.default_series
         @current_series = current_user.default_series
       elsif @current_series.nil?
         @current_series = Series.all.first
@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_activity_year=(activity_year)
-    session[:current_activity_year] = activity_year.id 
+    session[:current_activity_year] = activity_year.id
     @current_activity_year = activity_year
   end
 
@@ -78,7 +78,7 @@ class ApplicationController < ActionController::Base
 		Ability.new current_user
 	 else
 		ApiAbility.new current_api_key
-	 end	
+	 end
   end
 
   def current_user
@@ -108,7 +108,7 @@ class ApplicationController < ActionController::Base
 	 if @apikey
       @apikey
 	 elsif params[:apikey]
-	 	raise Mage::ApiError.new("Invalid api key")		
+	 	raise Mage::ApiError.new("Invalid api key")
 	 else
 	 	nil
 	 end
@@ -139,7 +139,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def after_sign_in_path_for(res) 
+  def after_sign_in_path_for(res)
     stored_location_for(res) || accounting_index_path
   end
 

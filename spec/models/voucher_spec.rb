@@ -98,7 +98,7 @@ describe Voucher do
     voucher = Voucher.make
     voucher.should be_valid
     voucher.save
-    
+
     pre = voucher.attributes
     ++voucher.number
     voucher.bookkept_by = User.make
@@ -123,19 +123,19 @@ describe Voucher do
     end
 
 
-    it "should not allow change of accounting date" do 
+    it "should not allow change of accounting date" do
       @voucher.accounting_date = 2.days.ago
       @voucher.should_not be_valid
     end
 
-    it "should not allow change of series" do 
+    it "should not allow change of series" do
       series = Series.make
       series.save
       @voucher.series = series
       @voucher.should_not be_valid
     end
 
-    it "should not allow change of organ" do 
+    it "should not allow change of organ" do
       organ = Organ.make
       organ.save
       @voucher.organ = organ
@@ -150,12 +150,12 @@ describe Voucher do
       @voucher.save
     end
 
-    it "should allow change of accounting date" do 
+    it "should allow change of accounting date" do
       @voucher.accounting_date = 2.days.ago
       @voucher.should be_valid
     end
 
-    it "should allow change of organ" do 
+    it "should allow change of organ" do
       organ = Organ.make
       organ.save
       @voucher.organ = organ
@@ -177,7 +177,7 @@ describe Voucher do
       @voucher.should be_valid
     end
 
-    it "should allow change of series" do 
+    it "should allow change of series" do
       series = Series.make
       series.save
       @voucher.series = series
@@ -202,7 +202,7 @@ describe Voucher do
   end
 
   it "should allow row adding without signature in not bookkept vouchers" do
-    voucher = Voucher.make(:not_bookkept); 
+    voucher = Voucher.make(:not_bookkept);
     voucher.save
     sum = rand(100)
     voucher.bookkept_by = User.make
@@ -215,7 +215,7 @@ describe Voucher do
   end
 
   it "should allow row deletion in not bookkept vouchers" do
-    voucher = Voucher.make(:not_bookkept); 
+    voucher = Voucher.make(:not_bookkept);
     sum = rand(100)
     added_rows = [
       VoucherRow.make(:voucher => voucher, :sum => sum),
@@ -251,7 +251,7 @@ describe Voucher do
   end
 
   it "should allow row deletion and addition in not bookkept vouchers" do
-    voucher = Voucher.make(:not_bookkept); 
+    voucher = Voucher.make(:not_bookkept);
     voucher.save
 
     num_rows = voucher.voucher_rows.count

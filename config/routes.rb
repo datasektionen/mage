@@ -4,7 +4,7 @@ Mage::Application.routes.draw do
     get "sign_out", :to => "users/omniauth_callbacks#destroy", :as => :destroy_user_session
   end
 
-  localized(['sv']) do 
+  localized(['sv']) do
 
     resources :journals
     resources :series
@@ -30,7 +30,7 @@ Mage::Application.routes.draw do
         post :show
       end
     end
-    resources :vouchers do 
+    resources :vouchers do
       collection do
         get :rows, :defaults => {:format => :xml}
         post :print, :default => {:format => :pdf}
@@ -41,7 +41,7 @@ Mage::Application.routes.draw do
       end
     end
 
-    
+
     resources :administration, :only => [:index], :controller => "administration"
     resources :accounting, :only => [:index], :controller => "accounting" do
       collection do
@@ -50,7 +50,7 @@ Mage::Application.routes.draw do
       end
     end
 
-    resources :voucher_templates do 
+    resources :voucher_templates do
       collection do
         get :fields
         post :parse

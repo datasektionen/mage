@@ -36,7 +36,7 @@ class VouchersController < InheritedResources::Base
       @voucher.accounting_date = last_voucher.accounting_date
       @voucher.organ = last_voucher.organ
     else
-      @voucher.accounting_date = Time.now 
+      @voucher.accounting_date = Time.now
     end
 
     authorize! :write, @voucher
@@ -49,7 +49,7 @@ class VouchersController < InheritedResources::Base
       @voucher.title = "Rättar #{@voucher.corrects}"
       @voucher.series = @voucher.corrects.series
       @voucher.activity_year = @voucher.corrects.activity_year
-      self.current_series = @voucher.series 
+      self.current_series = @voucher.series
       self.current_activity_year = @voucher.activity_year
     end
   end
@@ -67,7 +67,7 @@ class VouchersController < InheritedResources::Base
     end
     @voucher.material_from = current_user
     create! do |success, failure|
-      success.html { 
+      success.html {
         self.current_series = @voucher.series
         flash[:notice] = "Verifikat <a href='#{voucher_path(@voucher)}'>#{@voucher.pretty_number}</a> skapades"
         redirect_to new_voucher_path
@@ -161,7 +161,7 @@ class VouchersController < InheritedResources::Base
           vr[:signature_id] = current_user.id if voucher_row.changed?
         else
           # New row, add signature
-          vr[:signature_id] = current_user.id 
+          vr[:signature_id] = current_user.id
         end
       else
         vr[:signature_id] = nil #If it is not yet bookkept we shall have no signatures
@@ -169,9 +169,9 @@ class VouchersController < InheritedResources::Base
     end
 
     unless @voucher.bookkept?
-      params[:bookkept_by] = current_user 
+      params[:bookkept_by] = current_user
       update_created_at = true
-    else 
+    else
       update_created_at = false
     end
 
@@ -179,13 +179,13 @@ class VouchersController < InheritedResources::Base
       success.html {
 
         # If the voucher came from the api and was bookept now, update created at
-        if update_created_at 
+        if update_created_at
           @voucher.created_at = Time.now
           @voucher.save
         end
 
         if @voucher.bookkept_by_id.nil?
-          @voucher.bookkept_by_id = current_user.id 
+          @voucher.bookkept_by_id = current_user.id
           @voucher.save
         end
         flash[:notice] = "Verifikat #{@voucher.pretty_number} har uppdaterats"
@@ -203,7 +203,7 @@ class VouchersController < InheritedResources::Base
     authorize! :read, @vouchers
     output = VoucherPDF.new(@vouchers).to_pdf
 
-    respond_to do |format| 
+    respond_to do |format|
       format.pdf do
         send_data output, :filename => "verifikat.pdf",
                           :type => :pdf,
@@ -220,7 +220,7 @@ class VouchersController < InheritedResources::Base
   # Renders rows for new and edit
   def rows
     @voucher = Voucher.unscoped.find(:first, :conditions=>{:id=>params[:voucher_id].to_i}, :select=>[:id, :bookkept_by_id])
- 
+
     @activity_year = params[:activity_year]
 
     if params[:type] == "account"
@@ -234,9 +234,9 @@ class VouchersController < InheritedResources::Base
     else
       render :nothing=>true, :status=>500 and return
     end
-    @sum = @rows.reduce(0) { |memo, r| memo+=r.int_sum } 
+    @sum = @rows.reduce(0) { |memo, r| memo+=r.int_sum }
 
-    if @voucher && @voucher.bookkept? 
+    if @voucher && @voucher.bookkept?
       @rows.each {|r| r.signature = current_user; r.updated_at = Time.now }
     end
   end
@@ -253,7 +253,7 @@ class VouchersController < InheritedResources::Base
     redirect_to accounting_index_path and return
   end
 
-protected 
+protected
 
   def resource
     @voucher ||= Voucher.unscoped.find(params[:id])

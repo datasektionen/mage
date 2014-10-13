@@ -7,7 +7,7 @@ $(".update_all_kredit").click(function(e) {
   }
   return false
 })
-  
+
 $(".update_all_debet").click(function(e) {
   var first_val = $(".debet_is_normal_"+$(this).attr("group_id")).first().prop("checked")
   if(first_val !== undefined) {

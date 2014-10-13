@@ -15,7 +15,7 @@ class ArrangementsController < InheritedResources::Base
     end
   end
 
-  def update 
+  def update
     update! do |success, failure|
       success.html {
         flash[:notice] = "Arrangemanget har uppdaterats"

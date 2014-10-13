@@ -53,7 +53,7 @@ $(function() {
   })
 
   //Bind keys
-  $("form.voucher input, form.voucher select").live('keydown', function(e) { 
+  $("form.voucher input, form.voucher select").live('keydown', function(e) {
     var keyCode = e.keyCode || e.which
     if(keyCode == 13)
       e.preventDefault()
@@ -97,7 +97,7 @@ $(function() {
         $("#voucher_add_row_sum").val(sum)
         return false
       }
-    } 
+    }
   })
 
 })
@@ -130,10 +130,10 @@ function add_row() {
     sum = get_diff()*-1.0;
   } else {
     if(!(sum_str.charAt(0) == "+" || sum_str.charAt(0) == "-")) {
-      //Try to guess sign 
+      //Try to guess sign
       if(current_account.kredit_is_normal && !current_account.debet_is_normal) {
         sum = -1*sum;
-      } 
+      }
       // positive for account_type 4
     }
   }
@@ -163,7 +163,7 @@ function add_row() {
         $("#voucher_rows tbody").append($(data).find("html_content").text())
         num_rows += parseInt($(data).find("num_rows").text())
       }
-      
+
       $("#spinner").hide() //Hide spinner
       update_account(undefined) //Unset account
     },

@@ -25,7 +25,7 @@ describe Api do
     }
 
     #key = ApiKey.generate_key("Test", User.make)
-    #key.api_accesses << 
+    #key.api_accesses <<
     #res = ApiCall
   end
 end

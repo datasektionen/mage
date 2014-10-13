@@ -68,7 +68,7 @@ namespace :deploy do
     run "cd #{current_path}; git pull; git reset --hard #{branch}"
     finalize_update
   end
-  
+
   desc "Update the database (overwritten to avoid symlink)"
   task :migrations do
     transaction do
@@ -84,12 +84,12 @@ namespace :deploy do
     cmd = files.map {|file| "ln -sf #{shared_path}/config/#{file} #{release_path}/config/#{file}" }.join(" && ")
     run cmd
   end
- 
+
   desc "compile stylesheets"
   task :compile_stylesheets do
     run "cd #{current_path} && RAILS_ENV=#{rails_env} /usr/local/bin/1.9.2_bundle exec rake sass:build"
   end
-  
+
   task :restart, :except => { :no_release => true } do
     pid = "#{shared_path}/pids/unicorn.pid"
     run "test -e #{pid} && kill -USR2 `cat #{pid}` || /bin/true"
@@ -106,12 +106,12 @@ namespace :deploy do
       set :branch, "HEAD@{1}"
       deploy.default
     end
-    
+
     desc "Rewrite reflog so HEAD@{1} will continue to point to at the next previous release."
     task :cleanup, :except => { :no_release => true } do
       run "cd #{current_path}; git reflog delete --rewrite HEAD@{1}; git reflog delete --rewrite HEAD@{1}"
     end
-    
+
     desc "Rolls back to the previously deployed version."
     task :default do
       rollback.repo
@@ -120,7 +120,7 @@ namespace :deploy do
   end
 end
 
-namespace :bundler do  
+namespace :bundler do
   task :create_symlink, :roles => :app do
     set :bundle_dir, 'vendor/bundle'
     set :shared_bundle_path, File.join(shared_path, 'bundle')
