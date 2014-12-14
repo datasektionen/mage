@@ -43,9 +43,3 @@ group :test do
   gem 'rcov', '< 1.0.0'
   gem 'ruby-debug19'
 end
-
-group :deploy do
-  gem 'capistrano'
-  gem 'capistrano-ext'
-  gem 'capistrano_colors'
-end
