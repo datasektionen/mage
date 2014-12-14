@@ -32,12 +32,6 @@ group :production do
 end
 
 group :development, :test do
-  gem 'guard', '>= 1.0.0'
-  gem 'guard-bundler'
-  gem 'guard-cucumber'
-  gem 'guard-rspec'
-  gem 'libnotify'
-  gem 'rb-inotify'
   gem 'rspec', '~> 2.8.0'
   gem 'rspec-rails'
   gem 'sunspot_solr'
