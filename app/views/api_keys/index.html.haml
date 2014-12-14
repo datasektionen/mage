@@ -8,7 +8,7 @@
       %th Namn
       %th API-nyckel
       %th{:colspan => 3}= t 'actions'
-  
+
   %tbody
     - for api_key in @api_keys
       %tr{ :class => cycle(:odd, :even) }

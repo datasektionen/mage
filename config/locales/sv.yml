@@ -114,13 +114,13 @@
     errors:
       # model.errors.full_messages format.
       format: "%{attribute}} {{message}"
-      
+
       template:
         header:
           one:    "Ett fel förhindrade denna %{model} från att sparas"
           other:  "%{count}} fel förhindrade denna {{model} från att sparas"
         body: "Det var problem med följande fält:"
-      
+
       # The values :model, :attribute and :value are always available for interpolation
       # The value :count is available when applicable. Can be used for pluralization.
       messages:
@@ -245,7 +245,7 @@
   hints:
     voucher_template:
       template_type: "Kontomall är en mall som placeras i 'konto'-fältet, annars hamnar den i listan över mallar."
-      output_fields: "Formeln är helt enkelt en matematisk formel för resultatet, {input_field_script_name} ersätts med värdet för fältet med skriptnamnet angivet inom {}. Skriptnamn är frivilligt för utfälten." 
+      output_fields: "Formeln är helt enkelt en matematisk formel för resultatet, {input_field_script_name} ersätts med värdet för fältet med skriptnamnet angivet inom {}. Skriptnamn är frivilligt för utfälten."
       input_fields: "Namn är det som står vid inmatning och beskrivningen står under inmatningsfältet för att förtydliga. Skriptnamn är det som används för att referera till fältet i formlera i utfälten. Om mallen är en kontomall ska du inte ha några indatafält, det enda indatafältet då är automatiskt {sum}"
       valid_fields: "Endast hela år. Lämna fälten tomma för att inte begränsa åt det hållet"
     arrangements:
@@ -284,7 +284,7 @@
 
   time:
     formats:
-      default: "%Y-%m-%d %H:%M:%S" 
+      default: "%Y-%m-%d %H:%M:%S"
       short: "%e %b %H:%M"
       long: "%e %B %Y %H:%M"
       short_time: "%H:%M"
@@ -312,11 +312,11 @@
     update: "Uppdaterade"
     destroy: "Raderade"
     import: "Importerade"
-    update_import: "Uppdaterade via import" 
+    update_import: "Uppdaterade via import"
     activity_year:
       update_accounts: "Uppdaterade kontoplan för "
 # models
-  
+
 
   edit: "Redigera"
   show: "Visa"
@@ -342,11 +342,11 @@
     type1: "Tillgångskonton"
     type2: "Skuldkonton"
     type3: "Intäktskonton"
-    type4: "Utgiftskonton"  
+    type4: "Utgiftskonton"
   voucher_templates:
     delete_success: "Mallen raderades"
-    
-  resources: 
+
+  resources:
     users: "anvandare"
     series: "serier"
     organs: "namnder"

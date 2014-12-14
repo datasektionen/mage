@@ -16,7 +16,7 @@
           %td
             - begin
               = link_to entry.object.to_s, entry.object
-            - rescue NoMethodError 
+            - rescue NoMethodError
               = entry.object.to_s
 
           %td= link_to entry.user.to_s, entry.user
@@ -39,7 +39,7 @@
         status = false
 
       height = pre.data("height")
-      if(height === undefined) 
+      if(height === undefined)
         pre.data("height", pre.css("height"))
 
       if(status === false) {

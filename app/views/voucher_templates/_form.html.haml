@@ -16,9 +16,9 @@
     %p.hint= t('hints.voucher_template.input_fields')
     %table
       %tr
-        %th= t('activerecord.attributes.voucher_template.name') 
-        %th= t('activerecord.attributes.voucher_template.description') 
-        %th= t('activerecord.attributes.voucher_template.script_name') 
+        %th= t('activerecord.attributes.voucher_template.name')
+        %th= t('activerecord.attributes.voucher_template.description')
+        %th= t('activerecord.attributes.voucher_template.script_name')
         %th
       = f.simple_fields_for :input_fields do |fi|
         = render 'input_field_fields', :f=>fi
@@ -29,8 +29,8 @@
     %p.hint= t('hints.voucher_template.output_fields')
     %table
       %tr
-        %th= t('activerecord.attributes.voucher_template.account') 
-        %th= t('activerecord.attributes.voucher_template.formula') 
+        %th= t('activerecord.attributes.voucher_template.account')
+        %th= t('activerecord.attributes.voucher_template.formula')
         %th= t('activerecord.attributes.voucher_template.script_name')
         %th
       = f.simple_fields_for :output_fields do |fo|

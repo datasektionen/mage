@@ -15,7 +15,7 @@
         = r.label "Mall", :required=>false
         = r.select :template, options_from_collection_for_select(VoucherTemplate.in_year(current_activity_year.year), :id, :name), include_blank: true
       #template_fields.clear
-      
+
 
 
   %p.input
@@ -31,7 +31,7 @@
       = image_tag 'ajax-loader.gif', :class=>:spinner
   .clear
   %p#voucher_info
-  
+
   %hr
   %table#voucher_rows
     %thead
@@ -42,7 +42,7 @@
         %th.debet Debet
         %th.kredit Kredit
         %th.signature
-        %th.actions 
+        %th.actions
     %tbody
       = render :partial=>"form_row", :collection=>@voucher.voucher_rows
     %tfoot
@@ -58,7 +58,7 @@
   = f.submit
 - else
   = f.submit :value => t('helpers.submit.bookkeep')
-      
+
 - ActiveRecord::Base.include_root_in_json = false
 / Below is data for javascript
 :javascript

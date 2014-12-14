@@ -6,7 +6,7 @@
       - arrangement_name = arrangement.nil? ? "Tillgångar och skulder" : "#{arrangement[:organ]} - #{arrangement[:name]}(#{arrangement[:number]})"
       %li.arrangement
         %h4= arrangement_name
-        %ul 
+        %ul
           - arr_report.account_group_reports.each do |account_group_report|
             %li
               %ul
@@ -47,8 +47,8 @@
                         %td{:colspan=>4} Utgående saldo
                         %td= currency_clean account_report.outgoing_balance
                       %tr
-                        %td{:colspan=>4} 
-                          Förändring #{account_report.account[:number]} 
+                        %td{:colspan=>4}
+                          Förändring #{account_report.account[:number]}
                           #{format_date @activity_year.starts} - #{format_date @activity_year.ends}:
                         %td= currency_clean account_report.total_debet
                         %td= currency_clean account_report.total_kredit
@@ -60,7 +60,7 @@
           %br
           Kredit: #{currency_clean arr_report.total_kredit}
           %br
-          Resultat: #{currency_clean arr_report.balance_difference} 
+          Resultat: #{currency_clean arr_report.balance_difference}
 
   %hr
   .summary

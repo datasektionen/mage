@@ -4,11 +4,11 @@
 %table.datatable
   %thead
     %th Serie
-    %th 
+    %th
   %tbody
     - @series.each do |s|
       %tr
         %td= link_to s, s
         %td= link_to t('edit'), edit_series_path(s)
-  
+
 %p=link_to "Skapa ny serie", new_series_path

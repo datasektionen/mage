@@ -4,7 +4,7 @@
 %table.datatable
   %thead
     %th Kontogrupper
-    %th 
+    %th
   %tbody
     - @account_groups.each do |account_group|
       %tr
@@ -14,5 +14,5 @@
           - if account_group.allow_destroy?
             |
             =link_to t('destroy'), account_group_path(account_group), :method=>:delete, :confirm=>"Är du säker på att du vill radera kontogruppen?"
-  
+
 %p= link_to "Skapa ny kontogrupp", new_account_group_path

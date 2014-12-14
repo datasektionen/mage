@@ -24,9 +24,9 @@ namespace "import" do
       debet = true
       if(nr < 2000)
         account_group = ag[0]
-      elsif(nr < 3000) 
+      elsif(nr < 3000)
         account_group = ag[1]
-      elsif(nr < 4000) 
+      elsif(nr < 4000)
         account_group = ag[2]
         debet = false
       else
@@ -60,7 +60,7 @@ namespace "import" do
     f = File.open("hogia.si",'r')
     lines = f.readlines
     f.close
-    
+
     # Build syntax tree:
     # Root {
     #   { (Line) a, b, c }
@@ -72,7 +72,7 @@ namespace "import" do
     @pos_stack = Array.new
 
     lines.each { |line| parse_line line}
-    
+
     @organ_translate = Hash.new
     @arr_translate = Hash.new
 
@@ -159,7 +159,7 @@ namespace "import" do
             @organ_translate[item[2]] = o
           elsif item[1] == "1" && item[2] != "0"
             # Skapa översättingstabell för projekt => arr
-            if Arrangement.find_by_number(item[2]).nil? 
+            if Arrangement.find_by_number(item[2]).nil?
               a = Arrangement.new(:name=>item[3], :number=>item[2].to_i)
               a.organ = Organ.first
               a.save
@@ -206,7 +206,7 @@ private
   def parse_line(line)
     line.lstrip!
     if line =~ /^#/
-      @cur_pos << Array.new 
+      @cur_pos << Array.new
       @pos_stack.push(@cur_pos)
       @cur_pos = @cur_pos.last
       parse_line line[1..-1]
