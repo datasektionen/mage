@@ -180,7 +180,6 @@ GEM
       thor (>= 0.14.6, < 2.0)
     raindrops (0.8.0)
     rake (10.3.2)
-    rcov (0.9.11)
     rdoc (3.12.2)
       json (~> 1.4)
     responders (0.6.5)
@@ -276,7 +275,6 @@ DEPENDENCIES
   prawn-qrcode (~> 0.1.1)!
   progress_bar
   rails (~> 3.2.0)
-  rcov (< 1.0.0)
   rqrcode
   rspec (~> 2.8.0)
   rspec-rails
