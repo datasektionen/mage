@@ -3,7 +3,7 @@
 Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in DeviseMailer.
-  config.mailer_sender = "please-change-me@config-initializers-devise.com"
+  config.mailer_sender = 'please-change-me@config-initializers-devise.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
@@ -45,10 +45,10 @@ Devise.setup do |config|
   # from others authentication tools as :clearance_sha1, :authlogic_sha512 (then
   # you should set stretches above to 20 for default behavior) and :restful_authentication_sha1
   # (then you should set stretches to 10, and copy REST_AUTH_SITE_KEY to pepper)
-  #config.encryptor = :bcrypt
+  # config.encryptor = :bcrypt
 
   # Setup a pepper to generate the encrypted password.
-  config.pepper = "2e125486baf90f40fae080ef914a565ac8ca1b5877cadb4e26b6d6ba8fb1968d5ff9eebcc0aa46128da5136c853feb3249ef9c4d44d9c78e55bcfc530a2726e7"
+  config.pepper = '2e125486baf90f40fae080ef914a565ac8ca1b5877cadb4e26b6d6ba8fb1968d5ff9eebcc0aa46128da5136c853feb3249ef9c4d44d9c78e55bcfc530a2726e7'
 
   # ==> Configuration for :confirmable
   # The time you want to give your user to confirm his account. During this time
@@ -142,6 +142,6 @@ Devise.setup do |config|
   #   manager.default_strategies(:scope => :user).unshift :twitter_oauth
   # end
   #
-  #config.cas_base_url = "https://login.kth.se"
-  config.omniauth :cas, :cas_server => 'https://login.kth.se'
+  # config.cas_base_url = "https://login.kth.se"
+  config.omniauth :cas, cas_server: 'https://login.kth.se'
 end

@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 class ReportsController < ApplicationController
-  @@report_templates = {:complete =>"Huvudbok redovisning", :summary =>"Huvudbok summerad", :balance=>"Balansrapport", :result=>"Resultatrapport", :accounts=>"Kontorapport"}
+  @@report_templates = { complete: 'Huvudbok redovisning', summary: 'Huvudbok summerad', balance: 'Balansrapport', result: 'Resultatrapport', accounts: 'Kontorapport' }
 
   def index
     @report_templates = @@report_templates
@@ -17,15 +17,14 @@ class ReportsController < ApplicationController
     @organs = Array(@report_input[:organ]).select(&:present?).map { |o| Organ.find(o) }
     @organs = nil if @organs.blank?
 
-    @report_name += " (filtrerad)" if @series || @organs
+    @report_name += ' (filtrerad)' if @series || @organs
 
     if self.respond_to?(@report_template)
-      self.send(@report_template)
+      send(@report_template)
     else
       @report = Mage::Report.full_report(@activity_year, @series, @organs, @account)
       render @report_template
     end
-
   end
 
   def summary
@@ -36,7 +35,7 @@ class ReportsController < ApplicationController
   # Den här rapporten saknar vy än så länge, användes för att ta fram data till resturangrapporten
   # Ska summera per konto utan några arrangemang eller dyl
   def accounts
-    @report = Mage::Report.account_report(@activity_year, @series, @organs, @account, nil , false)
+    @report = Mage::Report.account_report(@activity_year, @series, @organs, @account, nil, false)
     @hide_arrangement = true
     render :summary
   end

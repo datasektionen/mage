@@ -1,6 +1,6 @@
 class AddColumnDeletedToVoucherTemplates < ActiveRecord::Migration
   def self.up
-    add_column :voucher_templates, :is_deleted, :bool, :default=>false
+    add_column :voucher_templates, :is_deleted, :bool, default: false
   end
 
   def self.down

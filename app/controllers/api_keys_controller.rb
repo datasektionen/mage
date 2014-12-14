@@ -1,11 +1,10 @@
 class ApiKeysController < InheritedResources::Base
-  load_and_authorize_resource :except=>:create
-  after_filter LogFilter , :only=>[:create,:update]
-
+  load_and_authorize_resource except: :create
+  after_filter LogFilter, only: [:create, :update]
 
   def create
     authorize! :write, ApiKey
-    @api_key = ApiKey.generate_key(params[:api_key][:name],current_user)
+    @api_key = ApiKey.generate_key(params[:api_key][:name], current_user)
     create!
   end
 
@@ -14,7 +13,6 @@ class ApiKeysController < InheritedResources::Base
   end
 
   def sub_layout
-    "main"
+    'main'
   end
-
 end

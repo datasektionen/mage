@@ -3,7 +3,7 @@
 class Organ < ActiveRecord::Base
   after_create :create_other_arr
 
-  validates :number, :presence=>true, :uniqueness=>true
+  validates :number, presence: true, uniqueness: true
 
   has_many :arrangements
 
@@ -11,8 +11,9 @@ class Organ < ActiveRecord::Base
     name
   end
 
-private
+  private
+
   def create_other_arr
-    Arrangement.create(:organ_id=>self.id, :name=>"Övrigt", :number=>0)
+    Arrangement.create(organ_id: id, name: 'Övrigt', number: 0)
   end
 end

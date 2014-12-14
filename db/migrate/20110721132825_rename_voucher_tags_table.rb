@@ -4,6 +4,6 @@ class RenameVoucherTagsTable < ActiveRecord::Migration
   end
 
   def self.down
-    rename_table :tags_vouchers,:vouchers_tags
+    rename_table :tags_vouchers, :vouchers_tags
   end
 end

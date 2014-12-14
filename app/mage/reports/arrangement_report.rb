@@ -13,14 +13,14 @@ module Mage
         report = new(arrangement)
 
         current_data = []
-        current_account_group = {:number=>data.first["account_group_number"], :name=>data.first["account_group_name"]}
+        current_account_group = { number: data.first['account_group_number'], name: data.first['account_group_name'] }
 
         data.each do |d|
-          if current_account_group[:number] != d["account_group_number"]
+          if current_account_group[:number] != d['account_group_number']
             current_account_group = nil if current_account_group[:number].nil?
             report.account_group_reports << AccountGroupReport.generate(current_account_group, current_data)
             current_data = [d]
-            current_account_group = {:number=>d["account_group_number"], :name=>d["account_group_name"]}
+            current_account_group = { number: d['account_group_number'], name: d['account_group_name'] }
           else
             current_data << d
           end
@@ -37,7 +37,7 @@ module Mage
         @total_debet = 0
         @total_kredit = 0
         account_group_reports.each do |report|
-          @balance_difference+=report.balance_difference
+          @balance_difference += report.balance_difference
           @total_debet += report.total_debet
           @total_kredit += report.total_kredit
         end

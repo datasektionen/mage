@@ -1,8 +1,8 @@
 class AddActivityYearIdAndAccountTypeToAccounts < ActiveRecord::Migration
   def self.up
-    add_column :accounts, :activity_year_id, :integer, :null=>false
-    add_column :accounts, :debet_is_normal, :boolean, :default=>true
-    add_column :accounts, :kredit_is_normal, :boolean, :default=>true
+    add_column :accounts, :activity_year_id, :integer, null: false
+    add_column :accounts, :debet_is_normal, :boolean, default: true
+    add_column :accounts, :kredit_is_normal, :boolean, default: true
 
     Account.all.each do |account|
       account.activity_year = ActivityYear.first

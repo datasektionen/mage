@@ -1,6 +1,6 @@
 class Invoice < ActiveRecord::Base
   belongs_to :voucher
-  has_many :payment_vouchers, :class_name => "Voucher", :foreign_key => :pays_invoice_id, :inverse_of => :pays_invoice
+  has_many :payment_vouchers, class_name: 'Voucher', foreign_key: :pays_invoice_id, inverse_of: :pays_invoice
   validates_presence_of :voucher, :direction, :due_days, :title, :number
 
   def date
@@ -8,7 +8,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def due_date
-    date.advance(:days => due_days)
+    date.advance(days: due_days)
   end
 
   def sum
@@ -18,11 +18,11 @@ class Invoice < ActiveRecord::Base
 
   def paid_sum
     @paid_sum = calculate_paid_sum unless @sum
-    @paid_sum or 0
+    @paid_sum || 0
   end
 
   def fully_paid
-    return paid_sum >= sum
+    paid_sum >= sum
   end
 
   # Account type for the rows defining the sum in the invoice voucher
@@ -43,16 +43,17 @@ class Invoice < ActiveRecord::Base
     end
   end
 
-private
+  private
+
   def calculate_sum
     voucher.voucher_rows.reduce(0) do |sum, row|
-      sum + (row.account.account_type == sum_account_type ? row.sum : 0 ).abs
+      sum + (row.account.account_type == sum_account_type ? row.sum : 0).abs
     end
   end
 
   def calculate_paid_sum
     payment_vouchers.reduce(0) do |sum, voucher|
-      sum + voucher.voucher_rows.reduce(0) { |r_sum, row| r_sum + (row.account.account_type == sum_account_type ? row.sum : 0 ) }.abs
+      sum + voucher.voucher_rows.reduce(0) { |r_sum, row| r_sum + (row.account.account_type == sum_account_type ? row.sum : 0) }.abs
     end
   end
 end

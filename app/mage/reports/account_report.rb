@@ -4,13 +4,13 @@ module Mage
       attr_reader :account, :voucher_rows, :balance_difference, :total_debet, :total_kredit
       attr_reader :ingoing_balance, :outgoing_balance
 
-      def initialize(account, voucher_rows=[])
+      def initialize(account, voucher_rows = [])
         @account = account
         @voucher_rows = voucher_rows
         @ingoing_balance = account[:ingoing_balance] || 0
       end
 
-      def self.generate(account, voucher_rows=[])
+      def self.generate(account, voucher_rows = [])
         report = new(account, voucher_rows)
 
         report.calculate_outgoing_balance
@@ -28,12 +28,12 @@ module Mage
         @total_debet = 0
         @total_kredit = 0
         voucher_rows.each do |row|
-          @balance_difference+=row["sum"]
-          row["debet"] = [0, row["sum"]].max unless row["debet"]
-          row["kredit"] = [0, row["sum"]].min unless row["kredit"]
-          @total_debet += row["debet"]
-          @total_kredit += row["kredit"]
-          row["accumulated"] = @ingoing_balance + @balance_difference
+          @balance_difference += row['sum']
+          row['debet'] = [0, row['sum']].max unless row['debet']
+          row['kredit'] = [0, row['sum']].min unless row['kredit']
+          @total_debet += row['debet']
+          @total_kredit += row['kredit']
+          row['accumulated'] = @ingoing_balance + @balance_difference
         end
       end
     end

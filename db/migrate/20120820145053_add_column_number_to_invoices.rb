@@ -1,6 +1,6 @@
 class AddColumnNumberToInvoices < ActiveRecord::Migration
   def self.up
-    add_column :invoices, :number, :string, :null=>false
+    add_column :invoices, :number, :string, null: false
   end
 
   def self.down

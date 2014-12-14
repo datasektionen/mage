@@ -1,10 +1,10 @@
 class CreateApiAccess < ActiveRecord::Migration
   def self.up
     create_table :api_accesses do |t|
-      t.integer :api_key_id, :null=>false
-      t.integer :serie_id, :null=>false
+      t.integer :api_key_id, null: false
+      t.integer :serie_id, null: false
       t.integer :granted_by_id
-      t.string :read_write, :default => 'r', :null=>false
+      t.string :read_write, default: 'r', null: false
       t.timestamps
     end
 

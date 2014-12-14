@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 class VouchersController < InheritedResources::Base
   actions :all
-  after_filter LogFilter , :only=>[:create,:update, :destroy]
+  after_filter LogFilter, only: [:create, :update, :destroy]
 
   def index
     # Display all vouchers if params[:per] < 0
@@ -17,7 +17,7 @@ class VouchersController < InheritedResources::Base
 
       keywords(search_param(:title)) unless search_param(:title).blank?
 
-      paginate :page => params[:page], :per_page => per_page
+      paginate page: params[:page], per_page: per_page
     end
     @vouchers = @search.results
   end
@@ -27,8 +27,8 @@ class VouchersController < InheritedResources::Base
     @voucher.organ = current_series.default_organ || Organ.first
     @voucher.series = current_series
     @voucher.activity_year = current_activity_year
-    last_user_voucher = current_user.vouchers.where(:series_id=>current_series.id, :activity_year_id=>current_activity_year.id).last
-    last_voucher = Voucher.where(:series_id=>current_series.id, :activity_year_id=>current_activity_year.id).last
+    last_user_voucher = current_user.vouchers.where(series_id: current_series.id, activity_year_id: current_activity_year.id).last
+    last_voucher = Voucher.where(series_id: current_series.id, activity_year_id: current_activity_year.id).last
     if last_user_voucher
       @voucher.accounting_date = last_user_voucher.accounting_date
       @voucher.organ = last_user_voucher.organ
@@ -58,7 +58,7 @@ class VouchersController < InheritedResources::Base
     params[:voucher].delete(:add_row)
     @voucher = Voucher.new(params[:voucher])
     authorize! :write, @voucher
-    if not current_api_key
+    if !current_api_key
       @voucher.bookkept_by = current_user
       @voucher.set_number!
     else
@@ -66,25 +66,25 @@ class VouchersController < InheritedResources::Base
       @voucher.api_key = current_api_key
     end
     @voucher.material_from = current_user
-    create! do |success, failure|
-      success.html {
+    create! do |success, _failure|
+      success.html do
         self.current_series = @voucher.series
         flash[:notice] = "Verifikat <a href='#{voucher_path(@voucher)}'>#{@voucher.pretty_number}</a> skapades"
         redirect_to new_voucher_path
-      }
+      end
     end
   end
 
   def complete
     if current_api_key.nil?
-      @vouchers = Voucher.unscoped.find(:all,:conditions=>{:id=>params[:vouchers]})
+      @vouchers = Voucher.unscoped.find(:all, conditions: { id: params[:vouchers] })
       authorize! :write, @vouchers
       @vouchers.each do |v|
         unless v.bookkept?
           v.bookkept_by = current_user
           v.created_at = Time.now
           if v.save
-            Journal.log(:complete,v,current_user, nil)
+            Journal.log(:complete, v, current_user, nil)
           end
         end
       end
@@ -95,11 +95,11 @@ class VouchersController < InheritedResources::Base
 
   def api_create
     unless params[:voucher]
-      raise Mage::ApiError.new("Voucher data missing")
+      fail Mage::ApiError, 'Voucher data missing'
     end
     params[:voucher][:series] = Series.find_by_letter(params[:voucher][:series])
     if params[:voucher][:series].nil?
-      raise Mage::ApiError.new("Invalid series letter")
+      fail Mage::ApiError, 'Invalid series letter'
     end
 
     unless params[:voucher][:organ]
@@ -107,44 +107,42 @@ class VouchersController < InheritedResources::Base
     else
       params[:voucher][:organ] = Organ.find_by_number(params[:voucher][:organ])
       if params[:voucher][:organ].nil?
-        raise Mage::ApiError.new("Invalid organ number")
+        fail Mage::ApiError, 'Invalid organ number'
       end
     end
     if params[:voucher][:activity_year]
       params[:voucher][:activity_year] = ActivityYear.find_by_year(params[:voucher][:activity_year])
     else
-      raise Mage::ApiError.new("Missing activity year")
+      fail Mage::ApiError, 'Missing activity year'
     end
 
     begin
-
       params[:voucher][:authorized_by] = User.find_or_create_by_ugid(params[:voucher][:authorized_by]) if params[:voucher][:authorized_by]
       params[:voucher][:material_from] = User.find_or_create_by_ugid(params[:voucher][:material_from]) if params[:voucher][:material_from]
 
       # Parse arrangement number to id
-      #params[:voucher][:arrangement]
+      # params[:voucher][:arrangement]
       params[:voucher][:voucher_rows_attributes].each do |vr|
         vr[:arrangement] = params[:voucher][:organ].arrangements.find_by_number(vr[:arrangement]) if vr[:arrangement]
-        vr[:arrangement] = nil unless Account.find_by_number_and_activity_year_id(vr[:account_number],params[:voucher][:activity_year].id).has_arrangements?
+        vr[:arrangement] = nil unless Account.find_by_number_and_activity_year_id(vr[:account_number], params[:voucher][:activity_year].id).has_arrangements?
       end
 
       @voucher = Voucher.new(params[:voucher])
-
-    rescue Exception => e
-      raise Mage::ApiError::new(e.to_s)
+    rescue => e
+      raise Mage::ApiError, e.to_s
     end
 
     begin
       authorize! :write, @voucher
     rescue CanCan::AccessDenied
-      render :status=>403, :json => {"errors"=>"Access denied"} and return
+      return render(status: 403, json: { 'errors' => 'Access denied' })
     end
     @voucher.bookkept_by = nil # Make sure this is not set
     @voucher.api_key = current_api_key
     if @voucher.save
-      Journal.log(:api_create,@voucher,current_user, current_api_key)
+      Journal.log(:api_create, @voucher, current_user, current_api_key)
     else
-      raise Mage::ApiError.new("Save failed: #{@voucher.errors.inspect}")
+      fail Mage::ApiError, "Save failed: #{@voucher.errors.inspect}"
     end
   end
 
@@ -164,20 +162,19 @@ class VouchersController < InheritedResources::Base
           vr[:signature_id] = current_user.id
         end
       else
-        vr[:signature_id] = nil #If it is not yet bookkept we shall have no signatures
+        vr[:signature_id] = nil # If it is not yet bookkept we shall have no signatures
       end
     end
 
-    unless @voucher.bookkept?
+    if @voucher.bookkept?
+      update_created_at = false
+    else
       params[:bookkept_by] = current_user
       update_created_at = true
-    else
-      update_created_at = false
     end
 
-    update! do |success, failure|
-      success.html {
-
+    update! do |success, _failure|
+      success.html do
         # If the voucher came from the api and was bookept now, update created at
         if update_created_at
           @voucher.created_at = Time.now
@@ -190,24 +187,24 @@ class VouchersController < InheritedResources::Base
         end
         flash[:notice] = "Verifikat #{@voucher.pretty_number} har uppdaterats"
         redirect_to voucher_path(@voucher)
-      }
+      end
     end
   end
 
   def sub_layout
-    "accounting"
+    'accounting'
   end
 
   def print
-    @vouchers = Voucher.find(:all,:conditions=>{:id=>params[:vouchers]})
+    @vouchers = Voucher.find(:all, conditions: { id: params[:vouchers] })
     authorize! :read, @vouchers
     output = VoucherPDF.new(@vouchers).to_pdf
 
     respond_to do |format|
       format.pdf do
-        send_data output, :filename => "verifikat.pdf",
-                          :type => :pdf,
-                          :disposition=>'inline'
+        send_data output, filename: 'verifikat.pdf',
+                          type: :pdf,
+                          disposition: 'inline'
       end
     end
   end
@@ -219,25 +216,25 @@ class VouchersController < InheritedResources::Base
 
   # Renders rows for new and edit
   def rows
-    @voucher = Voucher.unscoped.find(:first, :conditions=>{:id=>params[:voucher_id].to_i}, :select=>[:id, :bookkept_by_id])
+    @voucher = Voucher.unscoped.find(:first, conditions: { id: params[:voucher_id].to_i }, select: [:id, :bookkept_by_id])
 
     @activity_year = params[:activity_year]
 
-    if params[:type] == "account"
-      account = Account.find_by_number_and_activity_year_id(params[:account],params[:activity_year])
-      render :nothing=>true, :status=>400 and return if account.nil?
-      @rows = [VoucherRow.new(:account=>account, :sum=>params[:sum].to_f, :arrangement_id=>params[:arrangement])]
-    elsif params[:type] == "template"
+    if params[:type] == 'account'
+      account = Account.find_by_number_and_activity_year_id(params[:account], params[:activity_year])
+      return render(nothing: true, status: 400) if account.nil?
+      @rows = [VoucherRow.new(account: account, sum: params[:sum].to_f, arrangement_id: params[:arrangement])]
+    elsif params[:type] == 'template'
       template = VoucherTemplate.find(params[:id])
-      render :nothing=>true, :status=>400 and return if template.nil?
-      @rows = template.parse({:sum=>params[:sum]},params[:arrangement], params[:activity_year])
+      return render(nothing: true, status: 400) if template.nil?
+      @rows = template.parse({ sum: params[:sum] }, params[:arrangement], params[:activity_year])
     else
-      render :nothing=>true, :status=>500 and return
+      return render(nothing: true, status: 500)
     end
-    @sum = @rows.reduce(0) { |memo, r| memo+=r.int_sum }
+    @sum = @rows.map(&:int_sum).reduce(0, :+)
 
     if @voucher && @voucher.bookkept?
-      @rows.each {|r| r.signature = current_user; r.updated_at = Time.now }
+      @rows.each { |r| r.signature = current_user; r.updated_at = Time.now }
     end
   end
 
@@ -248,20 +245,21 @@ class VouchersController < InheritedResources::Base
       @voucher.destroy
       flash[:notice] =  t 'vouchers.deleted'
     else
-      flash[:error]=t 'vouchers.cant_delete_bookkept'
+      flash[:error] = t 'vouchers.cant_delete_bookkept'
     end
-    redirect_to accounting_index_path and return
+    return redirect_to(accounting_index_path)
   end
 
-protected
+  protected
 
   def resource
     @voucher ||= Voucher.unscoped.find(params[:id])
     authorize! :read, @voucher
   end
 
-private
-  def search_param name
+  private
+
+  def search_param(name)
     params[:search].try(:[], name.to_s)
   end
 end

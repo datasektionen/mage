@@ -16,25 +16,17 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_activity_year, :current_series
 
-  rescue_from Mage::Unauthorized do |exception|
-    render "errors/error_401"
+  rescue_from Mage::Unauthorized do |_exception|
+    render 'errors/error_401'
   end
 
-  rescue_from CanCan::AccessDenied do |exception|
-    render "errors/error_401"
+  rescue_from CanCan::AccessDenied do |_exception|
+    render 'errors/error_401'
   end
 
   rescue_from Mage::ApiError do |exception|
- 	 render :json=> {"errors"=>"Api Error: #{exception.message}"}, :status=>500
+    render json: { 'errors' => "Api Error: #{exception.message}" }, status: 500
   end
-
-  #rescue_from ActiveRecord::RecordNotFound do |exception|
-  #  render "errors/error_404"
-  #end
-
-  #rescue_from CanCan::AccessDenied do |exception|
-  #  render 'errors/access_denied', :status=>401 and return false
-  #end
 
   # Returns the series set in session[:current_series] or default_series if it is not set
   def current_series
@@ -62,7 +54,7 @@ class ApplicationController < ActionController::Base
     else
       @current_activity_year = ActivityYear.find(session[:current_activity_year]) if session[:current_activity_year]
       if @current_activity_year.nil?
-        @current_activity_year = ActivityYear.order("year").last
+        @current_activity_year = ActivityYear.order('year').last
       end
       @current_activity_year
     end
@@ -74,26 +66,24 @@ class ApplicationController < ActionController::Base
   end
 
   def current_ability
-	 unless current_api_key
-		Ability.new current_user
-	 else
-		ApiAbility.new current_api_key
-	 end
+    unless current_api_key
+      Ability.new current_user
+    else
+      ApiAbility.new current_api_key
+    end
   end
 
   def current_user
-	 unless current_api_key
-		super
-	 else
+    unless current_api_key
+      super
+    else
       u = User.find_or_create_by_ugid(params[:ugid]) if params[:ugid]
-      if params[:ugid] and !u
-        raise Mage::ApiError.new("Could not find user with ugid #{params[:ugid]}")
+      if params[:ugid] && !u
+        fail Mage::ApiError.new("Could not find user with ugid #{params[:ugid]}")
       elsif u
         u
-      else
-        nil
       end
-	 end
+    end
   end
 
   def authenticate_user!
@@ -103,15 +93,13 @@ class ApplicationController < ActionController::Base
   end
 
   def current_api_key
-  	 return @apikey if @apikey
-	 @apikey = ApiKey.authorize(params, request.body)
-	 if @apikey
+    return @apikey if @apikey
+    @apikey = ApiKey.authorize(params, request.body)
+    if @apikey
       @apikey
-	 elsif params[:apikey]
-	 	raise Mage::ApiError.new("Invalid api key")
-	 else
-	 	nil
-	 end
+    elsif params[:apikey]
+      fail Mage::ApiError.new('Invalid api key')
+    end
   end
 
   # Sets global session values (as specified above)
@@ -128,7 +116,7 @@ class ApplicationController < ActionController::Base
   end
 
   def sub_layout
-    "main"
+    'main'
   end
 
   protected

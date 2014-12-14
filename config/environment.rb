@@ -5,7 +5,7 @@ require 'sass/plugin'
 module Mage
   class Application < Rails::Application
     attr_accessor :settings
-    config.encoding = "utf-8"
+    config.encoding = 'utf-8'
   end
 end
 

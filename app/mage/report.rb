@@ -1,6 +1,5 @@
 module Mage
   class Report
-
     def self.data_from_query(query)
       result = ActiveRecord::Base.connection.execute(query)
       data = []
@@ -15,8 +14,8 @@ module Mage
     def self.full_report(activity_year, series = nil, organ = nil, account = nil)
       optional_conditions = build_optional_condition(series, organ, account)
 
-      return Mage::Reports::Report.generate(
-          self.data_from_query("
+      Mage::Reports::Report.generate(
+          data_from_query("
                           select
                             accounts.ingoing_balance,
                             accounts.name as 'account_name',
@@ -56,7 +55,6 @@ module Mage
                            vouchers.accounting_date
                           ")
           )
-
     end
 
     ##
@@ -64,8 +62,8 @@ module Mage
     def self.full_report_summarized(activity_year, series = nil, organ = nil, account = nil, account_type_filter = nil, invert_sign = false)
       optional_conditions = build_optional_condition(series, organ, account, account_type_filter)
       sign = invert_sign ? '- ' : ''
-      return Mage::Reports::Report.generate(
-          self.data_from_query("
+      Mage::Reports::Report.generate(
+          data_from_query("
                           select
                             #{sign}SUM(voucher_rows.sum) as 'sum',
                             #{sign}SUM(GREATEST(voucher_rows.sum,0)) as 'debet',
@@ -99,17 +97,15 @@ module Mage
                            accounts.number
                           ")
           )
-
     end
-
 
     ##
     # Get a summarized report (no organs or stuff)
     def self.account_report(activity_year, series = nil, organ = nil, account = nil, account_type_filter = nil, invert_sign = false)
       optional_conditions = build_optional_condition(series, organ, account, account_type_filter)
       sign = invert_sign ? '- ' : ''
-      return Mage::Reports::Report.generate(
-          self.data_from_query("
+      Mage::Reports::Report.generate(
+          data_from_query("
                           select
                             #{sign}SUM(voucher_rows.sum) as 'sum',
                             #{sign}SUM(GREATEST(voucher_rows.sum,0)) as 'debet',
@@ -135,22 +131,16 @@ module Mage
                            accounts.number
                           ")
           )
-
     end
 
-
-    private
-
     def self.build_optional_condition(series, organs, account, account_type_filter = nil)
-      optional_conditions = ""
+      optional_conditions = ''
       optional_conditions += " and vouchers.series_id = #{series.id.to_i}" unless series.nil?
-      optional_conditions += " and vouchers.organ_id IN (#{organs.map {|o| o.id.to_i}.join(",") })" unless organs.nil?
+      optional_conditions += " and vouchers.organ_id IN (#{organs.map { |o| o.id.to_i }.join(',') })" unless organs.nil?
       optional_conditions += " and voucher_rows.account_number = #{account.number.to_i}" unless account.nil?
-      optional_conditions += " and account_groups.account_type IN (#{account_type_filter.join(",")})"  unless account_type_filter.nil?
+      optional_conditions += " and account_groups.account_type IN (#{account_type_filter.join(',')})"  unless account_type_filter.nil?
 
       optional_conditions
     end
-
   end
-
 end

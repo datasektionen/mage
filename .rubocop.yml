@@ -1,0 +1,9 @@
+AllCops:
+  Exclude:
+    - db/schema.rb
+
+Rails/ActionFilter:
+  Enabled: false
+
+Style/DotPosition:
+  EnforcedStyle: trailing
