@@ -30,18 +30,14 @@ fi
 if [ ! -f config/database.yml ]; then
     echo "[-] No database config found, copying template..."
     cp config/database.yml.sample config/database.yml
-    echo "[-] Now, go ahead and update config/database.yml to match your setup!"
-    exit 1
 fi
 
 # Sunspot config
 if [ ! -f config/sunspot.yml ]; then
     echo "[-] No sunspot config found, copying template..."
     cp config/sunspot.yml.sample config/sunspot.yml
-    echo "[-] Now, go ahead and update config/sunspot.yml to match your setup!"
-    exit 1
 fi
 
 # Setup rake tasks
 echo "[+] Running setup rake tasks..."
-bundle exec rake db:create db:migrate db:seed sunspot:reindex
+bundle exec rake db:create db:migrate db:seed

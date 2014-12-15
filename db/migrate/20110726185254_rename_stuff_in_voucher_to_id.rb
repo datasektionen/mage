@@ -1,4 +1,4 @@
-class RenameStuffInVoucherTo_id < ActiveRecord::Migration
+class RenameStuffInVoucherToId < ActiveRecord::Migration
   def self.up
     change_table :vouchers do |t|
       t.rename :corrects, :corrects_id
