@@ -1,5 +1,5 @@
 class ApiKey < ActiveRecord::Base
-  belongs_to :created_by, :class_name => "User"
+  belongs_to :created_by, class_name: 'User'
   has_many :api_accesses
 
   accepts_nested_attributes_for :api_accesses
@@ -8,7 +8,7 @@ class ApiKey < ActiveRecord::Base
   validates_uniqueness_of :name, :key
 
   def self.generate_key(name, current_user)
-    api_key = ApiKey.new(:name => name, :created_by => current_user, :key => SecureRandom.hex(32), :private_key => SecureRandom.hex(8))
+    api_key = ApiKey.new(name: name, created_by: current_user, key: SecureRandom.hex(32), private_key: SecureRandom.hex(8))
     if api_key.save
       api_key
     else
@@ -16,11 +16,11 @@ class ApiKey < ActiveRecord::Base
     end
   end
 
-  def self.authorize(params,body)
+  def self.authorize(params, body)
     if params[:apikey]
-      api_key = self.find_by_key(params[:apikey])
+      api_key = find_by_key(params[:apikey])
       if api_key
-        checksum = ApiCall::create_hash(body.read,api_key.private_key)
+        checksum = ApiCall.create_hash(body.read, api_key.private_key)
         Rails.logger.debug("Calculated checksum: #{  checksum }")
         if params[:checksum] == checksum
           return api_key
@@ -40,13 +40,13 @@ class ApiKey < ActiveRecord::Base
   end
 
   def find_access(series)
-    api_accesses.where(:series_id => series.id).first
+    api_accesses.where(series_id: series.id).first
   end
 
   # Type is :read, :write or :read_write
-  def has_access?(series=nil, type=nil)
+  def has_access?(series = nil, type = nil)
     return false if revoked?
-	 return true if series.nil? && type.nil?
+    return true if series.nil? && type.nil?
     a = find_access(series)
     return false if a.nil?
 
@@ -60,7 +60,6 @@ class ApiKey < ActiveRecord::Base
   end
 
   def to_s
-    return name
+    name
   end
-
 end

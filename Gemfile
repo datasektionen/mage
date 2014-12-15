@@ -32,28 +32,13 @@ group :production do
 end
 
 group :development, :test do
-  gem 'guard', '>= 1.0.0'
-  gem 'guard-bundler'
-  gem 'guard-cucumber'
-  gem 'guard-rspec'
-  gem 'libnotify'
-  gem 'rb-inotify'
   gem 'rspec', '~> 2.8.0'
   gem 'rspec-rails'
   gem 'sunspot_solr'
 end
 
 group :test do
-  gem 'capybara'
-  gem 'cucumber-rails'
   gem 'database_cleaner'
   gem 'machinist', '>= 2.0.0.beta2'
-  gem 'rcov', '< 1.0.0'
   gem 'ruby-debug19'
-end
-
-group :deploy do
-  gem 'capistrano'
-  gem 'capistrano-ext'
-  gem 'capistrano_colors'
 end

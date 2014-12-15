@@ -1,9 +1,8 @@
 class AdministrationController < ApplicationController
   def index
-
   end
 
   def sub_layout
-    "main"
+    'main'
   end
 end

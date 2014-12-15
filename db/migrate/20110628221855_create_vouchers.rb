@@ -5,7 +5,7 @@ class CreateVouchers < ActiveRecord::Migration
       t.integer :serie_id
       t.integer :organ_id
       t.datetime :accounting_date
-      t.integer :created_by, :null=>true
+      t.integer :created_by, null: true
       t.integer :activity_year
       t.integer :corrects
 

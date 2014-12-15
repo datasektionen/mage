@@ -1,11 +1,11 @@
 class AccountingController < ApplicationController
   def index
     @vouchers = current_activity_year.vouchers.recent(current_series).limit(20)
-    @incomplete_vouchers = current_activity_year.vouchers.incomplete.where(:series_id=>Series.all.map(&:id))
+    @incomplete_vouchers = current_activity_year.vouchers.incomplete.where(series_id: Series.all.map(&:id))
   end
 
   def sub_layout
-    "accounting"
+    'accounting'
   end
 
   def navigate

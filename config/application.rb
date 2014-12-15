@@ -34,7 +34,7 @@ module Mage
     # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
 
     # Configure the default encoding used in templates for Ruby 1.9.
-    config.encoding = "utf-8"
+    config.encoding = 'utf-8'
 
     config.i18n.default_locale = :sv
 
@@ -47,6 +47,5 @@ module Mage
       g.test_framework :rspec
       g.fixture_replacement :machinist
     end
-
   end
 end

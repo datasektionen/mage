@@ -1,25 +1,22 @@
 # -*- encoding: utf-8 -*-
 
 module TitleHelper
-  def title(title)
-    @title = title
-  end
+  attr_writer :title
 
   def render_title
     if @title.present?
       title = @title
     else
       title = if @page.present?
-        @page.title.present? ? @page.title  : ""
-      end
+                @page.title.present? ? @page.title  : ''
+              end
     end
 
     if title.blank?
-      title = "MAGE"
+      title = 'MAGE'
     else
-      title += " – MAGE"
+      title += ' – MAGE'
     end
     title
   end
-
 end

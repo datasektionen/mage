@@ -13,11 +13,11 @@ class Ability
         can :read, Arrangement
         can :read, ActivityYear
 
-        can do |action, subject_call, subject|
-          unless subject.kind_of? Enumerable
+        can do |action, _subject_call, subject|
+          unless subject.is_a? Enumerable
             if subject.respond_to? :series
               series = subject.series
-            elsif subject.kind_of? Series
+            elsif subject.is_a? Series
               series = subject
             else
               series = nil
@@ -37,7 +37,7 @@ class Ability
               false
             end
           else
-            subject.all? {|s| can action, s.class, s }
+            subject.all? { |s| can action, s.class, s }
           end
         end
       end

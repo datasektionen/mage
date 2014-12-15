@@ -1,9 +1,9 @@
 class AddColumnSlugToVouchers < ActiveRecord::Migration
   def self.up
-    add_column :vouchers, :slug, :string, :null=>false
-    puts "Generating slugs for existing models"
-    Voucher.unscoped.find_each(&:save) #Generate slugs for all
-    add_index :vouchers, :slug, :unique=>true
+    add_column :vouchers, :slug, :string, null: false
+    puts 'Generating slugs for existing models'
+    Voucher.unscoped.find_each(&:save) # Generate slugs for all
+    add_index :vouchers, :slug, unique: true
   end
 
   def self.down

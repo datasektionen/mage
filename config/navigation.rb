@@ -45,25 +45,24 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            against the current URI.
     #
     primary.item :accounting, 'Bokför', accounting_index_path do |accounting|
-      accounting.item :new_voucher, "Nytt verifikat", new_voucher_path, :if=> Proc.new { can? :write, current_series }
-      #accounting.item :bank_accounting, "Bankhändelser", bank_accounting_index_path
-      accounting.item :search_vouchers, "Sök verifikat", vouchers_path, :highlights_on=>/\/(vouchers|verifikat)\/[0-9]+/
-      accounting.item :manage_templates, "Hantera mallar", voucher_templates_path, :highlights_on=>/\/(voucher_templates|mallar)(\/[0-9]+)?/
-      accounting.item :account_list, "Kontoplan", activity_year_accounts_path(current_activity_year)
+      accounting.item :new_voucher, 'Nytt verifikat', new_voucher_path, if: proc { can? :write, current_series }
+      # accounting.item :bank_accounting, "Bankhändelser", bank_accounting_index_path
+      accounting.item :search_vouchers, 'Sök verifikat', vouchers_path, highlights_on: /\/(vouchers|verifikat)\/[0-9]+/
+      accounting.item :manage_templates, 'Hantera mallar', voucher_templates_path, highlights_on: /\/(voucher_templates|mallar)(\/[0-9]+)?/
+      accounting.item :account_list, 'Kontoplan', activity_year_accounts_path(current_activity_year)
     end
 
-
-    primary.item :reports, 'Rapporter', reports_path do |reports|
+    primary.item :reports, 'Rapporter', reports_path do |_reports|
     end
 
-    primary.item :administration, 'Administrera', administration_index_path, :if => Proc.new { current_user.admin? } do |admin|
-      admin.item :users, "Användare", users_path, :highlights_on=>/\/(users|anvandare)/
-      admin.item :organs, "Nämnder och arrangemang", organs_path, :highlights_on=>/\/(organs|namnder)/
-      admin.item :series, "Serier", series_index_path, :highlights_on=>/\/(series|serier)/
-      admin.item :activity_years, "Verksamhetsår och kontoplaner", activity_years_path, :highlights_on=>/\/(activity_year|verksamhetsar)(\/.*)?/
-      admin.item :account_groups, "Kontogrupper", account_groups_path, :highlights_on=>/\/(account_group|kontogrupp)(\/.*)?/
-      admin.item :journal , "Journal", journals_path, :highlights_on=>/\/(journals?)(\/.*)?/
-      admin.item :api_keys, "Apinycklar", api_keys_path, :highlights_on=>/\/(api_keys|apinycklar)/
+    primary.item :administration, 'Administrera', administration_index_path, if: proc { current_user.admin? } do |admin|
+      admin.item :users, 'Användare', users_path, highlights_on: /\/(users|anvandare)/
+      admin.item :organs, 'Nämnder och arrangemang', organs_path, highlights_on: /\/(organs|namnder)/
+      admin.item :series, 'Serier', series_index_path, highlights_on: /\/(series|serier)/
+      admin.item :activity_years, 'Verksamhetsår och kontoplaner', activity_years_path, highlights_on: /\/(activity_year|verksamhetsar)(\/.*)?/
+      admin.item :account_groups, 'Kontogrupper', account_groups_path, highlights_on: /\/(account_group|kontogrupp)(\/.*)?/
+      admin.item :journal, 'Journal', journals_path, highlights_on: /\/(journals?)(\/.*)?/
+      admin.item :api_keys, 'Apinycklar', api_keys_path, highlights_on: /\/(api_keys|apinycklar)/
     end
 
     # you can also specify a css id or class to attach to this particular level
@@ -73,7 +72,5 @@ SimpleNavigation::Configuration.run do |navigation|
 
     # You can turn off auto highlighting for a specific level
     # primary.auto_highlight = false
-
   end
-
 end

@@ -12,7 +12,7 @@
     %span= currency(form_row.debet)
     = hidden_field_tag "voucher[voucher_rows_attributes][][sum]", form_row.sum
   %td.kredit.row_data
-    %span= currency(form_row.kredit) 
+    %span= currency(form_row.kredit)
   %td.signature
     - unless form_row.signature.nil?
       %span.date= format_date(form_row.updated_at || Time.now)

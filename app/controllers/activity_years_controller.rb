@@ -1,6 +1,6 @@
 class ActivityYearsController < ApplicationController
-  load_resource :find_by => :year, :except=>[:create]
-  authorize_resource :except=>[:index]
+  load_resource find_by: :year, except: [:create]
+  authorize_resource except: [:index]
 
   def index
     respond_to do |format|
@@ -8,15 +8,15 @@ class ActivityYearsController < ApplicationController
         @activity_year = ActivityYear.new
         authorize! :manage, @activity_year
       end
-      format.json {
+      format.json do
         @activity_years = ActivityYear.all
-        render :json => @activity_years
-      }
+        render json: @activity_years
+      end
     end
   end
 
   def create
-    @activity_year = ActivityYear.new(:year=>params[:activity_year][:year])
+    @activity_year = ActivityYear.new(year: params[:activity_year][:year])
     authorize! :create, @activity_year
     if @activity_year.save
       clone_accounts = params[:activity_year][:account][:clone]
@@ -31,7 +31,6 @@ class ActivityYearsController < ApplicationController
         @activity_year = ActivityYear.new
       end
     end
-
 
     @activity_years = ActivityYear.all
     render :index

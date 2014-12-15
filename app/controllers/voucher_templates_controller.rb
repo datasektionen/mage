@@ -5,7 +5,7 @@ class VoucherTemplatesController < InheritedResources::Base
     @voucher_template = VoucherTemplate.find(params[:template])
     @organ = Organ.find(params[:organ])
     @activity_year = ActivityYear.find(params[:activity_year])
-    render :layout => nil
+    render layout: nil
   end
 
   def parse
@@ -13,11 +13,11 @@ class VoucherTemplatesController < InheritedResources::Base
     activity_year_id = params[:activity_year].to_i
     @voucher_template = VoucherTemplate.find(params[:template])
     begin
-      @rows = @voucher_template.parse(params[:fields],arr, activity_year_id)
-    rescue Exception => e
-      render :inline=>e.message, :status=>400 and return
+      @rows = @voucher_template.parse(params[:fields], arr, activity_year_id)
+    rescue => e
+      return render(inline: e.message, status: 400)
     end
-    @sum = @rows.reduce(0) { |s, r| s = s + r.int_sum }
+    @sum = @rows.map(&:int_sum).reduce(0, :+)
     render 'vouchers/rows'
   end
 
@@ -32,17 +32,17 @@ class VoucherTemplatesController < InheritedResources::Base
     authorize! :read, @voucher_template
     authorize! :write, VoucherTemplate.new
     cloned = @voucher_template.clone
-    cloned.name+=" (#{t('copy')})"
+    cloned.name += " (#{t('copy')})"
     cloned.save
     redirect_to voucher_template_path(cloned)
   end
 
   def destroy
-    destroy! do |success, failure|
-      success.html {
+    destroy! do |success, _failure|
+      success.html do
         flash[:notice] = t('voucher_templates.delete_success')
         redirect_to voucher_templates_path
-      }
+      end
     end
   end
 end

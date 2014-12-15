@@ -19,8 +19,8 @@
       %span.title Beskriving
       %span.organ Nämnd
       - if use_long_format
-        %span.correcting 
+        %span.correcting
       %span.enfoldment Omslutning
-    #list_body= render :partial=>"vouchers/voucher_list_row", :collection=>voucher_list, :locals=>{:use_long_format=>use_long_format, :show_delete=>incomplete} 
+    #list_body= render :partial=>"vouchers/voucher_list_row", :collection=>voucher_list, :locals=>{:use_long_format=>use_long_format, :show_delete=>incomplete}
 
   =render "vouchers/voucher_list_buttons", :incomplete=>incomplete

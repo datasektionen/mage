@@ -1,7 +1,0 @@
-require 'autotest/bundler'
-require 'autotest/growl'
-require 'autotest/restart'
-
-module Autotest::Growl
-  @@clear_terminal = false
-end

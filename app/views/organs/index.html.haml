@@ -4,11 +4,11 @@
 %table.datatable
   %thead
     %th Nämnd
-    %th 
+    %th
   %tbody
     - @organs.each do |organ|
       %tr
         %td= link_to "#{organ} (#{organ.number})", organ
         %td= link_to t('edit'), edit_organ_path(organ)
-  
+
 %p= link_to "Skapa ny nämnd", new_organ_path

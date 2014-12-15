@@ -11,18 +11,18 @@ class UsersController < InheritedResources::Base
     add_right = params[:user][:add_right]
     unless add_right[:series].empty?
       UserAccess.create(
-        :user_id=>@user.id,
-        :series_id=>add_right[:series],
-        :granted_by_id=>current_user.id)
+        user_id: @user.id,
+        series_id: add_right[:series],
+        granted_by_id: current_user.id)
     end
     params[:user].delete(:add_right)
 
     update! { edit_user_path(@user) }
   end
 
-protected
+  protected
 
   def collection
-    @users ||= end_of_association_chain.order("first_name asc, last_name asc")
+    @users ||= end_of_association_chain.order('first_name asc, last_name asc')
   end
 end
