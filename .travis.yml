@@ -1,6 +1,9 @@
 before_script:
   - ./script/bootstrap
   - bundle exec rake sunspot:solr:start
+branches:
+  only:
+    - master
 language: ruby
 notifications:
   slack:
