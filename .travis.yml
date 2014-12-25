@@ -1,5 +1,4 @@
 language: ruby
-bundle_args: --without development
 before_script:
   - ./script/bootstrap
   - bundle exec rake sunspot:solr:start
