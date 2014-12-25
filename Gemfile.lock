@@ -56,12 +56,10 @@ GEM
     airbrake (3.0.9)
       activesupport
       builder
-    archive-tar-minitar (0.5.2)
     arel (3.0.3)
     bcrypt-ruby (3.0.1)
     builder (3.0.4)
     cancan (1.6.7)
-    columnize (0.3.6)
     database_cleaner (0.7.1)
     devise (1.4.9)
       bcrypt-ruby (~> 3.0)
@@ -104,8 +102,6 @@ GEM
       activesupport (>= 3.0.0)
       railties (>= 3.0.0)
     kgio (2.7.2)
-    linecache19 (0.5.12)
-      ruby_core_source (>= 0.1.4)
     log4r (1.1.10)
     macaddr (1.5.0)
       systemu (>= 2.4.0)
@@ -199,17 +195,7 @@ GEM
       activesupport (>= 3.0)
       railties (>= 3.0)
       rspec (~> 2.8.0)
-    ruby-debug-base19 (0.11.25)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      ruby_core_source (>= 0.1.4)
-    ruby-debug19 (0.11.6)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      ruby-debug-base19 (>= 0.11.19)
     ruby-rc4 (0.1.5)
-    ruby_core_source (0.1.5)
-      archive-tar-minitar (>= 0.5.2)
     rubyntlm (0.1.1)
     sass (3.1.14)
     simple-navigation (3.6.0)
@@ -278,7 +264,6 @@ DEPENDENCIES
   rqrcode
   rspec (~> 2.8.0)
   rspec-rails
-  ruby-debug19
   sass
   simple-navigation
   simple_form
