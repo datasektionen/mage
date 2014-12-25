@@ -7,3 +7,4 @@ notifications:
     secure: 2lSYXbDIryxupzOCnvxuSozGNpVkPs+qel8jyXrBX4A9/xTLU8JoF0rwrGpLplwoUotQuE9JrEXIx8CbxL46Sd8KIwrlGHZvoCmqzsUkdkKNuVZ0K6/0jpV6RUU7BJtJcU4ognzhglKjKGLkWuAWYyKP+4DdMCVVdc2qGeVT+4g=
 rvm:
 - 1.9.3
+sudo: false
