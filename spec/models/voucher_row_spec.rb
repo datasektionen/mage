@@ -52,9 +52,13 @@ describe VoucherRow do
     user.save
 
     voucher.voucher_rows[0].signature = user
-    voucher_row = voucher.voucher_rows[0].clone
+    voucher.voucher_rows.build(
+      voucher.voucher_rows[0].attributes.merge(
+        account: voucher.voucher_rows[0].account,
+        signature: User.make
+      )
+    )
     voucher.voucher_rows[0].cancel!
-    voucher.voucher_rows << voucher_row
 
     voucher.should be_valid
   end
@@ -96,9 +100,12 @@ describe VoucherRow do
   it 'should allow invalid arrangements outside the organ on cancelled rows' do
     voucher = Voucher.make
     voucher.save
-    voucher_row = voucher.voucher_rows[0].clone
-    voucher_row.signature = User.make
-    voucher.voucher_rows << voucher_row
+    voucher.voucher_rows.build(
+      voucher.voucher_rows[0].attributes.merge(
+        account: voucher.voucher_rows[0].account,
+        signature: User.make
+      )
+    )
     voucher.voucher_rows[0].cancel!
     voucher.voucher_rows[0].signature = User.make
 
