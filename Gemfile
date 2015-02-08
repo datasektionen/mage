@@ -40,4 +40,5 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'machinist', '>= 2.0.0.beta2'
+  gem 'sunspot_test'
 end
