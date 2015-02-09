@@ -3,6 +3,7 @@ before_script:
 branches:
   only:
     - master
+cache: bundler
 language: ruby
 notifications:
   slack:
