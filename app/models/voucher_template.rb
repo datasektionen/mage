@@ -62,21 +62,15 @@ class VoucherTemplate < ActiveRecord::Base
     save
   end
 
-  private
-
-  alias_method :shallow_clone, :clone
-
-  public
-
   def clone
-    v = shallow_clone
+    v = VoucherTemplate.new(attributes)
     v.input_fields = input_fields.map { |f|
-      c = f.clone
+      c = TemplateInputField.new(f.attributes)
       c.template = v
       c
     }
     v.output_fields = output_fields.map { |f|
-      c = f.clone
+      c = TemplateOutputField.new(f.attributes)
       c.template = v
       c
     }
