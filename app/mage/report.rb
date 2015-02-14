@@ -141,13 +141,16 @@ module Mage
     end
 
     def self.build_optional_condition(series, organs, account, account_type_filter = nil)
-      optional_conditions = ''
-      optional_conditions += " AND vouchers.series_id = #{series.id.to_i}" unless series.nil?
-      optional_conditions += " AND vouchers.organ_id IN (#{organs.map { |o| o.id.to_i }.join(',') })" unless organs.nil?
-      optional_conditions += " AND voucher_rows.account_number = #{account.number.to_i}" unless account.nil?
-      optional_conditions += " AND account_groups.account_type IN (#{account_type_filter.join(',')})"  unless account_type_filter.nil?
-
-      optional_conditions
+      optional_conditions = []
+      optional_conditions << Voucher.arel_table[:series_id].eq(series.id) if series
+      optional_conditions << Voucher.arel_table[:organ_id].in(organs.map(&:id)) if organs
+      optional_conditions << VoucherRow.arel_table[:account_number].eq(account.number) if account
+      optional_conditions << AccountGroup.arel_table[:account_type].in(account_type_filter) if account_type_filter
+      if optional_conditions.any?
+        ' AND ' + optional_conditions.reduce { |a, e| a.and(e) }.to_sql
+      else
+        ''
+      end
     end
   end
 end
