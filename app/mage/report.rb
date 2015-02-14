@@ -10,7 +10,7 @@ module Mage
     ##
     # Get a full report
     def self.full_report(activity_year, series = nil, organ = nil, account = nil)
-      optional_conditions = build_optional_condition(series, organ, account)
+      conditions = build_conditions(activity_year, series, organ, account)
 
       Mage::Reports::Report.generate(
         data_from_query(
@@ -43,9 +43,7 @@ module Mage
               JOIN account_groups ON accounts.account_group_id = account_groups.id
               JOIN series ON vouchers.series_id = series.id
             WHERE
-              vouchers.activity_year_id = #{activity_year.id.to_i}
-              AND voucher_rows.canceled = 0
-              #{optional_conditions}
+              #{conditions}
             ORDER BY
               organ_number,
               arrangement_number,
@@ -60,7 +58,7 @@ module Mage
     ##
     # Get a summarized report
     def self.full_report_summarized(activity_year, series = nil, organ = nil, account = nil, account_type_filter = nil, invert_sign = false)
-      optional_conditions = build_optional_condition(series, organ, account, account_type_filter)
+      conditions = build_conditions(activity_year, series, organ, account, account_type_filter)
       sign = invert_sign ? '- ' : ''
       Mage::Reports::Report.generate(
           data_from_query(
@@ -87,9 +85,7 @@ module Mage
                 JOIN account_groups ON accounts.account_group_id = account_groups.id
                 JOIN series ON vouchers.series_id = series.id
               WHERE
-                vouchers.activity_year_id = #{activity_year.id.to_i}
-                AND voucher_rows.canceled = 0
-                #{optional_conditions}
+                #{conditions}
               GROUP BY
                 organ_number,
                 arrangements.number,
@@ -107,7 +103,7 @@ module Mage
     ##
     # Get a summarized report (no organs or stuff)
     def self.account_report(activity_year, series = nil, organ = nil, account = nil, account_type_filter = nil, invert_sign = false)
-      optional_conditions = build_optional_condition(series, organ, account, account_type_filter)
+      conditions = build_conditions(activity_year, series, organ, account, account_type_filter)
       sign = invert_sign ? '- ' : ''
       Mage::Reports::Report.generate(
         data_from_query(
@@ -128,9 +124,7 @@ module Mage
               JOIN account_groups ON accounts.account_group_id = account_groups.id
               JOIN series ON vouchers.series_id = series.id
             WHERE
-              vouchers.activity_year_id = #{activity_year.id.to_i} AND
-              voucher_rows.canceled = 0
-              #{optional_conditions}
+              #{conditions}
             GROUP BY accounts.number
             ORDER BY
               account_groups.number,
@@ -140,17 +134,15 @@ module Mage
       )
     end
 
-    def self.build_optional_condition(series, organs, account, account_type_filter = nil)
-      optional_conditions = []
-      optional_conditions << Voucher.arel_table[:series_id].eq(series.id) if series
-      optional_conditions << Voucher.arel_table[:organ_id].in(organs.map(&:id)) if organs
-      optional_conditions << VoucherRow.arel_table[:account_number].eq(account.number) if account
-      optional_conditions << AccountGroup.arel_table[:account_type].in(account_type_filter) if account_type_filter
-      if optional_conditions.any?
-        ' AND ' + optional_conditions.reduce { |a, e| a.and(e) }.to_sql
-      else
-        ''
-      end
+    def self.build_conditions(activity_year, series, organs, account, account_type_filter = nil)
+      conditions = []
+      conditions << Voucher.arel_table[:activity_year_id].eq(activity_year.id)
+      conditions << VoucherRow.arel_table[:canceled].eq(0)
+      conditions << Voucher.arel_table[:series_id].eq(series.id) if series
+      conditions << Voucher.arel_table[:organ_id].in(organs.map(&:id)) if organs
+      conditions << VoucherRow.arel_table[:account_number].eq(account.number) if account
+      conditions << AccountGroup.arel_table[:account_type].in(account_type_filter) if account_type_filter
+      conditions.reduce { |a, e| a.and(e) }.to_sql
     end
   end
 end
