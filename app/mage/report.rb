@@ -137,6 +137,7 @@ module Mage
     def self.build_conditions(activity_year, series, organs, account, account_type_filter = nil)
       conditions = []
       conditions << Voucher.arel_table[:activity_year_id].eq(activity_year.id)
+      conditions << Voucher.arel_table[:bookkept_by_id].not_eq(nil)
       conditions << VoucherRow.arel_table[:canceled].eq(0)
       conditions << Voucher.arel_table[:series_id].eq(series.id) if series
       conditions << Voucher.arel_table[:organ_id].in(organs.map(&:id)) if organs
