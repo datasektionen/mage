@@ -7,3 +7,9 @@ Rails/ActionFilter:
 
 Style/DotPosition:
   EnforcedStyle: trailing
+
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
