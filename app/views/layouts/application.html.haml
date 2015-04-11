@@ -33,8 +33,17 @@
 
     = csrf_meta_tag
   %body
-    = render :partial => 'menus/session'
-    = render :partial => 'menus/apps'
+    %nav#apps.horizontal
+      %p.session-info
+        - if user_signed_in?
+          Inloggad som:
+          %span.person= link_to current_user, current_user
+        = session_change_link
+      %ul
+        %li= link_to "STÖn", "http://ston.datasektionen.se"
+        %li= link_to "Cashflow", "http://cashflow.datasektionen.se"
+        %li.active= link_to "Mage", root_path
+        %li= link_to "GitHub", "https://github.com/datasektionen"
     #root
       %header.main
         %h1.title= link_to "MAGE", root_url
