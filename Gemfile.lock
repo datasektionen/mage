@@ -57,6 +57,7 @@ GEM
       activesupport
       builder
     arel (3.0.3)
+    attr_extras (4.4.0)
     bcrypt-ruby (3.0.1)
     builder (3.0.4)
     cancan (1.6.7)
@@ -198,6 +199,9 @@ GEM
     ruby-rc4 (0.1.5)
     rubyntlm (0.1.1)
     sass (3.1.14)
+    sie (3.0.0)
+      activesupport
+      attr_extras
     simple-navigation (3.6.0)
       activesupport (>= 2.3.2)
     simple_form (1.5.2)
@@ -267,6 +271,7 @@ DEPENDENCIES
   rspec (~> 2.8.0)
   rspec-rails
   sass
+  sie (~> 3.0)
   simple-navigation
   simple_form
   sunspot_rails
