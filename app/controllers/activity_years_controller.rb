@@ -21,7 +21,7 @@ class ActivityYearsController < ApplicationController
     if @activity_year.save
       clone_accounts = params[:activity_year][:account][:clone]
 
-      @clone_year = ActivityYear.find(clone_accounts)
+      @clone_year = ActivityYear.find_by_id(clone_accounts)
       if @clone_year
         @activity_year.accounts = @clone_year.clone_accounts(params[:activity_year][:account][:transfer_saldo])
       end
