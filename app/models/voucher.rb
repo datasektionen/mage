@@ -166,7 +166,7 @@ Attesterat av: #{authorized_by_to_s}
     rows = voucher_rows
     rows.reject!(&:canceled?) unless options[:canceled]
     rows.map do |old|
-      vr = old.clone
+      vr = old.dup
       vr.sum *= -1
       vr
     end
