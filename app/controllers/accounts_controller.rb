@@ -15,6 +15,10 @@ class AccountsController < ApplicationController
   # Multi edit
   def edit
     @activity_year = ActivityYear.find_by_year(params[:activity_year_id])
+
+    @account_groups = @activity_year.accounts.group_by(&:account_group)
+    AccountGroup.find_each { |ag| @account_groups[ag] ||= [] }
+
     authorize! :update, @activity_year
   end
 
@@ -28,6 +32,7 @@ class AccountsController < ApplicationController
     else
       flash[:error] = t('activemodel.errors.template.header.one', model: t('activerecord.models.account_plan'))
     end
-    render action: :edit
+
+    redirect_to action: :edit
   end
 end
