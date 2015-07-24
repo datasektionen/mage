@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby "1.9.3"
+
 gem 'airbrake'
 gem 'cancan'
 gem 'devise', '1.4.9'
@@ -29,7 +31,7 @@ gem 'simple_form'
 gem 'sunspot_rails'
 
 group :production do
-  gem 'unicorn'
+  gem 'puma'
 end
 
 group :development, :test do
